@@ -1,0 +1,19 @@
+.product_box {
+    width: 20%;
+    height: auto;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.product_box > div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 10px 0;
+}
+
+.product_image {
+    width: 80%;
+    height: 200px;
+}

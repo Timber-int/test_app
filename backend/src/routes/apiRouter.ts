@@ -1,8 +1,13 @@
 import { Router } from 'express';
 
 import { STATUS } from '../errorCode';
+import { productRouter } from './productRouter';
+import { commentRouter } from './commentRouter';
 
 const router = Router();
+
+router.use('/products', productRouter);
+router.use('/comments', commentRouter);
 
 // @ts-ignore
 router.use('*', (err, req, res, next) => {

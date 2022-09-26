@@ -1,0 +1,41 @@
+.product_details_container {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.first_block {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    height: 40vh;
+    align-items: center;
+    background-color: #FFD600;
+}
+
+.second_block {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    height: 40vh;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #497BE8;
+}
+
+.second_block > div {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    font-size: 46px;
+}
+
+.product_element {
+    font-size: 46px;
+    color: #e53935;
+}
+
+.product_image {
+    width: 500px;
+    height: 500px;
+}
