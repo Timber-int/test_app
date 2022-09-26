@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
-import {ModalWindow, Product} from "../../components";
+import {Product} from "../../components";
 import {getAllProducts, productActions} from "../../store";
 
 import css from './ProductsPage.module.css';
@@ -19,17 +19,9 @@ const ProductsPage = () => {
     return (
         <div>
             <div className={css.add_product_button_container}>
-                <button onClick={() => dispatch(productActions.showWindow())}>Add product</button>
+                <button  className={css.add_product_button} onClick={() => dispatch(productActions.showWindow())}>Add product</button>
             </div>
-            <div>
-                {
-                    showWindow === true
-                        ?
-                        <ModalWindow/>
-                        :
-                        <></>
-                }
-            </div>
+
             <div className={css.products_container}>
                 {
                     [...products].sort((a,b)=>a.count- b.count).sort((a, b) => a.name.localeCompare(b.name)).map(product =>

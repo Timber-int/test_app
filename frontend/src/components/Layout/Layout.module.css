@@ -1,5 +1,27 @@
-.outlet_container{
+.outlet_container {
     width: 100%;
     margin-top: 50px;
     height: 90vh;
 }
+
+.header {
+    min-height: 70px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.header > a {
+    margin: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 24px;
+}
+
+.header > a:hover {
+    color: #e53935;
+}
+

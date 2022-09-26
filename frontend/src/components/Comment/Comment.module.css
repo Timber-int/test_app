@@ -1,21 +1,34 @@
-.products_container {
+.comment_box {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    height: 100px;
     justify-content: center;
 }
 
-.add_product_button_container {
+.comment_information {
     width: 100%;
+    display: flex;
+}
+
+.comment_information > div {
+    width: 40%;
+    display: flex;
+    align-items: center
+}
+
+.comment_box > div {
+    width: 50%;
+    font-size: 24px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 100px 0 100px 0;
+    margin: 10px 0 10px 0;
 }
-.add_product_button {
+
+.delete_button {
     padding: 5px;
-    height: 100px;
-    width: 500px;
+    width: 330px;
     border: none;
     font-size: 24px;
     border-radius: 4px;
@@ -26,7 +39,7 @@
     color: #ffffff;
 }
 
-.add_product_button:hover {
+.delete_button:hover {
     box-shadow: inset 330px 0 0 0 #f9e506;
     cursor: pointer;
     color: #e53935;

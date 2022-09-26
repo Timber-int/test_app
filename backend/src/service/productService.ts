@@ -1,4 +1,4 @@
-import { UpdateResult } from 'typeorm';
+import { DeleteResult, UpdateResult } from 'typeorm';
 import { IProduct, Product } from '../entity';
 import { productRepository } from '../repository';
 
@@ -9,6 +9,10 @@ class ProductService {
 
     public async getProductById(id:number): Promise<IProduct | undefined> {
         return productRepository.getProductById(id);
+    }
+
+    public async deleteProductById(id:number): Promise<DeleteResult> {
+        return productRepository.deleteProductById(id);
     }
 
     public async createProduct(productData: Product): Promise<IProduct> {

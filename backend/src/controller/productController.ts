@@ -12,10 +12,30 @@ class ProductController {
         }
     }
 
+    public async getProductById(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            const product = await productService.getProductById(Number(req.params.id));
+
+            res.json({ productData: product });
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async deleteProductById(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            const product = await productService.getProductById(Number(req.params.id));
+
+            await productService.deleteProductById(Number(req.params.id));
+
+            res.json({ productData: product });
+        } catch (e) {
+            next(e);
+        }
+    }
+
     public async createProduct(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            console.log(req.body);
-
             const productData = req.body;
 
             const product = await productService.createProduct(productData);
@@ -26,15 +46,17 @@ class ProductController {
         }
     }
 
-    // public async updateProduct(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
-    //     try {
-    //         const products = await productService.updateProduct();
-    //
-    //         res.json(products);
-    //     } catch (e) {
-    //         next(e);
-    //     }
-    // }
+    public async updateProductById(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            await productService.updateProduct(Number(req.params.id), req.body);
+
+            const productData = await productService.getProductById(Number(req.params.id));
+
+            res.json({ productData });
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 export const productController = new ProductController();

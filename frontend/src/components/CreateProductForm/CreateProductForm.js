@@ -1,40 +1,56 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {useDispatch, useSelector} from "react-redux";
 
 import {createProductValidator} from "../../validator";
 import css from './CreateProductForm.module.css';
-import {createProduct} from "../../store";
+import {createProduct, productActions, updateProductById} from "../../store";
 
 const CreateProductForm = () => {
 
     const dispatch = useDispatch();
 
     const {
-        status,
-        serverErrors,
+        productDataToUpdate,
     } = useSelector(state => state['productReducer']);
+
+    const {width, weight, name, imageUrl, height, id, count} = productDataToUpdate;
 
     const {
         register,
         handleSubmit,
         reset,
         formState: {errors},
+        setValue,
     } = useForm({
         resolver: joiResolver(createProductValidator),
         mode: 'onTouched',
     });
 
+    useEffect(() => {
+        setValue('width', width);
+        setValue('weight', weight);
+        setValue('name', name);
+        setValue('imageUrl', imageUrl);
+        setValue('height', height);
+        setValue('count', count);
+    }, [id]);
+
     const confirm = (data) => {
-        dispatch(createProduct({productData: data}));
-        reset();
+        if (id){
+            dispatch(updateProductById({productData: {...data,id}}));
+            reset();
+        }else {
+            dispatch(createProduct({productData: data}));
+            reset();
+        }
     }
 
     const cancel = () => {
+        dispatch(productActions.clearProductDataToUpdate());
         reset();
     }
-
 
     return (
         <div>
@@ -61,7 +77,7 @@ const CreateProductForm = () => {
                                                       required placeholder={'weight'}/></div>
 
                 <div className={css.input_box}><input className={css.product_button_confirm} type="submit"
-                                                      value={'Сonfirm'}/>
+                                                      value={id ? 'Update' : 'Сonfirm'}/>
                 </div>
             </form>
             <div className={css.input_box}>

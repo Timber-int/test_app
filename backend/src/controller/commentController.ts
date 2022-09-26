@@ -21,6 +21,17 @@ class CommentController {
             next(e);
         }
     }
+
+    public async deleteComment(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            const commentFromDB = await commentService.getCommentById(Number(req.params.id));
+            await commentService.deleteCommentById(Number(req.params.id));
+
+            res.json({ commentData: commentFromDB });
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 export const commentController = new CommentController();
