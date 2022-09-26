@@ -79,10 +79,16 @@ const productSlice = createSlice({
         serverErrors: null,
         status: null,
         showWindow: false,
+        showSmallWindow: false,
+        productIdToDelete: null,
     },
     reducers: {
         showWindow: (state, action) => {
             state.showWindow = !state.showWindow;
+        },
+        showSmallWindowDeleteChoose: (state, action) => {
+            state.showSmallWindow = !state.showSmallWindow;
+            state.productIdToDelete = action.payload.id;
         },
         createSingleProduct: (state, action) => {
             const createdProduct = action.payload.productData;
@@ -101,7 +107,7 @@ const productSlice = createSlice({
             state.products = state.products.map(product => product.id === productFromDB.id ? productFromDB : product);
             state.productDataToUpdate = {};
         },
-        clearProductDataToUpdate:(state,action)=>{
+        clearProductDataToUpdate: (state, action) => {
             state.productDataToUpdate = {};
         }
     },
@@ -160,8 +166,24 @@ const productSlice = createSlice({
 
 const productReducer = productSlice.reducer;
 
-const {showWindow, createSingleProduct, deleteSingleProduct, setSingleProductToUpdate,updateSingleProduct,clearProductDataToUpdate} = productSlice.actions;
+const {
+    showWindow,
+    createSingleProduct,
+    deleteSingleProduct,
+    setSingleProductToUpdate,
+    updateSingleProduct,
+    clearProductDataToUpdate,
+    showSmallWindowDeleteChoose
+} = productSlice.actions;
 
-export const productActions = {showWindow, createSingleProduct, deleteSingleProduct, setSingleProductToUpdate,updateSingleProduct,clearProductDataToUpdate};
+export const productActions = {
+    showWindow,
+    createSingleProduct,
+    deleteSingleProduct,
+    setSingleProductToUpdate,
+    updateSingleProduct,
+    clearProductDataToUpdate,
+    showSmallWindowDeleteChoose
+};
 
 export default productReducer;

@@ -1,18 +1,14 @@
 import React from 'react';
-
 import {NavLink} from "react-router-dom";
-import css from './Product.module.css';
 import {useDispatch} from "react-redux";
-import {deleteProductById, productActions} from "../../store";
+
+import {productActions} from "../../store";
+import css from './Product.module.css';
 
 const Product = ({product}) => {
     const {name, imageUrl, height, id, count} = product;
 
     const dispatch = useDispatch();
-
-    const removeProduct = (id) => {
-        dispatch(deleteProductById({id}));
-    }
 
     const setProductToUpdate = (productDataToUpdate) => {
         dispatch(productActions.showWindow());
@@ -29,7 +25,7 @@ const Product = ({product}) => {
                 <div>Count: {count}</div>
             </NavLink>
             <div>
-                <button onClick={() => removeProduct(id)} className={css.delete_button}>Delete</button>
+                <button onClick={() => dispatch(productActions.showSmallWindowDeleteChoose({id}))} className={css.delete_button}>Delete</button>
             </div>
             <div className={css.update_button_container}>
                 <button className={css.update_button} onClick={() =>setProductToUpdate(product) }>Update product</button>

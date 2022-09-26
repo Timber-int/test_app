@@ -7,7 +7,7 @@ import css from './ModalWindow.module.css';
 
 const ModalWindow = () => {
 
-    let dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const [visible, setVisible] = useState(true);
 
@@ -16,6 +16,7 @@ const ModalWindow = () => {
     if (visible) {
         rootClasses.push(css.active);
     }
+
     const exit = () => {
         setVisible(false);
         dispatch(productActions.showWindow())
