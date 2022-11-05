@@ -12,3 +12,15 @@ export const createNameValidator = Joi.object({
             'string.pattern.base': 'Enter only letter min 3 max 30',
         }),
 });
+
+export const updateNameRankValidator = Joi.object({
+    id: Joi.number()
+        .min(1)
+        .max(1000000)
+        .required()
+        .messages({
+            'number.base': 'Id must be number',
+            'number.min': 'Number min 1',
+            'number.max': 'Number max 1000000',
+        }),
+});

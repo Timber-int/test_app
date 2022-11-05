@@ -47,6 +47,20 @@ class NameController {
         }
     }
 
+    public async updateNameRankById(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            const { id } = req.body;
+
+            await nameService.updateNameRankById(Number(req.params.id), Number(id));
+
+            const nameData = await nameService.getNameById(Number(id));
+
+            res.json(nameData);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     public async createName(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
             const nameData = await nameService.createName(req.body);

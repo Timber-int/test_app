@@ -2,7 +2,7 @@ import { NextFunction, Response, Router } from 'express';
 import { nameController } from '../controller';
 import { IRequestExtended } from '../interface';
 import { dataValidatorMiddleware, nameMiddleware } from '../middleware';
-import { createNameValidator } from '../validator';
+import { createNameValidator, updateNameRankValidator } from '../validator';
 
 const router = Router();
 
@@ -25,6 +25,11 @@ router.put('/:id',
     dataValidatorMiddleware.dataValidator,
     nameController.updateNameById,
 );
+
+router.put('/set/:id', (req: IRequestExtended, res: Response, next: NextFunction) => {
+    req.chosenValidationType = updateNameRankValidator;
+    next();
+}, dataValidatorMiddleware.dataValidator, nameMiddleware.checkIsNameExist, nameMiddleware.checkIsNameRankNotExist, nameController.updateNameRankById);
 router.delete('/:id', nameMiddleware.checkIsNameExist, nameController.deleteNameById);
 
 export const nameRouter = router;

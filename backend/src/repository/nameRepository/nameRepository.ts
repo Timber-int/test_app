@@ -22,6 +22,10 @@ class NameRepository extends Repository<Name> implements INameRepository {
         return getManager().getRepository(Name).update({ id }, dataToUpdate);
     }
 
+    public async updateNameRankById(id: number, IdToUpdate: number): Promise<UpdateResult> {
+        return getManager().getRepository(Name).update({ id }, { id: IdToUpdate });
+    }
+
     public async createName(data: Name): Promise<IName> {
         return getManager().getRepository(Name).save(data);
     }

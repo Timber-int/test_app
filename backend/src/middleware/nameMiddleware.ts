@@ -20,6 +20,21 @@ class NameMiddleware {
             next(e);
         }
     }
+
+    public async checkIsNameRankNotExist(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            const nameFromDB = await nameService.getNameById(Number(req.body.id));
+
+            if (nameFromDB) {
+                next(new ErrorHandler(MESSAGE.RANK_IS_EXIST, STATUS.CODE_404));
+                return;
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 export const nameMiddleware = new NameMiddleware();

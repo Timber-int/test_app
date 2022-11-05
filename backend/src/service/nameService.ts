@@ -1,4 +1,4 @@
-import { DeleteResult } from 'typeorm';
+import { DeleteResult, UpdateResult } from 'typeorm';
 import { IName, Name } from '../entity';
 import { nameRepository } from '../repository';
 
@@ -15,8 +15,12 @@ class NameService {
         return nameRepository.deleteNameById(id);
     }
 
-    public async updateNameById(id: number, dataToUpdate: Partial<IName>): Promise<DeleteResult> {
+    public async updateNameById(id: number, dataToUpdate: Partial<IName>): Promise<UpdateResult> {
         return nameRepository.updateNameById(id, dataToUpdate);
+    }
+
+    public async updateNameRankById(id: number, IdToUpdate: number): Promise<UpdateResult> {
+        return nameRepository.updateNameRankById(id, IdToUpdate);
     }
 
     public async createName(data: Name): Promise<IName> {
