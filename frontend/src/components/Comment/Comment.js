@@ -6,7 +6,11 @@ import {deleteCommentById} from "../../store/commentSlice";
 
 const Comment = ({comment, numberComment}) => {
 
-    const {description, id, createdAt: data} = comment;
+    const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+
+    const {description, id, createdAt} = comment;
+
+    const data = new Date(createdAt);
 
     const dispatch = useDispatch();
 
@@ -21,7 +25,7 @@ const Comment = ({comment, numberComment}) => {
                     <span>{numberComment}</span>)
                     <span>{description}</span>
                 </div>
-                <div>Data: {data}</div>
+                <div>Data: {data.toLocaleDateString("en-US", options)}</div>
             </div>
 
             <div>
