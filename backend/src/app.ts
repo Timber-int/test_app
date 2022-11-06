@@ -21,6 +21,8 @@ app.use(apiRouter);
 // 2) Run the "npm run migration:run" command to start the migration.
 // 3) Run the "npm run start" command to start the server.
 
+// If your need more information pleace start the server and write to url http://localhost:5000/docs
+
 app.listen(PORT, async () => {
     console.log(`Server has been started on ${PORT} port...`);
     try {

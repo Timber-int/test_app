@@ -16,7 +16,7 @@ router.post('/',
     dataValidatorMiddleware.dataValidator,
     nameController.createName,
 );
-router.put('/:id',
+router.put('/update/:id',
     (req: IRequestExtended, res: Response, next: NextFunction) => {
         req.chosenValidationType = createNameValidator;
         next();
@@ -30,6 +30,6 @@ router.put('/set/:id', (req: IRequestExtended, res: Response, next: NextFunction
     req.chosenValidationType = updateNameRankValidator;
     next();
 }, dataValidatorMiddleware.dataValidator, nameMiddleware.checkIsNameExist, nameMiddleware.checkIsNameRankNotExist, nameController.updateNameRankById);
-router.delete('/:id', nameMiddleware.checkIsNameExist, nameController.deleteNameById);
+router.delete('/delete/:id', nameMiddleware.checkIsNameExist, nameController.deleteNameById);
 
 export const nameRouter = router;

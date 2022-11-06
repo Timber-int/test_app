@@ -1,0 +1,275 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "AleannLab 2022",
+    "description": "Project documentation",
+    "version": "0.1",
+    "contact": {
+      "email": "timoty01@ukr.net",
+      "name": "Slobodianyk Artem"
+    }
+  },
+  "paths": {
+    "/names/": {
+      "get": {
+        "description": "GetAllNames",
+        "operationId": "GetAllNames",
+        "tags": [
+          "Names"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/name"
+              }
+            },
+            "description": "Get all names"
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/names/{id}/": {
+      "get": {
+        "operationId": "get Name",
+        "description": "get Name",
+        "tags": [
+          "Names"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "name": "id",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "$ref": "#/definitions/name"
+                }
+              }
+            },
+            "description": "Get name by id"
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/names": {
+      "post": {
+        "description": "create Name",
+        "operationId": "create Name",
+        "tags": [
+          "Names"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "name",
+            "in": "formData",
+            "maxLength": 1000000,
+            "minLength": 3,
+            "required": true,
+            "uniqueItems": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "$ref": "#/definitions/name"
+                }
+              }
+            },
+            "description": "Create name"
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/names/update/{id}": {
+      "put": {
+        "description": "update Name",
+        "operationId": "update Name",
+        "tags": [
+          "Names"
+        ],
+        "parameters": [
+          {
+            "type": "number",
+            "in": "path",
+            "name": "id",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "name",
+            "in": "formData",
+            "maxLength": 1000000,
+            "minLength": 3,
+            "required": true,
+            "uniqueItems": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "$ref": "#/definitions/name"
+                }
+              }
+            },
+            "description": "update name"
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/names/delete/{id}": {
+      "delete": {
+        "description": "delete name by Id",
+        "operationId": "delete name by Id",
+        "tags": [
+          "Names"
+        ],
+        "parameters": [
+          {
+            "type": "number",
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "$ref": "#/definitions/name"
+                }
+              }
+            },
+            "description": "update name"
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/names/set/{id}": {
+      "put": {
+        "description": "set new rank name",
+        "operationId": "set new rank name",
+        "tags": [
+          "Names"
+        ],
+        "parameters": [
+          {
+            "type": "number",
+            "in": "path",
+            "name": "id",
+            "required": true
+          },
+          {
+            "type": "number",
+            "in": "formData",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "$ref": "#/definitions/name"
+                }
+              }
+            },
+            "description": "update name"
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "name": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "Artem"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2022-04-11T14:57:23.471Z"
+        },
+        "deletedAt": {
+          "type": "string",
+          "default": null
+        }
+      }
+    },
+    "errorResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "example": "Bad request",
+          "description": "Standard error response"
+        }
+      }
+    }
+  }
+}
+
