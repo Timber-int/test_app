@@ -16,6 +16,11 @@ const { PORT } = config;
 
 app.use(apiRouter);
 
+// If you start work:
+// 1) Install the database MySQL, if it is installed, then create a database with the name "aleannlab";
+// 2) Run the "npm run migration:run" command to start the migration.
+// 3) Run the "npm run start" command to start the server.
+
 app.listen(PORT, async () => {
     console.log(`Server has been started on ${PORT} port...`);
     try {
