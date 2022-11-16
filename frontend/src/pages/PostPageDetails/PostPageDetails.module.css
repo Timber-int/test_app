@@ -1,0 +1,122 @@
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.post_details_container {
+    width: 50%;
+}
+
+.comments_container {
+    background-color: #bdbdbd;
+    width: 30%;
+    padding: 10px;
+}
+
+.comment_form {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.comments_block {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    justify-content: center;
+    max-height: 550px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.comments_block::-webkit-scrollbar {
+    display: none;
+}
+
+.comments_loading {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 100px;
+    justify-content: center;
+}
+
+.errors_span {
+    max-width: 100%;
+    font-size: 24px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    color: #e53935;
+    background-color: #bdbdbd;
+}
+
+.registration_input {
+    width: 60%;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 24px;
+}
+
+.confirm_input {
+    width: 25%;
+    border-radius: 10px;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #bdbdbd;
+    color: snow;
+}
+
+.confirm_input_disabled {
+    width: 25%;
+    border-radius: 10px;
+    font-size: 24px;
+    padding: 10px;
+    background-color: #bdbdbd;
+    color: snow;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.confirm_input:hover {
+    color: #e53935;
+}
+
+.single_comment {
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.single_comment > span {
+    display: flex;
+    align-items: center;
+}
+
+.comment_author {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    font-size: 26px;
+    color: snow;
+    background-color: #e53935;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.comment_text {
+    width: calc(100% - 80px);
+    color: snow;
+    font-size: 24px;
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

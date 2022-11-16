@@ -3,14 +3,12 @@ import {commentService} from "../services";
 import {CONSTANTS} from "../constants";
 
 export const getAllComments = createAsyncThunk(
-    'productSlice/getAllComments',
-    async (_, {rejectWithValue}) => {
+    'postSlice/getAllComments',
+    async (_, {dispatch, rejectWithValue}) => {
         try {
-
             const data = await commentService.getAllComments();
 
-            return data;
-
+            return {data};
         } catch (e) {
             return rejectWithValue(e.response.data.message);
         }
@@ -18,33 +16,14 @@ export const getAllComments = createAsyncThunk(
 );
 
 export const createComment = createAsyncThunk(
-    'productSlice/createComment',
+    'postSlice/createComment',
     async ({commentData}, {dispatch, rejectWithValue}) => {
         try {
-
             const data = await commentService.createComment(commentData);
 
-            dispatch(commentActions.createSingleComment(data));
+            dispatch(commentActions.createSingleComment({data}));
 
-            return data;
-
-        } catch (e) {
-            return rejectWithValue(e.response.data.message);
-        }
-    }
-);
-
-export const deleteCommentById = createAsyncThunk(
-    'productSlice/deleteCommentById',
-    async ({commentId}, {dispatch, rejectWithValue}) => {
-        try {
-
-            const data = await commentService.deleteComment(commentId);
-
-            dispatch(commentActions.deleteSingleComment(data));
-
-            return data;
-
+            return {data};
         } catch (e) {
             return rejectWithValue(e.response.data.message);
         }
@@ -55,18 +34,12 @@ const commentSlice = createSlice({
     name: 'commentSlice',
     initialState: {
         comments: [],
-        status: null,
         serverErrors: null,
+        status: null,
     },
     reducers: {
         createSingleComment: (state, action) => {
-            const createdComment = action.payload.commentData;
-            state.comments.push(createdComment);
-        },
-
-        deleteSingleComment: (state, action) => {
-            const commentFromDB = action.payload.commentData;
-            state.comments = state.comments.filter(comment => comment.id !== commentFromDB.id);
+            state.comments.push(action.payload.data.comment);
         }
     },
     extraReducers: {
@@ -76,7 +49,7 @@ const commentSlice = createSlice({
         },
         [getAllComments.fulfilled]: (state, action) => {
             state.status = CONSTANTS.RESOLVED;
-            state.comments = action.payload.commentsData;
+            state.comments = action.payload.data.comments;
             state.serverErrors = null;
         },
         [getAllComments.rejected]: (state, action) => {
@@ -95,25 +68,13 @@ const commentSlice = createSlice({
             state.status = CONSTANTS.REJECTED;
             state.serverErrors = action.payload;
         },
-        [deleteCommentById.pending]: (state, action) => {
-            state.status = CONSTANTS.LOADING;
-            state.serverErrors = null;
-        },
-        [deleteCommentById.fulfilled]: (state, action) => {
-            state.status = CONSTANTS.RESOLVED;
-            state.serverErrors = null;
-        },
-        [deleteCommentById.rejected]: (state, action) => {
-            state.status = CONSTANTS.REJECTED;
-            state.serverErrors = action.payload;
-        },
     },
 });
 
 const commentReducer = commentSlice.reducer;
 
-const {createSingleComment, deleteSingleComment} = commentSlice.actions;
+const {createSingleComment} = commentSlice.actions;
 
-export const commentActions = {createSingleComment, deleteSingleComment};
+export const commentActions = {createSingleComment};
 
 export default commentReducer;

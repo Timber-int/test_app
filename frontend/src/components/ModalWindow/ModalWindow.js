@@ -1,33 +1,31 @@
-import React, {useState} from 'react';
-import {useDispatch} from "react-redux";
+import React from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {ImExit} from 'react-icons/im';
 
-import {CreateProductForm} from "../CreateProductForm/CreateProductForm";
-import {productActions} from "../../store";
 import css from './ModalWindow.module.css';
+import {postActions} from "../../store";
 
 const ModalWindow = () => {
 
     const dispatch = useDispatch();
 
-    const [visible, setVisible] = useState(true);
+    const {visible, text} = useSelector(state => state.postReducer);
 
     const rootClasses = [css.modalWindow];
 
     if (visible) {
         rootClasses.push(css.active);
     }
-
     const exit = () => {
-        setVisible(false);
-        dispatch(productActions.showWindow())
+        dispatch(postActions.setShowWindow({text: ''}));
     };
 
     return (
         <div className={rootClasses.join(' ')}>
             <div className={css.modalWindowContent} onClick={event => event.stopPropagation()}>
-                {<div className={css.exit_box} onClick={() => exit()}><span>✖</span></div>}
-                <div className={css.create_product_form_container}>
-                    <CreateProductForm/>
+                <div className={css.exit_box}><ImExit className={css.exit_item} onClick={() => exit()}/></div>
+                <div className={css.post_text}>
+                    {text}
                 </div>
             </div>
         </div>

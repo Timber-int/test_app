@@ -1,6 +1,12 @@
 export const baseURL = 'http://localhost:5000';
 
 export const urls = {
-    products: '/products',
-    comments: '/comments'
+    auth: '/auth',
+    registration: '/registration',
+    login: '/login',
+    logout: '/logout',
+    posts: '/posts',
+    users: '/users',
+    comments: '/comments',
+    refresh: '/refresh',
 };

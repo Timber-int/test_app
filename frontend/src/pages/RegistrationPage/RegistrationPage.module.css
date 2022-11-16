@@ -1,0 +1,68 @@
+.input_box {
+    display: block;
+}
+
+.registration_value_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    color: snow;
+    font-weight: bold;
+}
+
+.server_error {
+    margin-bottom: 20px;
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e53935;
+}
+
+.input_box_name {
+    font-size: 32px;
+    color: snow;
+}
+
+
+.registration_input {
+    padding: 10px;
+    font-size: 24px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 500px;
+}
+
+.errors_span {
+    max-width: 500px;
+    margin: 5px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    color: #e53935;
+}
+
+.form_submit_box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.confirm_input {
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #bdbdbd;
+    color: snow;
+}
+
+.nav_to_login {
+    color: snow;
+}
+
+
+.nav_to_login:hover {
+    color: #e53935;
+}

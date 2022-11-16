@@ -1,28 +1,57 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavLink, Outlet} from 'react-router-dom';
+
 import css from './Layout.module.css'
-import {ModalWindow} from "../ModalWindow/ModalWindow";
-import {useSelector} from "react-redux";
+import {CONSTANTS} from "../../constants";
+import {useDispatch, useSelector} from "react-redux";
+import {logout} from "../../store";
 
 const Layout = () => {
 
-    const { showWindow} = useSelector(state => state['productReducer']);
+    const {user} = useSelector(state => state.authReducer);
+
+    const dispatch = useDispatch();
+
+    const logoutUser = () => {
+        if (user) {
+            dispatch(logout());
+        }
+    }
+    useEffect(() => {
+
+    }, [user]);
 
     return (
-        <div>
+        <div className={css.blog_container}>
             <div className={css.header}>
-                <NavLink to={'/'}>Products</NavLink>
-            </div>
-            <div>
                 {
-                    showWindow === true
-                        ?
-                        <ModalWindow/>
+                    user ?
+                        <NavLink className={css.user_data_box} to={'/registration'}>
+                            {user?.firstName[0].toUpperCase()}{user?.lastName[0].toUpperCase()}
+                        </NavLink>
                         :
-                        <></>
+                        <NavLink className={css.user_data_box} to={'/registration'}>
+
+                        </NavLink>
                 }
+                <div className={css.menu}>
+                    <NavLink to={'/posts'}>
+                        Main
+                    </NavLink>
+                    <NavLink to={'/userPosts'}>
+                        My post
+                    </NavLink>
+                    <NavLink to={'/createPost'}>
+                        Add post
+                    </NavLink>
+                </div>
+                <NavLink to={'/registration'}>
+                    <button className={css.enter_exit_button}
+                        onClick={() => logoutUser()}>{localStorage.getItem(CONSTANTS.USER) ? 'Exit' : 'Enter'}
+                    </button>
+                </NavLink>
             </div>
-            <div className={css.outlet_container}>
+            <div className={css.outlet}>
                 <Outlet/>
             </div>
         </div>

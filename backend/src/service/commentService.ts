@@ -7,16 +7,24 @@ class CommentService {
         return commentRepository.getAllComments();
     }
 
-    public async getCommentById(id:number): Promise<IComment | undefined> {
-        return commentRepository.getCommentById(id);
+    public async createComment(comment: IComment): Promise<IComment> {
+        return commentRepository.createComment(comment);
     }
 
-    public async deleteCommentById(id:number): Promise<DeleteResult> {
+    public async deleteCommentById(id: number): Promise<DeleteResult> {
         return commentRepository.deleteCommentById(id);
     }
 
-    public async createComment(commentData: IComment): Promise<IComment> {
-        return commentRepository.createComment(commentData);
+    public async getCommentByUserId(userId: number): Promise<IComment | undefined> {
+        return commentRepository.getCommentByUserId(userId);
+    }
+
+    public async getCommentById(id: number): Promise<IComment | undefined> {
+        return commentRepository.getCommentById(id);
+    }
+
+    public async getCommentByPostId(postId: number): Promise<IComment | undefined> {
+        return commentRepository.getCommentByPostId(postId);
     }
 }
 

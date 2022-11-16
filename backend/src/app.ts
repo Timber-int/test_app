@@ -1,6 +1,8 @@
 import 'reflect-metadata';
 import express from 'express';
 import morgan from 'morgan';
+import fileUpload from 'express-fileupload';
+import path from 'path';
 import cors from 'cors';
 
 import { createConnection } from 'typeorm';
@@ -15,8 +17,10 @@ const corsOptions = {
     optionSuccessStatus: 200,
 };
 
+app.use(fileUpload());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'fileDirectory')));
 app.use(morgan('dev'));
 app.use(cors(corsOptions));
 
