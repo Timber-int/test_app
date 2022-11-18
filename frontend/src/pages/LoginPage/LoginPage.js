@@ -32,13 +32,10 @@ const LoginPage = () => {
 
         reset();
 
-    }
-
-    useEffect(() => {
         if (status === CONSTANTS.RESOLVED) {
             navigate('/userPosts');
         }
-    }, [status]);
+    }
 
     return (
         <div>

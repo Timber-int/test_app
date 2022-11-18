@@ -3,7 +3,7 @@ import {Navigate, useLocation} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {TokenType} from '../../constants';
 
-const RequireAuth = ({ children }) => {
+const RequireAuth = ({children}) => {
     const location = useLocation();
 
     const {
@@ -17,4 +17,4 @@ const RequireAuth = ({ children }) => {
     return children;
 };
 
-export { RequireAuth };
+export {RequireAuth};

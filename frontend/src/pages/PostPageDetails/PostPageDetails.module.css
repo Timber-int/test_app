@@ -28,7 +28,7 @@
     flex-wrap: wrap;
     margin-top: 20px;
     justify-content: center;
-    max-height: 550px;
+    max-height: 650px;
     overflow: hidden;
     overflow-y: auto;
 }
@@ -97,6 +97,7 @@
 .single_comment > span {
     display: flex;
     align-items: center;
+    padding: 10px;
 }
 
 .comment_author {
@@ -116,7 +117,8 @@
     color: snow;
     font-size: 24px;
     display: flex;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    word-break: break-all;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 1px 0 1px #141E30;
 }

@@ -56,6 +56,10 @@
     overflow: hidden;
     overflow-y: auto;
     cursor: pointer;
+    padding: 10px;
+    border: 1px solid snow;
+    box-shadow: 1px 1px 1px 1px #141E30;
+    border-radius: 5px;
 }
 
 .post_text_with_full_height::-webkit-scrollbar {

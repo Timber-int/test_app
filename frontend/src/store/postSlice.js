@@ -4,9 +4,9 @@ import {CONSTANTS} from "../constants";
 
 export const getAllPosts = createAsyncThunk(
     'postSlice/getAllPosts',
-    async (_, {dispatch, rejectWithValue}) => {
+    async ({page, perPage}, {dispatch, rejectWithValue}) => {
         try {
-            const data = await postService.getAllPosts();
+            const data = await postService.getAllPosts(page, perPage);
 
             return {data};
         } catch (e) {
@@ -102,6 +102,9 @@ const postSlice = createSlice({
     name: 'postSlice',
     initialState: {
         posts: [],
+        page: null,
+        perPage: null,
+        itemCount: null,
         visible: false,
         postDataToUpdate: null,
         serverErrors: null,
@@ -128,6 +131,9 @@ const postSlice = createSlice({
         setShowWindow: (state, action) => {
             state.visible = !state.visible;
             state.text = action.payload.text;
+        },
+        setPage: (state, action) => {
+            state.page = action.payload.pageNumber;
         }
     },
     extraReducers: {
@@ -137,7 +143,11 @@ const postSlice = createSlice({
         },
         [getAllPosts.fulfilled]: (state, action) => {
             state.status = CONSTANTS.RESOLVED;
-            state.posts = action.payload.data.posts;
+            console.log(action.payload.data);
+            state.posts = action.payload.data.posts.data;
+            state.page = action.payload.data.posts.page;
+            state.perPage = action.payload.data.posts.perPage;
+            state.itemCount = action.payload.data.posts.itemCount;
             state.serverErrors = null;
         },
         [getAllPosts.rejected]: (state, action) => {
@@ -198,8 +208,8 @@ const postSlice = createSlice({
 
 const postReducer = postSlice.reducer;
 
-const {deleteSinglePostById, setPostDataToUpdate, updateSinglePostById, setShowWindow} = postSlice.actions;
+const {deleteSinglePostById, setPostDataToUpdate, updateSinglePostById, setShowWindow, setPage} = postSlice.actions;
 
-export const postActions = {deleteSinglePostById, setPostDataToUpdate, updateSinglePostById, setShowWindow};
+export const postActions = {deleteSinglePostById, setPostDataToUpdate, updateSinglePostById, setShowWindow, setPage};
 
 export default postReducer;

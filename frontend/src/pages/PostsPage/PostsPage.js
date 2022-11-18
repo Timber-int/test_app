@@ -1,20 +1,21 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getAllPosts} from "../../store";
-import css from './PostsPage.module.css';
-import {CONSTANTS} from "../../constants";
 import {Loading, Post} from "../../components";
 import {NavLink} from "react-router-dom";
+import {getAllPosts, postActions} from "../../store";
+import {CONSTANTS} from "../../constants";
+import css from './PostsPage.module.css';
+import ReactPaginate from "react-paginate";
 
 const PostsPage = () => {
 
     const dispatch = useDispatch();
 
-    const {posts, serverErrors, status} = useSelector(state => state.postReducer);
+    const {posts, serverErrors, status, page, perPage, itemCount} = useSelector(state => state.postReducer);
 
     useEffect(() => {
-        dispatch(getAllPosts());
-    }, []);
+        dispatch(getAllPosts({page, perPage: 3}));
+    }, [page, perPage]);
 
     return (
         <>
@@ -46,17 +47,28 @@ const PostsPage = () => {
                             </div>
                             <div className={css.popular_posts_block}>
                                 <div className={css.popular_text}>Popular posts:</div>
-                                {
-                                    posts.map(post =>
-                                        (
-                                            <NavLink to={'/posts/' + post.id}
-                                                     state={post}
-                                                     key={post.id}
-                                                     className={css.popular_post}>{post.title}
-                                            </NavLink>
-                                        ))
-                                }
+                                <div className={css.posts_title_container}>
+                                    {
+                                        posts.map(post =>
+                                            (
+                                                <NavLink to={'/posts/' + post.id}
+                                                         state={post}
+                                                         key={post.id}
+                                                         className={css.popular_post}>{post.title}
+                                                </NavLink>
+                                            ))
+                                    }
+                                </div>
                             </div>
+                                <ReactPaginate
+                                    breakLabel='...'
+                                    pageCount={Math.ceil(itemCount / perPage)}
+                                    onPageChange={(data) => dispatch(postActions.setPage({pageNumber: data.selected + 1}))}
+                                    forcePage={page === 1 ? 0 : page - 1}
+                                    containerClassName={css.pagination_container}
+                                    disabledClassName={css.pagination_disabled}
+                                    activeClassName={css.pagination_active}
+                                />
                         </div>
                         :
                         <div className={css.empty_posts_container}>There are no posts.</div>

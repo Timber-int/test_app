@@ -1,6 +1,7 @@
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { IPost } from '../entity';
 import { postRepository } from '../repository';
+import { IPaginationResponse } from '../interface';
 
 class PostService {
     public async createPost(post: IPost): Promise<IPost> {
@@ -19,8 +20,8 @@ class PostService {
         return postRepository.findPostByTitle(title);
     }
 
-    public async getAllPosts(): Promise<IPost[]> {
-        return postRepository.getAllPosts();
+    public async getAllPosts(filterObject: Partial<IPost>, perPage: number, page: number): Promise<IPaginationResponse<IPost>> {
+        return postRepository.getAllPosts(filterObject, perPage, page);
     }
 
     public async updatePostById(id: number, postData: Partial<IPost>): Promise<UpdateResult> {

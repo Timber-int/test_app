@@ -7,7 +7,15 @@ import { IPost, IUser } from '../entity';
 class PostController {
     public async getAllPosts(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            const posts = await postService.getAllPosts();
+            const {
+                page,
+                perPage,
+                ...other
+            } = req.query;
+
+            console.log(req.query);
+
+            const posts = await postService.getAllPosts(other, Number(perPage), Number(page));
 
             res.json({ posts });
         } catch (e) {
@@ -74,7 +82,7 @@ class PostController {
 
     public async changePostViewsById(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            //Доробити
+            // Доробити
             const postFromDB = req.post as IPost;
 
             await postService.changePostViewsById(postFromDB);

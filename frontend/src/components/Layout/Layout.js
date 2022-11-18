@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {NavLink, Outlet} from 'react-router-dom';
+import {NavLink, Outlet, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 
 import {CONSTANTS} from "../../constants";
@@ -8,9 +8,11 @@ import css from './Layout.module.css'
 
 const Layout = () => {
 
-    const {user} = useSelector(state => state.authReducer);
+    const {user, status} = useSelector(state => state.authReducer);
 
     const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     const logoutUser = () => {
         if (user) {
@@ -18,8 +20,10 @@ const Layout = () => {
         }
     }
     useEffect(() => {
-
-    }, [user]);
+        if (status === CONSTANTS.RESOLVED) {
+            navigate('/registration');
+        }
+    }, [user, status]);
 
     return (
         <div className={css.blog_container}>

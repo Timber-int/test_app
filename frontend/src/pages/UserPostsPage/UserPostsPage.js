@@ -8,14 +8,15 @@ import {getAllPosts} from "../../store";
 
 const UserPostsPage = () => {
 
-    const {posts, status, serverErrors} = useSelector(state => state.postReducer);
+    const {posts, status, serverErrors, itemCount} = useSelector(state => state.postReducer);
+
     const {user} = useSelector(state => state.authReducer);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getAllPosts());
-    }, []);
+        dispatch(getAllPosts({page: 1, perPage: itemCount}));
+    }, [itemCount]);
 
     return (
         <>

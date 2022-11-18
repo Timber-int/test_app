@@ -3,6 +3,7 @@ import {
     EntityRepository, getManager, Repository, UpdateResult,
 } from 'typeorm';
 import { IPost, Post } from '../../entity';
+import { IPaginationResponse } from '../../interface';
 import { IPostRepository } from './postRepositoryInterface';
 
 @EntityRepository(Post)
@@ -33,10 +34,23 @@ class PostRepository extends Repository<Post> implements IPostRepository {
             .getOne();
     }
 
-    public async getAllPosts(): Promise<IPost[]> {
-        return getManager()
+    public async getAllPosts(searchObject: Partial<IPost> = {}, limit: number = 1, page: number = 1): Promise<IPaginationResponse<IPost>> {
+        const skip = limit * (page - 1);
+
+        const [posts, itemCount] = await getManager()
             .getRepository(Post)
-            .find();
+            .findAndCount({
+                where: searchObject,
+                skip,
+                take: limit,
+            });
+
+        return {
+            page,
+            perPage: limit,
+            itemCount,
+            data: posts,
+        };
     }
 
     public async updatePostById(id: number, postData: Partial<IPost>): Promise<UpdateResult> {
