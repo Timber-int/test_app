@@ -70,3 +70,12 @@
 .popular_post:hover {
     background-color: #bdbdbd;
 }
+
+.empty_posts_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    color: snow;
+    font-size: 54px;
+    font-weight: bold;
+}

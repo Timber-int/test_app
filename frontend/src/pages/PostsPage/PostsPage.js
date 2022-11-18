@@ -26,36 +26,40 @@ const PostsPage = () => {
                     ?
                     <Loading/>
                     :
-                    <div className={css.posts_container}>
-                        <div className={css.posts_block}>
-                            {
-                                posts.map(post => (
+                    posts.length
+                        ?
+                        <div className={css.posts_container}>
+                            <div className={css.posts_block}>
+                                {
+                                    posts.map(post => (
                                             <Post
                                                 key={post.id}
                                                 post={post}
                                                 margin={true}
                                                 textHigh={false}
-                                                textLength={400}
                                                 isUserPost={false}
+                                                textLength={400}
                                             />
+                                        )
                                     )
-                                )
-                            }
+                                }
+                            </div>
+                            <div className={css.popular_posts_block}>
+                                <div className={css.popular_text}>Popular posts:</div>
+                                {
+                                    posts.map(post =>
+                                        (
+                                            <NavLink to={'/posts/' + post.id}
+                                                     state={post}
+                                                     key={post.id}
+                                                     className={css.popular_post}>{post.title}
+                                            </NavLink>
+                                        ))
+                                }
+                            </div>
                         </div>
-                        <div className={css.popular_posts_block}>
-                            <div className={css.popular_text}>Popular posts:</div>
-                            {
-                                posts.map(post =>
-                                    (
-                                        <NavLink to={'/posts/' + post.id}
-                                                 state={post}
-                                                 key={post.id}
-                                                 className={css.popular_post}>{post.title}
-                                        </NavLink>
-                                    ))
-                            }
-                        </div>
-                    </div>
+                        :
+                        <div className={css.empty_posts_container}>There are no posts.</div>
             }
         </>
     );

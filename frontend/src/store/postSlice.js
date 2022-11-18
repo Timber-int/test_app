@@ -30,6 +30,21 @@ export const deletePostById = createAsyncThunk(
     }
 );
 
+export const changePostViewsById = createAsyncThunk(
+    'postSlice/changePostViewsById',
+    async ({id}, {dispatch, rejectWithValue}) => {
+        try {
+            const data = await postService.changePostViewsById(id);
+
+            dispatch(postActions.updateSinglePostById({data}));
+
+            return {data};
+        } catch (e) {
+            return rejectWithValue(e.response.data.message);
+        }
+    }
+);
+
 export const createPost = createAsyncThunk(
     'postSlice/createPost',
     async ({postData}, {dispatch, rejectWithValue}) => {
@@ -163,6 +178,18 @@ const postSlice = createSlice({
             state.serverErrors = null;
         },
         [updatePostById.rejected]: (state, action) => {
+            state.status = CONSTANTS.REJECTED;
+            state.serverErrors = action.payload;
+        },
+        [changePostViewsById.pending]: (state, action) => {
+            state.status = CONSTANTS.LOADING;
+            state.serverErrors = null;
+        },
+        [changePostViewsById.fulfilled]: (state, action) => {
+            state.status = CONSTANTS.RESOLVED;
+            state.serverErrors = null;
+        },
+        [changePostViewsById.rejected]: (state, action) => {
             state.status = CONSTANTS.REJECTED;
             state.serverErrors = action.payload;
         },

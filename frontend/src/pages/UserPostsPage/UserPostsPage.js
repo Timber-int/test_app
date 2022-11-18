@@ -29,16 +29,19 @@ const UserPostsPage = () => {
                     :
                     <div className={css.posts_container}>
                         {
-                            [...posts].reverse().filter(post => post.userId === user.id).map(post => (
-                                <Post
-                                    key={post.id}
-                                    post={post}
-                                    margin={true}
-                                    textHigh={false}
-                                    textLength={400}
-                                    isUserPost={true}
-                                />
-                            ))
+                            posts.length ?
+                                [...posts].reverse().filter(post => post.userId === user.id).map(post => (
+                                    <Post
+                                        key={post.id}
+                                        post={post}
+                                        margin={true}
+                                        textHigh={false}
+                                        textLength={400}
+                                        isUserPost={true}
+                                    />
+                                ))
+                                :
+                                <div className={css.empty_posts_container}>Your list of posts is empty.</div>
                         }
                     </div>
             }

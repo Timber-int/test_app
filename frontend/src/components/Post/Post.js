@@ -18,6 +18,7 @@ const Post = ({post, margin, textLength, textHigh, isUserPost}) => {
         text,
         photo,
         userId,
+        views,
         authorFirstName,
         authorLastName,
         createdAt,
@@ -83,7 +84,7 @@ const Post = ({post, margin, textLength, textHigh, isUserPost}) => {
                         <FaRegCommentDots/> <span>{comments.filter(comment => comment.postId === id).length}</span>
                     </div>
                     <div>
-                        <SlEyeglass/> <span>0</span>
+                        <SlEyeglass/> <span>{views}</span>
                     </div>
                 </div>
                 <div

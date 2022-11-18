@@ -46,6 +46,15 @@ class PostRepository extends Repository<Post> implements IPostRepository {
                 postData,
             );
     }
+
+    public async changePostViewsById(post: IPost): Promise<UpdateResult> {
+        const { views } = post;
+        return getManager()
+            .getRepository(Post)
+            .update({ id: post.id },
+                { views: views as number + 1 },
+            );
+    }
 }
 
 export const postRepository = new PostRepository();

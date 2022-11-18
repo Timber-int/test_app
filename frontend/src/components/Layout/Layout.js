@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {NavLink, Outlet} from 'react-router-dom';
-
-import css from './Layout.module.css'
-import {CONSTANTS} from "../../constants";
 import {useDispatch, useSelector} from "react-redux";
+
+import {CONSTANTS} from "../../constants";
 import {logout} from "../../store";
+import css from './Layout.module.css'
 
 const Layout = () => {
 
@@ -47,7 +47,7 @@ const Layout = () => {
                 </div>
                 <NavLink to={'/registration'}>
                     <button className={css.enter_exit_button}
-                        onClick={() => logoutUser()}>{localStorage.getItem(CONSTANTS.USER) ? 'Exit' : 'Enter'}
+                            onClick={() => logoutUser()}>{localStorage.getItem(CONSTANTS.USER) ? 'Exit' : 'Enter'}
                     </button>
                 </NavLink>
             </div>

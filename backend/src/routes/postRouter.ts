@@ -7,6 +7,7 @@ import { postBodyValidateForCreate, postBodyValidateForUpdate } from '../validat
 const router = Router();
 
 router.get('/', postController.getAllPosts);
+router.put('/views/:id', postMiddleware.checkIsPostExistById, postController.changePostViewsById);
 router.post('/',
     (req: IRequestExtended, res: Response, next: NextFunction) => {
         req.chosenValidationType = postBodyValidateForCreate;

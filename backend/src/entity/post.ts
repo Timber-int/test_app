@@ -12,6 +12,7 @@ export interface IPost extends IDefaultValue {
     text: string,
     photo: string,
     userId: number;
+    views?: number;
     authorFirstName: string,
     authorLastName: string,
 }
@@ -26,12 +27,12 @@ export class Post extends DefaultValue implements IPost {
     })
         title: string;
 
-  @Column({
-      type: 'varchar',
-      width: 255,
-      nullable: false,
-  })
-      authorFirstName: string;
+    @Column({
+        type: 'varchar',
+        width: 255,
+        nullable: false,
+    })
+        authorFirstName: string;
 
     @Column({
         type: 'varchar',
@@ -58,6 +59,13 @@ export class Post extends DefaultValue implements IPost {
         nullable: false,
     })
         userId: number;
+
+    @Column({
+        type: 'int',
+        nullable: false,
+        default: 0,
+    })
+        views: number;
 
     @ManyToOne(() => User, (user) => user.posts)
     @JoinColumn({ name: 'userId' })

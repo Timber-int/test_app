@@ -26,6 +26,10 @@ class PostService {
     public async updatePostById(id: number, postData: Partial<IPost>): Promise<UpdateResult> {
         return postRepository.updatePostById(id, postData);
     }
+
+    public async changePostViewsById(post: IPost): Promise<UpdateResult> {
+        return postRepository.changePostViewsById(post);
+    }
 }
 
 export const postService = new PostService();

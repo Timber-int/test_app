@@ -15,6 +15,8 @@ class PostMiddleware {
                 return;
             }
 
+            req.post = postFromDB;
+
             next();
         } catch (e) {
             next(e);

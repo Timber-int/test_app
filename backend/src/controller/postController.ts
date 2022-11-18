@@ -2,7 +2,7 @@ import { NextFunction, Response } from 'express';
 import { UploadedFile } from 'express-fileupload';
 import { IRequestExtended } from '../interface';
 import { fileService, postService } from '../service';
-import { IUser } from '../entity';
+import { IPost, IUser } from '../entity';
 
 class PostController {
     public async getAllPosts(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
@@ -65,6 +65,21 @@ class PostController {
             const post = await postService.getPostById(Number(req.params.id));
 
             await postService.deletePostById(Number(req.params.id));
+
+            res.json({ post });
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async changePostViewsById(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            //Доробити
+            const postFromDB = req.post as IPost;
+
+            await postService.changePostViewsById(postFromDB);
+
+            const post = await postService.getPostById(Number(req.params.id));
 
             res.json({ post });
         } catch (e) {

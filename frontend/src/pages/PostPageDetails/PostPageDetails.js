@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {useLocation} from "react-router-dom";
 import {Loading, Post} from "../../components";
@@ -7,7 +7,7 @@ import {joiResolver} from "@hookform/resolvers/joi/dist/joi";
 import {useDispatch, useSelector} from "react-redux";
 import {commentBodyValidateForCreate} from "../../validator";
 import css from './PostPageDetails.module.css';
-import {createComment} from "../../store";
+import {changePostViewsById, createComment} from "../../store";
 import {CONSTANTS} from "../../constants";
 
 const PostPageDetails = () => {
@@ -34,6 +34,10 @@ const PostPageDetails = () => {
         dispatch(createComment({commentData: {...data, userId: user.id, postId: post.id}}));
         reset();
     }
+
+    useEffect(()=>{
+        dispatch(changePostViewsById({id:post.id}))
+    },[]);
 
     return (
         <div className={css.container}>

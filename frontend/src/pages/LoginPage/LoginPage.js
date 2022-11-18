@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useEffect} from 'react';
 import {NavLink, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi/dist/joi";
@@ -32,17 +32,20 @@ const LoginPage = () => {
 
         reset();
 
+    }
+
+    useEffect(() => {
         if (status === CONSTANTS.RESOLVED) {
             navigate('/userPosts');
         }
-    }
+    }, [status]);
 
     return (
         <div>
             {
                 serverErrors && <div className={css.server_error}>{serverErrors}</div>
             }
-            {status === CONSTANTS.LOADING ?  <Loading/> :
+            {status === CONSTANTS.LOADING ? <Loading/> :
                 <>
                     <div className={css.registration_value_container}>Authorization</div>
                     <form onSubmit={handleSubmit(submit)}>

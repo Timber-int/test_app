@@ -9,6 +9,7 @@ export class CreateTablePosts1668149840780 implements MigrationInterface {
                 text TEXT NOT NULL,
                 photo VARCHAR(255) NOT NULL,
                 userId INT NOT NULL,
+                views INT CHECK (views >= 0) DEFAULT(0) NOT NULL,
                 authorFirstName VARCHAR(255) NOT NULL,
                 authorLastName VARCHAR(255) NOT NULL,
                 createdAt TIMESTAMP DEFAULT(UTC_TIMESTAMP()) NOT NULL,
