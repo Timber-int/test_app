@@ -7,8 +7,9 @@ import {joiResolver} from "@hookform/resolvers/joi/dist/joi";
 import {useDispatch, useSelector} from "react-redux";
 import {commentBodyValidateForCreate} from "../../validator";
 import css from './PostPageDetails.module.css';
-import {changePostViewsById, createComment} from "../../store";
+import {changePostViewsById, createComment, deleteCommentById} from "../../store";
 import {CONSTANTS} from "../../constants";
+import {AiTwotoneDelete} from "react-icons/ai";
 
 const PostPageDetails = () => {
 
@@ -35,9 +36,9 @@ const PostPageDetails = () => {
         reset();
     }
 
-    useEffect(()=>{
-        dispatch(changePostViewsById({id:post.id}))
-    },[]);
+    useEffect(() => {
+        dispatch(changePostViewsById({id: post.id}))
+    }, []);
 
     return (
         <div className={css.container}>
@@ -77,6 +78,15 @@ const PostPageDetails = () => {
                                         <span className={css.comment_text}>
                                         {comment.text}
                                     </span>
+                                        {
+                                            user && user.id === comment.userId
+                                                ?
+                                                <span className={css.delete_comment_button}
+                                                      onClick={() => dispatch(deleteCommentById({id: comment.id}))}><AiTwotoneDelete/>
+                                                </span>
+                                                :
+                                                <span></span>
+                                        }
                                     </div>
                                 ))
                         }

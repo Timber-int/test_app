@@ -1,8 +1,9 @@
 import { Request } from 'express';
-import { IPost, IUser } from '../entity';
+import { IComment, IPost, IUser } from '../entity';
 
 export interface IRequestExtended extends Request {
     chosenValidationType?: any,
     user?: IUser,
     post?: IPost,
+    comment?: IComment,
 }

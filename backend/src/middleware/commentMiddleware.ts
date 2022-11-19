@@ -14,6 +14,7 @@ class CommentMiddleware {
                 next(new ErrorHandler(MESSAGE.COMMENT_NOT_EXIST, STATUS.CODE_404));
                 return;
             }
+            req.comment = commentFromDB;
 
             next();
         } catch (e) {
@@ -46,6 +47,19 @@ class CommentMiddleware {
             }
 
             req.user = userFromDB;
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async checkIsAuthorThisComment(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            if (req.user?.id !== req.comment?.userId) {
+                next(new ErrorHandler(MESSAGE.INCORRECT_AUTHOR, STATUS.CODE_404));
+                return;
+            }
 
             next();
         } catch (e) {

@@ -7,6 +7,7 @@ export const MESSAGE = {
     POST_NOT_EXIST: 'post doesn\'t exists',
     COMMENT_NOT_EXIST: 'comment doesn\'t exists',
     USER_NOT_EXIST: 'user doesn\'t exists',
+    INCORRECT_AUTHOR: 'Incorrect author of the comment',
     UNAUTHORIZED: 'unauthorized',
     TOKEN_NOT_VALID: 'token not valid',
     LOGOUT_USER: 'logout user',

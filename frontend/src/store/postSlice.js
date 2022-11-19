@@ -143,7 +143,6 @@ const postSlice = createSlice({
         },
         [getAllPosts.fulfilled]: (state, action) => {
             state.status = CONSTANTS.RESOLVED;
-            console.log(action.payload.data);
             state.posts = action.payload.data.posts.data;
             state.page = action.payload.data.posts.page;
             state.perPage = action.payload.data.posts.perPage;

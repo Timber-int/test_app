@@ -29,6 +29,20 @@ export const createComment = createAsyncThunk(
         }
     }
 );
+export const deleteCommentById = createAsyncThunk(
+    'postSlice/deleteCommentById',
+    async ({id}, {dispatch, rejectWithValue}) => {
+        try {
+            const data = await commentService.deleteCommentById(id);
+
+            dispatch(commentActions.deleteSingleComment({data}));
+
+            return {data};
+        } catch (e) {
+            return rejectWithValue(e.response.data.message);
+        }
+    }
+);
 
 const commentSlice = createSlice({
     name: 'commentSlice',
@@ -40,6 +54,9 @@ const commentSlice = createSlice({
     reducers: {
         createSingleComment: (state, action) => {
             state.comments.push(action.payload.data.comment);
+        },
+        deleteSingleComment: (state, action) => {
+            state.comments = state.comments.filter(comment => comment.id !== action.payload.data.comment.id);
         }
     },
     extraReducers: {
@@ -68,13 +85,25 @@ const commentSlice = createSlice({
             state.status = CONSTANTS.REJECTED;
             state.serverErrors = action.payload;
         },
+        [deleteCommentById.pending]: (state, action) => {
+            state.status = CONSTANTS.LOADING;
+            state.serverErrors = null;
+        },
+        [deleteCommentById.fulfilled]: (state, action) => {
+            state.status = CONSTANTS.RESOLVED;
+            state.serverErrors = null;
+        },
+        [deleteCommentById.rejected]: (state, action) => {
+            state.status = CONSTANTS.REJECTED;
+            state.serverErrors = action.payload;
+        },
     },
 });
 
 const commentReducer = commentSlice.reducer;
 
-const {createSingleComment} = commentSlice.actions;
+const {createSingleComment, deleteSingleComment} = commentSlice.actions;
 
-export const commentActions = {createSingleComment};
+export const commentActions = {createSingleComment, deleteSingleComment};
 
 export default commentReducer;
