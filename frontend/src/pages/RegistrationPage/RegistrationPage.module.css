@@ -54,8 +54,16 @@
     font-size: 24px;
     padding: 10px;
     cursor: pointer;
-    background-color: #bdbdbd;
+    border: 1px solid snow;
+    border-radius: 5px;
     color: snow;
+    background-color: #141E30;
+}
+
+.confirm_input:hover {
+    border: 1px solid snow;
+    color: #141E30;
+    background-color: snow;
 }
 
 .nav_to_login {

@@ -6,9 +6,9 @@ import {joiResolver} from "@hookform/resolvers/joi";
 import {useDispatch, useSelector} from "react-redux";
 import {CONSTANTS} from "../../constants";
 import {postBodyValidateForCreate} from "../../validator";
-import css from './CreatePostPage.module.css';
-import {createPost, updatePostById} from "../../store";
+import {createPost, postActions, updatePostById} from "../../store";
 import {useNavigate} from "react-router-dom";
+import css from './CreatePostPage.module.css';
 
 const CreatePostPage = () => {
 
@@ -59,6 +59,11 @@ const CreatePostPage = () => {
                 }
             }
         }
+    }
+
+    const clearForm = () => {
+        dispatch(postActions.clearPostDataToUpdate());
+        reset();
     }
 
     return (
@@ -116,6 +121,17 @@ const CreatePostPage = () => {
                                                : 'Create'
                                        }
                                 />
+                                {
+                                    postDataToUpdate
+                                        ?
+                                        <button onClick={() => clearForm()}
+                                                className={css.confirm_input}
+                                        >
+                                            Clear
+                                        </button>
+                                        :
+                                        <></>
+                                }
                             </div>
                         </form>
                     </>

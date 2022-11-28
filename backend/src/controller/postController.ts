@@ -10,12 +10,11 @@ class PostController {
             const {
                 page,
                 perPage,
+                viewsSort,
                 ...other
             } = req.query;
 
-            console.log(req.query);
-
-            const posts = await postService.getAllPosts(other, Number(perPage), Number(page));
+            const posts = await postService.getAllPosts(other, Number(perPage), Number(page), viewsSort as string);
 
             res.json({ posts });
         } catch (e) {

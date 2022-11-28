@@ -1,6 +1,6 @@
 import {
     DeleteResult,
-    EntityRepository, getManager, Repository, UpdateResult,
+    EntityRepository, getManager, Like, Repository, UpdateResult,
 } from 'typeorm';
 import { IPost, Post } from '../../entity';
 import { IPaginationResponse } from '../../interface';
@@ -34,15 +34,22 @@ class PostRepository extends Repository<Post> implements IPostRepository {
             .getOne();
     }
 
-    public async getAllPosts(searchObject: Partial<IPost> = {}, limit: number = 1, page: number = 1): Promise<IPaginationResponse<IPost>> {
+    public async getAllPosts(
+        searchObject: Partial<IPost> = {},
+        limit: number = 1,
+        page: number = 1,
+        viewsSort: string = 'false',
+    ): Promise<IPaginationResponse<IPost>> {
         const skip = limit * (page - 1);
 
         const [posts, itemCount] = await getManager()
             .getRepository(Post)
             .findAndCount({
-                where: searchObject,
+                where: [{ title: Like(`%${searchObject.title}%`) }],
                 skip,
                 take: limit,
+                relations: ['comments'],
+                order: viewsSort === 'true' ? { views: 'DESC' } : { createdAt: 'DESC' },
             });
 
         return {

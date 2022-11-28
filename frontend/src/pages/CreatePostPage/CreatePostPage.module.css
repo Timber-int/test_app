@@ -29,16 +29,18 @@
     padding: 10px;
     font-size: 24px;
     border-radius: 10px;
-    max-width: 500px;
-    width: 500px;
+    max-width: 800px;
+    width: 800px;
 }
 
 .text_input {
     padding: 10px;
     font-size: 24px;
     border-radius: 10px;
-    max-width: 500px;
-    width: 500px;
+    max-width: 800px;
+    width: 800px;
+    min-height: 500px;
+    min-width: 800px;
 }
 
 .text_input::-webkit-scrollbar {
@@ -49,20 +51,24 @@
     display: flex;
     align-items: center;
     margin-top: 20px;
+    justify-content: space-evenly;
 }
 
 .confirm_input {
+    width: 250px;
     font-size: 24px;
     padding: 10px;
-    width: 500px;
     cursor: pointer;
-    border-radius: 10px;
-    background-color: #bdbdbd;
+    border: 1px solid snow;
+    border-radius: 5px;
     color: snow;
+    background-color: #141E30;
 }
 
 .confirm_input:hover {
-    color: #e53935;
+    border: 1px solid snow;
+    color: #141E30;
+    background-color: snow;
 }
 
 .file_input_box {

@@ -69,8 +69,9 @@
     font-size: 24px;
     padding: 10px;
     cursor: pointer;
-    background-color: snow;
-    color: #141E30;
+    background-color: #141E30;
+    color: snow;
+    border: 1px solid snow;
 }
 
 .confirm_input_disabled {
@@ -78,14 +79,17 @@
     border-radius: 10px;
     font-size: 24px;
     padding: 10px;
-    background-color: snow;
-    color: #e53935;
     cursor: not-allowed;
     pointer-events: none;
+    border: 1px solid snow;
+    color: #141E30;
+    background-color: snow;
 }
 
 .confirm_input:hover {
-    color: #e53935;
+    border: 1px solid snow;
+    color: #141E30;
+    background-color: snow;
 }
 
 .single_comment {

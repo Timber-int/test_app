@@ -3,7 +3,7 @@ import {commentService} from "../services";
 import {CONSTANTS} from "../constants";
 
 export const getAllComments = createAsyncThunk(
-    'postSlice/getAllComments',
+    'commentSlice/getAllComments',
     async (_, {dispatch, rejectWithValue}) => {
         try {
             const data = await commentService.getAllComments();
@@ -16,7 +16,7 @@ export const getAllComments = createAsyncThunk(
 );
 
 export const createComment = createAsyncThunk(
-    'postSlice/createComment',
+    'commentSlice/createComment',
     async ({commentData}, {dispatch, rejectWithValue}) => {
         try {
             const data = await commentService.createComment(commentData);
@@ -30,7 +30,7 @@ export const createComment = createAsyncThunk(
     }
 );
 export const deleteCommentById = createAsyncThunk(
-    'postSlice/deleteCommentById',
+    'commentSlice/deleteCommentById',
     async ({id}, {dispatch, rejectWithValue}) => {
         try {
             const data = await commentService.deleteCommentById(id);

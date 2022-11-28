@@ -4,9 +4,9 @@ import {CONSTANTS} from "../constants";
 
 export const getAllPosts = createAsyncThunk(
     'postSlice/getAllPosts',
-    async ({page, perPage}, {dispatch, rejectWithValue}) => {
+    async ({page, perPage, title, viewsSort}, {dispatch, rejectWithValue}) => {
         try {
-            const data = await postService.getAllPosts(page, perPage);
+            const data = await postService.getAllPosts(page, perPage, title, viewsSort);
 
             return {data};
         } catch (e) {
@@ -132,9 +132,18 @@ const postSlice = createSlice({
             state.visible = !state.visible;
             state.text = action.payload.text;
         },
+
         setPage: (state, action) => {
             state.page = action.payload.pageNumber;
-        }
+        },
+
+        clearPostDataToUpdate: (state, action) => {
+            state.postDataToUpdate = null;
+        },
+
+        sortPostsByComments: (state, action) => {
+            state.posts = state.posts.sort((a, b) => b.comments.length - a.comments.length);
+        },
     },
     extraReducers: {
         [getAllPosts.pending]: (state, action) => {
@@ -207,8 +216,24 @@ const postSlice = createSlice({
 
 const postReducer = postSlice.reducer;
 
-const {deleteSinglePostById, setPostDataToUpdate, updateSinglePostById, setShowWindow, setPage} = postSlice.actions;
+const {
+    deleteSinglePostById,
+    setPostDataToUpdate,
+    updateSinglePostById,
+    setShowWindow,
+    setPage,
+    sortPostsByComments,
+    clearPostDataToUpdate,
+} = postSlice.actions;
 
-export const postActions = {deleteSinglePostById, setPostDataToUpdate, updateSinglePostById, setShowWindow, setPage};
+export const postActions = {
+    deleteSinglePostById,
+    setPostDataToUpdate,
+    updateSinglePostById,
+    setShowWindow,
+    setPage,
+    sortPostsByComments,
+    clearPostDataToUpdate,
+};
 
 export default postReducer;

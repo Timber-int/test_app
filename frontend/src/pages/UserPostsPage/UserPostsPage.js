@@ -15,7 +15,7 @@ const UserPostsPage = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getAllPosts({page: 1, perPage: itemCount}));
+        dispatch(getAllPosts({page: 1, perPage: itemCount,title:''}));
     }, [itemCount]);
 
     return (

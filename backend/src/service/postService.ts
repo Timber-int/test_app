@@ -20,8 +20,8 @@ class PostService {
         return postRepository.findPostByTitle(title);
     }
 
-    public async getAllPosts(filterObject: Partial<IPost>, perPage: number, page: number): Promise<IPaginationResponse<IPost>> {
-        return postRepository.getAllPosts(filterObject, perPage, page);
+    public async getAllPosts(filterObject: Partial<IPost>, perPage: number, page: number, viewsSort: string): Promise<IPaginationResponse<IPost>> {
+        return postRepository.getAllPosts(filterObject, perPage, page, viewsSort);
     }
 
     public async updatePostById(id: number, postData: Partial<IPost>): Promise<UpdateResult> {

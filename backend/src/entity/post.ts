@@ -15,6 +15,7 @@ export interface IPost extends IDefaultValue {
     views?: number;
     authorFirstName: string,
     authorLastName: string,
+    comments?: Comment[],
 }
 
 @Entity('posts', { database: CONSTANTS.DATA_BASE })

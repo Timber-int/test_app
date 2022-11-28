@@ -31,13 +31,12 @@ const RegistrationPage = () => {
     const submit = (data) => {
         dispatch(registration({registrationData: data}));
 
-        reset();
-    }
-    useEffect(() => {
         if (status === CONSTANTS.RESOLVED) {
             navigate('/userPosts');
         }
-    }, [status]);
+
+        reset();
+    }
 
     return (
         <div>

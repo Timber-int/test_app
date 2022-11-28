@@ -1,0 +1,21 @@
+.carousel {
+    margin: 0 auto;
+    overflow: hidden;
+    max-width: 90%;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+}
+
+.carousel_inner {
+    white-space: nowrap;
+    transition: ease 1s;
+}
+.server_error {
+    margin-bottom: 20px;
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e53935;
+}

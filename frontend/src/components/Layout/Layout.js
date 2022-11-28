@@ -49,6 +49,17 @@ const Layout = () => {
                         Add post
                     </NavLink>
                 </div>
+                <div className={css.information_menu}>
+                    <div className={css.information_path}>
+                        <div className={css.text}>
+                            Information
+                        </div>
+                    </div>
+                    <div className={css.information_drop_down_menu}>
+                        <NavLink className={css.information_drop_down_path} to={'/carousel'}>Images</NavLink>
+                        <NavLink className={css.information_drop_down_path} to={'/carousel'}>Story</NavLink>
+                    </div>
+                </div>
                 <NavLink to={'/registration'}>
                     <button className={css.enter_exit_button}
                             onClick={() => logoutUser()}>{localStorage.getItem(CONSTANTS.USER) ? 'Exit' : 'Enter'}
