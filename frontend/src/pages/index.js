@@ -5,3 +5,4 @@ export * from './PostPageDetails/PostPageDetails';
 export * from './UserPostsPage/UserPostsPage';
 export * from './CreatePostPage/CreatePostPage';
 export * from './ImageCarouselPage/ImageCarouselPage';
+export * from './VideoPage/VideoPage';

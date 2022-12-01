@@ -10,7 +10,7 @@ import {
     PostPageDetails,
     PostsPage,
     RegistrationPage,
-    UserPostsPage
+    UserPostsPage, VideoPage
 } from "./pages";
 
 const App = () => {
@@ -25,6 +25,7 @@ const App = () => {
                 <Route path={'posts/:id'} element={<RequireAuth><PostPageDetails/></RequireAuth>}/>
                 <Route path={'userPosts'} element={<RequireAuth><UserPostsPage/></RequireAuth>}/>
                 <Route path={'createPost'} element={<RequireAuth><CreatePostPage/></RequireAuth>}/>
+                <Route path={'video'} element={<VideoPage/>}/>
             </Route>
         </Routes>
     );

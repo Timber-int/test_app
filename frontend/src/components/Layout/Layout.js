@@ -57,7 +57,7 @@ const Layout = () => {
                     </div>
                     <div className={css.information_drop_down_menu}>
                         <NavLink className={css.information_drop_down_path} to={'/carousel'}>Images</NavLink>
-                        <NavLink className={css.information_drop_down_path} to={'/carousel'}>Story</NavLink>
+                        <NavLink className={css.information_drop_down_path} to={'/video'}>Video</NavLink>
                     </div>
                 </div>
                 <NavLink to={'/registration'}>
