@@ -2,15 +2,11 @@ import { Router } from 'express';
 
 import { STATUS } from '../errorCode';
 import { authRouter } from './authRouter';
-import { postRouter } from './postRouter';
-import { commentRouter } from './commentRouter';
 import { userRouter } from './userRouter';
 
 const router = Router();
 
-router.use('/posts', postRouter);
 router.use('/auth', authRouter);
-router.use('/comments', commentRouter);
 router.use('/users', userRouter);
 
 // @ts-ignore

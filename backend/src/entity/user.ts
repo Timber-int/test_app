@@ -1,8 +1,6 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { DefaultValue, IDefaultValue } from './defaultValue';
 import { CONSTANTS } from '../constants';
-import { Post } from './post';
-import { Comment } from './comment';
 
 export interface IUser extends IDefaultValue {
     id: number,
@@ -42,10 +40,4 @@ export class User extends DefaultValue implements IUser {
         nullable: false,
     })
         password: string;
-
-    @OneToMany(() => Post, (post) => post.user)
-        posts: Post[];
-
-    @OneToMany(() => Comment, (comment) => comment.user)
-        comments: Comment[];
 }
