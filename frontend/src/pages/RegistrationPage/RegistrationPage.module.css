@@ -66,11 +66,31 @@
     background-color: snow;
 }
 
-.nav_to_login {
+.confirm_input_dark {
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #64dd17;
+    border-radius: 5px;
+    color: #64dd17;
+    background-color: #141E30;
+}
+
+.confirm_input_dark:hover {
+    border: 1px solid #64dd17;
+    color: #141E30;
+    background-color: snow;
+}
+
+.nav_to_login, .nav_to_login_dark {
     color: snow;
 }
 
 
 .nav_to_login:hover {
     color: #e53935;
+}
+
+.nav_to_login_dark:hover {
+    color: #64dd17;
 }

@@ -50,6 +50,33 @@
     background-color: snow;
 }
 
+.search_input_dark {
+    width: 500px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 24px;
+    color: #64dd17;
+    background-color: #141E30;
+    border: 1px solid #64dd17;
+}
+
+.confirm_input_dark {
+    font-size: 24px;
+    padding: 10px;
+    width: 200px;
+    margin-left: 10px;
+    cursor: pointer;
+    border: 1px solid #64dd17;
+    color: #64dd17;
+    background-color: #141E30;
+    border-radius: 5px;
+}
+
+.confirm_input_dark:hover {
+    color: #141E30;
+    background-color: snow;
+}
+
 .sort_button_container {
     display: flex;
     flex-wrap: wrap;
@@ -89,6 +116,24 @@
     background-color: snow;
 }
 
+.sort_button_dark {
+    padding: 10px;
+    margin: 10px;
+    width: 300px;
+    height: 50px;
+    border-radius: 5px;
+    border: 1px solid #64dd17;
+    color: #64dd17;
+    background-color: #141E30;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.sort_button_dark:hover {
+    color: #141E30;
+    background-color: snow;
+}
+
 .post {
     width: 100%;
 }
@@ -123,6 +168,13 @@
     color: snow;
 }
 
+.popular_text_dark {
+    width: 300px;
+    height: 50px;
+    font-size: 32px;
+    color: #64dd17;
+}
+
 .popular_posts_block::-webkit-scrollbar {
     display: none;
 }
@@ -139,8 +191,25 @@
     text-overflow: ellipsis;
 }
 
+.popular_post_dark {
+    padding: 10px;
+    height: 45px;
+    width: 300px;
+    margin-bottom: 10px;
+    color: #64dd17;
+    font-size: 24px;
+    transition: 0.1s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .popular_post:hover {
     background-color: #bdbdbd;
+}
+
+.popular_post_dark:hover {
+    background-color: #bdbdbd;
+    color: #141E30;
 }
 
 .empty_posts_container {
@@ -154,7 +223,7 @@
     min-height: 70vh;
 }
 
-.pagination_container {
+.pagination_container, .pagination_container_dark {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -178,6 +247,21 @@
     background-color: snow;
 }
 
+.pagination_container_dark a {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid #64dd17;
+    color: #64dd17;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.pagination_container_dark a:hover {
+    color: #141E30;
+    background-color: snow;
+}
+
 .pagination_active a {
     color: #141E30;
     background-color: snow;
@@ -186,6 +270,17 @@
 .pagination_disabled a {
     color: #141E30;
     border: 1px solid snow;
+    background-color: snow;
+}
+
+.pagination_active_dark a {
+    color: #141E30;
+    background-color: snow;
+}
+
+.pagination_disabled_dark a {
+    color: #141E30;
+    border: 1px solid #64dd17;
     background-color: snow;
 }
 

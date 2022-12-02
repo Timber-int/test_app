@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Loading} from "../../components";
 import {CONSTANTS} from "../../constants";
 import {userBodyForLoginValidator} from "../../validator";
-import {login} from "../../store";
+import {login, registration} from "../../store";
 import css from "../RegistrationPage/RegistrationPage.module.css";
 
 const LoginPage = () => {
@@ -27,6 +27,8 @@ const LoginPage = () => {
 
     const {status, serverErrors} = useSelector(state => state.authReducer);
 
+    const {theme} = useSelector(state => state.postReducer);
+
     const submit = (data) => {
         dispatch(login({loginData: data}));
 
@@ -36,6 +38,10 @@ const LoginPage = () => {
             navigate('/userPosts');
         }
     }
+
+
+    useEffect(() => {
+    }, [theme]);
 
     return (
         <div>
@@ -64,8 +70,8 @@ const LoginPage = () => {
                             />
                         </div>
                         <div className={css.form_submit_box}>
-                            <input className={css.confirm_input} type="submit" value={'Confirm'}/>
-                            <NavLink className={css.nav_to_login} to={'/registration'}>I don't have account?</NavLink>
+                            <input className={theme === true ? css.confirm_input_dark : css.confirm_input} type="submit" value={'Confirm'}/>
+                            <NavLink className={theme === true ? css.nav_to_login_dark :css.nav_to_login} to={'/registration'}>I don't have account?</NavLink>
                         </div>
                     </form>
                 </>

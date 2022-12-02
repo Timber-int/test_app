@@ -1,14 +1,19 @@
 import React, {useEffect} from 'react';
 import {NavLink, Outlet, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
+import {BsSunFill} from 'react-icons/bs';
+import {BsFillMoonStarsFill} from 'react-icons/bs';
+import Switch from 'react-switch';
 
 import {CONSTANTS} from "../../constants";
-import {logout} from "../../store";
+import {logout, postActions} from "../../store";
 import css from './Layout.module.css'
 
 const Layout = () => {
 
     const {user, status} = useSelector(state => state.authReducer);
+
+    const {theme} = useSelector(state => state.postReducer);
 
     const dispatch = useDispatch();
 
@@ -25,31 +30,41 @@ const Layout = () => {
         }
     }, [user, status]);
 
+    useEffect(() => {
+
+    }, [theme]);
+
+    const toggleTheme = () => {
+        dispatch(postActions.setTheme());
+    }
+
     return (
-        <div className={css.blog_container}>
-            <div className={css.header}>
+        <div className={theme === true ? css.blog_container_dark : css.blog_container}>
+            <div className={theme === true ? css.header_dark : css.header}>
                 {
                     user ?
-                        <NavLink className={css.user_data_box} to={'/registration'}>
+                        <NavLink className={theme === true ? css.user_data_box_dark : css.user_data_box}
+                                 to={'/registration'}>
                             {user?.firstName[0].toUpperCase()}{user?.lastName[0].toUpperCase()}
                         </NavLink>
                         :
-                        <NavLink className={css.user_data_box} to={'/registration'}>
+                        <NavLink className={theme === true ? css.user_data_box_dark : css.user_data_box}
+                                 to={'/registration'}>
 
                         </NavLink>
                 }
                 <div className={css.menu}>
-                    <NavLink to={'/posts'}>
+                    <NavLink to={'/posts'} className={theme === true ? css.link_dark : css.link}>
                         Main
                     </NavLink>
-                    <NavLink to={'/userPosts'}>
+                    <NavLink to={'/userPosts'} className={theme === true ? css.link_dark : css.link}>
                         My post
                     </NavLink>
-                    <NavLink to={'/createPost'}>
+                    <NavLink to={'/createPost'} className={theme === true ? css.link_dark : css.link}>
                         Add post
                     </NavLink>
                 </div>
-                <div className={css.information_menu}>
+                <div className={theme === true ? css.information_menu_dark : css.information_menu}>
                     <div className={css.information_path}>
                         <div className={css.text}>
                             Information
@@ -60,8 +75,21 @@ const Layout = () => {
                         <NavLink className={css.information_drop_down_path} to={'/video'}>Video</NavLink>
                     </div>
                 </div>
+                <div>
+                    <Switch
+                        className={css.switch}
+                        onChange={toggleTheme}
+                        checked={Boolean(theme)}
+                        uncheckedIcon={<BsFillMoonStarsFill className={css.icons}/>}
+                        checkedIcon={<BsSunFill className={css.icons}/>}
+                        onColor={'#141E30'}
+                        offColor={'#141E30'}
+                        width={60}
+                        height={32}
+                    />
+                </div>
                 <NavLink to={'/registration'}>
-                    <button className={css.enter_exit_button}
+                    <button className={theme === true ? css.enter_exit_button_dark : css.enter_exit_button}
                             onClick={() => logoutUser()}>{localStorage.getItem(CONSTANTS.USER) ? 'Exit' : 'Enter'}
                     </button>
                 </NavLink>

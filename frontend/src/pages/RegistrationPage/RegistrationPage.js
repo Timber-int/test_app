@@ -28,6 +28,8 @@ const RegistrationPage = () => {
 
     const {status, serverErrors} = useSelector(state => state.authReducer);
 
+    const {theme} = useSelector(state => state.postReducer);
+
     const submit = (data) => {
         dispatch(registration({registrationData: data}));
 
@@ -37,6 +39,9 @@ const RegistrationPage = () => {
 
         reset();
     }
+
+    useEffect(() => {
+    }, [theme]);
 
     return (
         <div>
@@ -83,8 +88,9 @@ const RegistrationPage = () => {
                             />
                         </div>
                         <div className={css.form_submit_box}>
-                            <input className={css.confirm_input} type="submit" value={'Confirm'}/>
-                            <NavLink className={css.nav_to_login} to={'/login'}>I already have account?</NavLink>
+                            <input className={theme === true ? css.confirm_input_dark : css.confirm_input} type="submit"
+                                   value={'Confirm'}/>
+                            <NavLink className={theme === true ? css.nav_to_login_dark :css.nav_to_login} to={'/login'}>I already have account?</NavLink>
                         </div>
                     </form>
                 </>

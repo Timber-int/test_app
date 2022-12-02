@@ -14,7 +14,7 @@ const CreatePostPage = () => {
 
     const navigate = useNavigate();
 
-    const {status, postDataToUpdate, serverErrors} = useSelector(state => state.postReducer);
+    const {status, postDataToUpdate, serverErrors, theme} = useSelector(state => state.postReducer);
 
     const {user} = useSelector(state => state.authReducer);
 
@@ -37,6 +37,9 @@ const CreatePostPage = () => {
             setValue("photo", postDataToUpdate.photo);
         }
     }, [postDataToUpdate]);
+
+    useEffect(() => {
+    }, [theme]);
 
     const dispatch = useDispatch();
 
@@ -113,7 +116,7 @@ const CreatePostPage = () => {
                                 />
                             </div>
                             <div className={css.form_submit_box}>
-                                <input className={css.confirm_input}
+                                <input className={theme === true ? css.confirm_input_dark : css.confirm_input}
                                        type="submit"
                                        value={
                                            postDataToUpdate
@@ -125,7 +128,7 @@ const CreatePostPage = () => {
                                     postDataToUpdate
                                         ?
                                         <button onClick={() => clearForm()}
-                                                className={css.confirm_input}
+                                                className={theme === true ? css.confirm_input_dark : css.confirm_input}
                                         >
                                             Clear
                                         </button>

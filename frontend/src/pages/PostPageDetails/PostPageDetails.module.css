@@ -74,6 +74,17 @@
     border: 1px solid snow;
 }
 
+.confirm_input_dark {
+    width: 25%;
+    border-radius: 10px;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    color: #64dd17;
+    background-color: #141E30;
+    border: 1px solid #64dd17;
+}
+
 .confirm_input_disabled {
     width: 25%;
     border-radius: 10px;
@@ -86,8 +97,26 @@
     background-color: snow;
 }
 
+.confirm_input_disabled_dark {
+    width: 25%;
+    border-radius: 10px;
+    font-size: 24px;
+    padding: 10px;
+    cursor: not-allowed;
+    pointer-events: none;
+    border: 1px solid #64dd17;
+    color: #141E30;
+    background-color: snow;
+}
+
 .confirm_input:hover {
     border: 1px solid snow;
+    color: #141E30;
+    background-color: snow;
+}
+
+.confirm_input_dark:hover {
+    border: 1px solid #64dd17;
     color: #141E30;
     background-color: snow;
 }
@@ -107,12 +136,26 @@
 }
 
 .comment_author {
-    width: 50px;
-    height: 50px;
+    width: 49px;
+    height: 49px;
     border-radius: 50px;
     font-size: 26px;
     color: snow;
     background-color: #e53935;
+    border: 1px solid snow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.comment_author_dark {
+    width: 49px;
+    height: 49px;
+    border-radius: 50px;
+    font-size: 26px;
+    color: #64dd17;
+    background-color: #141E30;
+    border: 1px solid #64dd17;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -125,6 +168,17 @@
     display: flex;
     word-break: break-all;
     border: 1px solid snow;
+    border-radius: 10px;
+    margin: 0 10px 0 10px;
+}
+
+.comment_text_dark {
+    width: calc(100% - 110px);
+    color: #64dd17;
+    font-size: 24px;
+    display: flex;
+    word-break: break-all;
+    border: 1px solid #64dd17;
     border-radius: 10px;
     margin: 0 10px 0 10px;
 }

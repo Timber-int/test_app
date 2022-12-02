@@ -20,11 +20,18 @@ const PostsPage = () => {
 
     const [searchData, setSearchData] = useState('');
 
-    const {posts, serverErrors, status, page, perPage, itemCount} = useSelector(state => state.postReducer);
+    const {posts, serverErrors, status, page, perPage, itemCount, theme} = useSelector(state => state.postReducer);
 
     useEffect(() => {
-        dispatch(getAllPosts({page, perPage: searchData === '' ? 5 : 3, title: searchData}));
+        dispatch(getAllPosts({
+            page: searchData.length > 0 ? 1 : page,
+            perPage: searchData === '' ? 5 : 3,
+            title: searchData
+        }));
     }, [page, perPage, searchData]);
+
+    useEffect(() => {
+    }, [theme]);
 
     const sortByPopular = () => {
         dispatch(getAllPosts({page, perPage: searchData === '' ? 5 : 3, title: searchData, viewsSort: true}));
@@ -55,12 +62,12 @@ const PostsPage = () => {
                     :
                     <div className={css.posts_container}>
                         <form onSubmit={handleSubmit(submit)} className={css.search_post_container}>
-                            <input className={css.search_input}
+                            <input className={theme === true ? css.search_input_dark : css.search_input}
                                    {...register('title')}
                                    type="text"
                                    placeholder={'Search...'}
                             />
-                            <input className={css.confirm_input} type="submit"
+                            <input className={theme === true ? css.confirm_input_dark : css.confirm_input} type="submit"
                                    value={posts.length === 0 ? 'Get posts' : 'Search'}/>
                         </form>
                         {
@@ -68,11 +75,14 @@ const PostsPage = () => {
                                 ?
                                 <>
                                     <div className={css.sort_button_container}>
-                                        <button className={css.sort_button} onClick={() => sortByPopular()}>Popular
+                                        <button className={theme === true ? css.sort_button_dark : css.sort_button}
+                                                onClick={() => sortByPopular()}>Popular
                                         </button>
-                                        <button className={css.sort_button} onClick={() => lastPosts()}>Last posts
+                                        <button className={theme === true ? css.sort_button_dark : css.sort_button}
+                                                onClick={() => lastPosts()}>Last posts
                                         </button>
-                                        <button className={css.sort_button} onClick={() => sortByComments()}>
+                                        <button className={theme === true ? css.sort_button_dark : css.sort_button}
+                                                onClick={() => sortByComments()}>
                                             Best comments
                                         </button>
                                     </div>
@@ -92,7 +102,10 @@ const PostsPage = () => {
                                         }
                                     </div>
                                     <div className={css.popular_posts_block}>
-                                        <div className={css.popular_text}>Popular posts:</div>
+                                        <div
+                                            className={theme === true ? css.popular_text_dark : css.popular_text}>Popular
+                                            posts:
+                                        </div>
                                         <div className={css.posts_title_container}>
                                             {
                                                 posts.map(post =>
@@ -100,7 +113,9 @@ const PostsPage = () => {
                                                         <NavLink to={'/posts/' + post.id}
                                                                  state={post}
                                                                  key={post.id}
-                                                                 className={css.popular_post}>{post.title}
+                                                                 className={theme === true ? css.popular_post_dark : css.popular_post}
+                                                        >
+                                                            {post.title}
                                                         </NavLink>
                                                     ))
                                             }
@@ -116,9 +131,9 @@ const PostsPage = () => {
                                                 pageCount={Math.ceil(itemCount / perPage)}
                                                 onPageChange={(data) => dispatch(postActions.setPage({pageNumber: data.selected + 1}))}
                                                 forcePage={page === 1 ? 0 : page - 1}
-                                                containerClassName={css.pagination_container}
-                                                disabledClassName={css.pagination_disabled}
-                                                activeClassName={css.pagination_active}
+                                                containerClassName={theme === true ? css.pagination_container_dark : css.pagination_container}
+                                                disabledClassName={theme === true ? css.pagination_disabled_dark : css.pagination_disabled}
+                                                activeClassName={theme === true ? css.pagination_active_dark : css.pagination_active}
                                             />
                                     }
                                 </>

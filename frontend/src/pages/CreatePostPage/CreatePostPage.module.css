@@ -70,6 +70,22 @@
     color: #141E30;
     background-color: snow;
 }
+.confirm_input_dark {
+    width: 250px;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #64dd17;
+    border-radius: 5px;
+    color: #64dd17;
+    background-color: #141E30;
+}
+
+.confirm_input_dark:hover {
+    border: 1px solid #64dd17;
+    color: #141E30;
+    background-color: snow;
+}
 
 .file_input_box {
     display: flex;

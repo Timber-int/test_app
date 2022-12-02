@@ -29,6 +29,8 @@ const PostPageDetails = () => {
 
     const {user} = useSelector(state => state.authReducer);
 
+    const {theme} = useSelector(state => state.postReducer);
+
     const {comments, serverErrors, status} = useSelector(state => state.commentReducer);
 
     const submit = (data) => {
@@ -39,6 +41,9 @@ const PostPageDetails = () => {
     useEffect(() => {
         dispatch(changePostViewsById({id: post.id}))
     }, []);
+
+    useEffect(() => {
+    }, [theme]);
 
     return (
         <div className={css.container}>
@@ -62,8 +67,9 @@ const PostPageDetails = () => {
                            type="text" {...register('text')} required
                            placeholder={'comment'}
                     />
-                    <input className={status === CONSTANTS.LOADING ? css.confirm_input_disabled : css.confirm_input}
-                           type="submit" value={'Send'}/>
+                    <input
+                        className={status === CONSTANTS.LOADING ? theme === true ? css.confirm_input_disabled_dark : css.confirm_input_disabled : theme === true ? css.confirm_input_dark : css.confirm_input}
+                        type="submit" value={'Send'}/>
                 </form>
                 {status === CONSTANTS.LOADING ? <div className={css.comments_loading}><Loading/></div> :
                     <div className={css.comments_block}>
@@ -72,10 +78,10 @@ const PostPageDetails = () => {
                                 .filter(comment => comment.postId === post.id)
                                 .map(comment => (
                                     <div key={comment.id} className={css.single_comment}>
-                                    <span className={css.comment_author}>
+                                    <span className={theme === true ? css.comment_author_dark : css.comment_author}>
                                         {comment.authorLastName[0].toUpperCase()}{comment.authorFirstName[0].toUpperCase()}
                                     </span>
-                                        <span className={css.comment_text}>
+                                        <span className={theme === true ? css.comment_text_dark : css.comment_text}>
                                         {comment.text}
                                     </span>
                                         {

@@ -110,6 +110,7 @@ const postSlice = createSlice({
         serverErrors: null,
         status: null,
         text: '',
+        theme: false,
     },
     reducers: {
         deleteSinglePostById: (state, action) => {
@@ -135,6 +136,11 @@ const postSlice = createSlice({
 
         setPage: (state, action) => {
             state.page = action.payload.pageNumber;
+        },
+
+        setTheme: (state, action) => {
+            state.theme = !state.theme;
+            // localStorage.setItem(CONSTANTS.THEME, JSON.stringify(state.theme));
         },
 
         clearPostDataToUpdate: (state, action) => {
@@ -224,6 +230,7 @@ const {
     setPage,
     sortPostsByComments,
     clearPostDataToUpdate,
+    setTheme,
 } = postSlice.actions;
 
 export const postActions = {
@@ -234,6 +241,7 @@ export const postActions = {
     setPage,
     sortPostsByComments,
     clearPostDataToUpdate,
+    setTheme,
 };
 
 export default postReducer;
