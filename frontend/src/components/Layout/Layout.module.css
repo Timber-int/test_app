@@ -35,36 +35,19 @@ a {
     justify-content: space-evenly;
 }
 
-.menu > .link {
+.menu > a {
     cursor: pointer;
     text-decoration: none;
     font-size: 28px;
     color: #bdbdbd;
 }
 
-.menu > .link_dark {
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 28px;
-    color: #bdbdbd;
-}
-
-.menu > .link:hover {
+.menu > a:hover {
     color: snow;
 }
 
-.menu > .link_dark:hover {
-    color: #64dd17;
-}
-
-.menu .link[class='active'] {
+.menu a[class='active'] {
     color: snow;
-    font-weight: bold;
-
-}
-
-.menu .link_dark[class='active'] {
-    color: #64dd17;
     font-weight: bold;
 }
 

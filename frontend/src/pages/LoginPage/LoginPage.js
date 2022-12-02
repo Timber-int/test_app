@@ -1,4 +1,4 @@
-import React ,{useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {NavLink, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi/dist/joi";
@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Loading} from "../../components";
 import {CONSTANTS} from "../../constants";
 import {userBodyForLoginValidator} from "../../validator";
-import {login, registration} from "../../store";
+import {login} from "../../store";
 import css from "../RegistrationPage/RegistrationPage.module.css";
 
 const LoginPage = () => {

@@ -54,13 +54,13 @@ const Layout = () => {
                         </NavLink>
                 }
                 <div className={css.menu}>
-                    <NavLink to={'/posts'} className={theme === true ? css.link_dark : css.link}>
+                    <NavLink to={'/posts'}>
                         Main
                     </NavLink>
-                    <NavLink to={'/userPosts'} className={theme === true ? css.link_dark : css.link}>
+                    <NavLink to={'/userPosts'}>
                         My post
                     </NavLink>
-                    <NavLink to={'/createPost'} className={theme === true ? css.link_dark : css.link}>
+                    <NavLink to={'/createPost'}>
                         Add post
                     </NavLink>
                 </div>

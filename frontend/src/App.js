@@ -1,5 +1,5 @@
-import React from 'react';
-import {Route, Routes} from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 import './App.css'
 
 import {Layout, RequireAuth} from './components';
@@ -14,6 +14,12 @@ import {
 } from "./pages";
 
 const App = () => {
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        navigate('/posts');
+    }, []);
 
     return (
         <Routes>
