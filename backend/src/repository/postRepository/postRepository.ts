@@ -2,7 +2,9 @@ import {
     DeleteResult,
     EntityRepository, getManager, Like, Repository, UpdateResult,
 } from 'typeorm';
-import { IPost, Post } from '../../entity';
+import {
+    IPost, IPostVideo, Post, PostVideo,
+} from '../../entity';
 import { IPaginationResponse } from '../../interface';
 import { IPostRepository } from './postRepositoryInterface';
 
@@ -14,15 +16,39 @@ class PostRepository extends Repository<Post> implements IPostRepository {
             .save(post);
     }
 
+    public async createPostVideo(postVideoData: IPostVideo): Promise<IPostVideo> {
+        return getManager()
+            .getRepository(PostVideo)
+            .save(postVideoData);
+    }
+
+    public async getAllPostVideo(): Promise<IPostVideo[]> {
+        return getManager()
+            .getRepository(PostVideo)
+            .find();
+    }
+
     public async getPostById(id: number): Promise<IPost | undefined> {
         return getManager()
             .getRepository(Post)
             .findOne({ id });
     }
 
+    public async getVideoById(id: number): Promise<IPostVideo | undefined> {
+        return getManager()
+            .getRepository(PostVideo)
+            .findOne({ id });
+    }
+
     public async deletePostById(id: number): Promise<DeleteResult> {
         return getManager()
             .getRepository(Post)
+            .delete({ id });
+    }
+
+    public async deletePostVideoById(id: number): Promise<DeleteResult> {
+        return getManager()
+            .getRepository(PostVideo)
             .delete({ id });
     }
 
@@ -48,7 +74,7 @@ class PostRepository extends Repository<Post> implements IPostRepository {
                 where: [{ title: Like(`%${searchObject.title}%`) }],
                 skip,
                 take: limit,
-                relations: ['comments'],
+                relations: ['comments', 'videos'],
                 order: viewsSort === 'true' ? { views: 'DESC' } : { createdAt: 'DESC' },
             });
 

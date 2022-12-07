@@ -20,7 +20,8 @@ const corsOptions = {
 app.use(fileUpload());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'fileDirectory')));
+app.use(express.static(path.join(__dirname, 'fileDirectory', 'photos')));
+app.use(express.static(path.join(__dirname, 'fileDirectory', 'videos')));
 app.use(morgan('dev'));
 app.use(cors(corsOptions));
 

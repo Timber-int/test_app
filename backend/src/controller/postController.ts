@@ -22,13 +22,40 @@ class PostController {
         }
     }
 
+    public async getAllPostVideo(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            const postVideos = await postService.getAllPostVideo();
+
+            res.json({ postVideos });
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async createPostVideo(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            const postVideo = req.files?.video as UploadedFile;
+
+            const postVideoPath = await fileService.saveFile(postVideo, 'mp4');
+
+            const video = await postService.createPostVideo({
+                ...req.body,
+                video: postVideoPath,
+            });
+
+            res.json({ video });
+        } catch (e) {
+            next(e);
+        }
+    }
+
     public async createPost(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
             const { firstName, lastName } = req.user as IUser;
 
             const postPhoto = req.files?.photo as UploadedFile;
 
-            const postPhotoPath = await fileService.saveFile(postPhoto);
+            const postPhotoPath = await fileService.saveFile(postPhoto, 'jpg');
 
             const post = await postService.createPost({
                 ...req.body,
@@ -52,7 +79,7 @@ class PostController {
             const postPhoto = req.files?.photo as UploadedFile;
 
             if (postPhoto) {
-                postPhotoPath = await fileService.saveFile(postPhoto);
+                postPhotoPath = await fileService.saveFile(postPhoto, 'jpg');
             }
 
             await postService.updatePostById(Number(id),
@@ -74,6 +101,18 @@ class PostController {
             await postService.deletePostById(Number(req.params.id));
 
             res.json({ post });
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async deleteVideoById(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            const video = await postService.getVideoById(Number(req.params.id));
+
+            await postService.deletePostVideoById(Number(req.params.id));
+
+            res.json({ video });
         } catch (e) {
             next(e);
         }

@@ -1,0 +1,79 @@
+
+.confirm_input {
+    width: 300px;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid snow;
+    border-radius: 5px;
+    color: snow;
+    background-color: #141E30;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+}
+
+.confirm_input:hover {
+    border: 1px solid snow;
+    color: #141E30;
+    background-color: snow;
+}
+
+.confirm_input_dark {
+    width: 300px;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #64dd17;
+    border-radius: 5px;
+    color: #64dd17;
+    background-color: #141E30;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+}
+
+.confirm_input_dark:hover {
+    border: 1px solid #64dd17;
+    color: #141E30;
+    background-color: snow;
+}
+
+.file_input_box {
+    display: flex;
+    justify-content: center;
+}
+
+.form_submit_box {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.file_input {
+    padding: 10px;
+    display: none;
+}
+
+.file_label {
+    width: 300px;
+    display: inline-block;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 10px 40px 10px 40px;
+    letter-spacing: 1.5px;
+    user-select: none;
+    cursor: pointer;
+    box-shadow: 5px 15px 25px rgba(0, 0, 0, 0.35);
+    border-radius: 3px;
+    background-color: snow;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.errors_span {
+    max-width: 500px;
+    margin: 5px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    color: #e53935;
+}

@@ -18,6 +18,10 @@ export const CONSTANTS = {
         'image/webp', // .webp
         'image/avif', // .avif
     ],
+    VIDEOS_MIMETYPES: [
+        'video/mp4', // .mp4
+    ],
+
 };
 export const UserRole = {
     USER: 'user',

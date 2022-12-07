@@ -5,6 +5,7 @@ import { DefaultValue, IDefaultValue } from './defaultValue';
 import { CONSTANTS } from '../constants';
 import { User } from './user';
 import { Comment } from './comment';
+import { PostVideo } from './postVideo';
 
 export interface IPost extends IDefaultValue {
     id: number,
@@ -74,4 +75,7 @@ export class Post extends DefaultValue implements IPost {
 
     @OneToMany(() => Comment, (comment) => comment.post)
         comments: Comment[];
+
+    @OneToMany(() => PostVideo, (postVideo) => postVideo.singlePost)
+        videos: PostVideo[];
 }

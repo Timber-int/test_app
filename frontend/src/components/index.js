@@ -5,3 +5,4 @@ export * from './ModalWindow/ModalWindow';
 export * from './Image/Image';
 export * from './hoc/RequireAuth';
 export * from './CarouselControl/CarouselControl';
+export * from './VideoForm/VideoForm';

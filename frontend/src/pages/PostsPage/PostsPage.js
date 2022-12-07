@@ -24,7 +24,7 @@ const PostsPage = () => {
 
     useEffect(() => {
         dispatch(getAllPosts({
-            page: searchData.length > 0 ? 1 : page,
+            page: searchData ? 1 : page,
             perPage: searchData === '' ? 5 : 3,
             title: searchData
         }));
@@ -34,20 +34,28 @@ const PostsPage = () => {
     }, [theme]);
 
     const sortByPopular = () => {
+        setSearchData('');
         dispatch(getAllPosts({page, perPage: searchData === '' ? 5 : 3, title: searchData, viewsSort: true}));
     }
 
     const sortByComments = () => {
+        setSearchData('');
         dispatch(postActions.sortPostsByComments());
     }
 
     const lastPosts = () => {
+        setSearchData('');
         dispatch(getAllPosts({page, perPage: searchData === '' ? 5 : 3, title: searchData, viewsSort: false}));
     }
 
     const submit = (data) => {
         setSearchData(data.title);
         reset();
+    }
+
+    const choosePage = (data) => {
+        setSearchData('');
+        dispatch(postActions.setPage({pageNumber: data.selected + 1}));
     }
 
     return (
@@ -129,7 +137,7 @@ const PostsPage = () => {
                                             <ReactPaginate
                                                 breakLabel='...'
                                                 pageCount={Math.ceil(itemCount / perPage)}
-                                                onPageChange={(data) => dispatch(postActions.setPage({pageNumber: data.selected + 1}))}
+                                                onPageChange={(data) => choosePage(data)}
                                                 forcePage={page === 1 ? 0 : page - 1}
                                                 containerClassName={theme === true ? css.pagination_container_dark : css.pagination_container}
                                                 disabledClassName={theme === true ? css.pagination_disabled_dark : css.pagination_disabled}

@@ -3,8 +3,8 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Loading, Post} from "../../components";
 import {CONSTANTS} from "../../constants";
-import css from './UserPostsPage.module.css';
 import {getAllPosts} from "../../store";
+import css from './UserPostsPage.module.css';
 
 const UserPostsPage = () => {
 
@@ -15,7 +15,7 @@ const UserPostsPage = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getAllPosts({page: 1, perPage: itemCount,title:''}));
+        dispatch(getAllPosts({page: 1, perPage: itemCount, title: ''}));
     }, [itemCount]);
 
     return (

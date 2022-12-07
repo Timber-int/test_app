@@ -77,7 +77,7 @@
 }
 
 .post_information_container {
-    width: 15%;
+    width: 20%;
     color: #bdbdbd;
     display: flex;
     align-items: center;
@@ -110,5 +110,3 @@
 .updated_post_button_container > div:hover {
     color: snow;
 }
-
-

@@ -36,6 +36,35 @@ class FileMiddleware {
         }
     }
 
+    async checkIsVideoFileExist(req: IRequestExtended, res: Response, next: NextFunction) {
+        try {
+            if (!req.files?.video) {
+                next(new ErrorHandler(MESSAGE.VIDEO_NOT_EXIST, STATUS.CODE_404));
+                return;
+            }
+
+            const {
+                name,
+                size,
+                mimetype,
+            } = req.files.video as UploadedFile;
+
+            if (size > CONSTANTS.VIDEO_MAX_SIZE) {
+                next(new ErrorHandler(`${MESSAGE.TO_BIG_PHOTO_FILE}: ${name}`));
+                return;
+            }
+
+            if (!CONSTANTS.VIDEOS_MIMETYPES.includes(mimetype)) {
+                next(new ErrorHandler(MESSAGE.WRONG_FILE_FORMAT));
+                return;
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    }
+
     async checkIsPhotoToUpdateFileExist(req: IRequestExtended, res: Response, next: NextFunction) {
         try {
             if (!req.files?.photo) {
@@ -50,11 +79,11 @@ class FileMiddleware {
             } = req.files?.photo as UploadedFile;
 
             if (size > CONSTANTS.PHOTO_MAX_SIZE) {
-                next(new ErrorHandler(`${MESSAGE.TO_BIG_PHOTO_FILE}: ${name}`));
+                next(new ErrorHandler(`${MESSAGE.TO_BIG_VIDEO_FILE}: ${name}`));
                 return;
             }
 
-            if (!CONSTANTS.PHOTOS_MIMETYPES.includes(mimetype)) {
+            if (!CONSTANTS.VIDEOS_MIMETYPES.includes(mimetype)) {
                 next(new ErrorHandler(MESSAGE.WRONG_FILE_FORMAT));
                 return;
             }

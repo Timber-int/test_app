@@ -21,6 +21,13 @@ export const postBodyValidateForCreate = Joi.object({
         .required(),
 });
 
+export const postVideoValidateForCreate = Joi.object({
+    userId: Joi.number()
+        .required(),
+    postId: Joi.number()
+        .required(),
+});
+
 export const postBodyValidateForUpdate = Joi.object({
     title: Joi.string()
         .min(2)

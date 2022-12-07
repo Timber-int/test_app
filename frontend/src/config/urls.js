@@ -6,6 +6,8 @@ export const urls = {
     login: '/login',
     logout: '/logout',
     posts: '/posts',
+    videos: '/videos',
+    download:'/download',
     users: '/users',
     comments: '/comments',
     refresh: '/refresh',

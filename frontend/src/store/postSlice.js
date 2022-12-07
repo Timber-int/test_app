@@ -15,6 +15,34 @@ export const getAllPosts = createAsyncThunk(
     }
 );
 
+export const getAllPostVideos = createAsyncThunk(
+    'postSlice/getAllPostVideos',
+    async (_, {dispatch, rejectWithValue}) => {
+        try {
+            const data = await postService.getPostVideos();
+
+            return {data};
+        } catch (e) {
+            return rejectWithValue(e.response.data.message);
+        }
+    }
+);
+
+export const deleteVideoById = createAsyncThunk(
+    'postSlice/deleteVideoById',
+    async ({id}, {dispatch, rejectWithValue}) => {
+        try {
+            const data = await postService.deleteVideoById(id);
+
+            dispatch(deleteSingleVideoById({data}));
+
+            return {data};
+        } catch (e) {
+            return rejectWithValue(e.response.data.message);
+        }
+    }
+);
+
 export const deletePostById = createAsyncThunk(
     'postSlice/deletePostById',
     async ({id}, {dispatch, rejectWithValue}) => {
@@ -67,6 +95,26 @@ export const createPost = createAsyncThunk(
         }
     }
 );
+export const createVideo = createAsyncThunk(
+    'postSlice/createVideo',
+    async ({video, postId, userId}, {dispatch, rejectWithValue}) => {
+        try {
+
+            let formData = new FormData();
+
+            formData.append('video', video[0]);
+            formData.append('userId', userId);
+            formData.append('postId', postId);
+
+            const data = await postService.createVideo(formData);
+
+            return {data};
+        } catch (e) {
+            console.log(e.response)
+            return rejectWithValue(e.response.data.message);
+        }
+    }
+);
 export const updatePostById = createAsyncThunk(
     'postSlice/updatePostById',
     async ({postId, postData}, {dispatch, rejectWithValue}) => {
@@ -102,6 +150,7 @@ const postSlice = createSlice({
     name: 'postSlice',
     initialState: {
         posts: [],
+        videos: [],
         page: null,
         perPage: null,
         itemCount: null,
@@ -117,6 +166,12 @@ const postSlice = createSlice({
             const id = action.payload.data.post.id;
 
             state.posts = state.posts.filter(post => post.id !== id);
+        },
+
+        deleteSingleVideoById: (state, action) => {
+            const id = action.payload.data.video.id;
+
+            state.videos = state.videos.filter(video => video.id !== id);
         },
         setPostDataToUpdate: (state, action) => {
             state.postDataToUpdate = action.payload.postData;
@@ -168,6 +223,19 @@ const postSlice = createSlice({
             state.status = CONSTANTS.REJECTED;
             state.serverErrors = action.payload;
         },
+        [getAllPostVideos.pending]: (state, action) => {
+            state.status = CONSTANTS.LOADING;
+            state.serverErrors = null;
+        },
+        [getAllPostVideos.fulfilled]: (state, action) => {
+            state.status = CONSTANTS.RESOLVED;
+            state.videos = action.payload.data.postVideos;
+            state.serverErrors = null;
+        },
+        [getAllPostVideos.rejected]: (state, action) => {
+            state.status = CONSTANTS.REJECTED;
+            state.serverErrors = action.payload;
+        },
         [deletePostById.pending]: (state, action) => {
             state.status = CONSTANTS.LOADING;
             state.serverErrors = null;
@@ -177,6 +245,18 @@ const postSlice = createSlice({
             state.serverErrors = null;
         },
         [deletePostById.rejected]: (state, action) => {
+            state.status = CONSTANTS.REJECTED;
+            state.serverErrors = action.payload;
+        },
+        [deleteVideoById.pending]: (state, action) => {
+            state.status = CONSTANTS.LOADING;
+            state.serverErrors = null;
+        },
+        [deleteVideoById.fulfilled]: (state, action) => {
+            state.status = CONSTANTS.RESOLVED;
+            state.serverErrors = null;
+        },
+        [deleteVideoById.rejected]: (state, action) => {
             state.status = CONSTANTS.REJECTED;
             state.serverErrors = action.payload;
         },
@@ -190,6 +270,19 @@ const postSlice = createSlice({
             state.serverErrors = null;
         },
         [createPost.rejected]: (state, action) => {
+            state.status = CONSTANTS.REJECTED;
+            state.serverErrors = action.payload;
+        },
+        [createVideo.pending]: (state, action) => {
+            state.status = CONSTANTS.LOADING;
+            state.serverErrors = null;
+        },
+        [createVideo.fulfilled]: (state, action) => {
+            state.status = CONSTANTS.RESOLVED;
+            state.videos.push(action.payload.data.video);
+            state.serverErrors = null;
+        },
+        [createVideo.rejected]: (state, action) => {
             state.status = CONSTANTS.REJECTED;
             state.serverErrors = action.payload;
         },
@@ -231,6 +324,7 @@ const {
     sortPostsByComments,
     clearPostDataToUpdate,
     setTheme,
+    deleteSingleVideoById,
 } = postSlice.actions;
 
 export const postActions = {
@@ -242,6 +336,7 @@ export const postActions = {
     sortPostsByComments,
     clearPostDataToUpdate,
     setTheme,
+    deleteSingleVideoById,
 };
 
 export default postReducer;

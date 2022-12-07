@@ -1,18 +1,70 @@
 .container {
+    margin-top: 100px;
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
 
 }
 
+.server_error {
+    margin-bottom: 20px;
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e53935;
+}
+
 .post_details_container {
     width: 50%;
+    /*min-height: 70vh;*/
 }
 
 .comments_container {
-    /*background-color: #bdbdbd;*/
     width: 30%;
     padding: 10px;
+    /*min-height: 80vh;*/
+}
+
+.video_container {
+    margin: 40px 0 40px 0;
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.video_element {
+    width: 30%;
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.delete_video_button {
+    width: 50%;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #141E30;
+    color: snow;
+    border: 1px solid snow;
+}
+
+.delete_video_button_dark {
+    width: 50%;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    color: #64dd17;
+    background-color: #141E30;
+    border: 1px solid #64dd17;
 }
 
 .comment_form {
@@ -28,10 +80,13 @@
     flex-wrap: wrap;
     margin-top: 20px;
     justify-content: space-evenly;
-    max-height: 650px;
+    max-height: 500px;
     overflow: hidden;
     overflow-y: auto;
+}
 
+.comments_block_container {
+    min-height: 500px;
 }
 
 .comments_block::-webkit-scrollbar {
@@ -43,6 +98,7 @@
     display: flex;
     flex-wrap: wrap;
     margin-top: 100px;
+    min-height: 450px;
     justify-content: center;
 }
 
@@ -109,13 +165,13 @@
     background-color: snow;
 }
 
-.confirm_input:hover {
+.confirm_input:hover, .delete_video_button:hover {
     border: 1px solid snow;
     color: #141E30;
     background-color: snow;
 }
 
-.confirm_input_dark:hover {
+.confirm_input_dark:hover, .delete_video_button_dark:hover {
     border: 1px solid #64dd17;
     color: #141E30;
     background-color: snow;
@@ -126,6 +182,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
+    min-height: 50px;
 }
 
 .single_comment > span {
@@ -191,4 +248,12 @@
 
 .delete_comment_button:hover {
     color: #e53935;
+}
+
+.video_form_container {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }

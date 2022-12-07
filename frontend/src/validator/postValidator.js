@@ -20,4 +20,8 @@ export const postBodyValidateForCreate = Joi.object({
     photo: Joi.any()
         .required()
 });
+export const videoValidateForCreate = Joi.object({
+    video: Joi.object()
+        .required()
+});
 

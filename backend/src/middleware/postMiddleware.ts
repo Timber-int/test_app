@@ -23,6 +23,40 @@ class PostMiddleware {
         }
     }
 
+    public async checkIsVideoExistById(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            const videoFromDB = await postService.getVideoById(Number(req.params.id));
+
+            if (!videoFromDB) {
+                next(new ErrorHandler(MESSAGE.VIDEO_NOT_EXIST, STATUS.CODE_404));
+                return;
+            }
+
+            req.video = videoFromDB;
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async checkIsVideoHavePostId(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            const postFromDB = await postService.getPostById(Number(req.body.postId));
+
+            if (!postFromDB) {
+                next(new ErrorHandler(MESSAGE.POST_NOT_EXIST, STATUS.CODE_404));
+                return;
+            }
+
+            req.post = postFromDB;
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    }
+
     public async checkIsPostExistsByTitle(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
             const postFromDB = await postService.findPostByTitle(req.body.title);
