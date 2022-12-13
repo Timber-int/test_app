@@ -11,7 +11,7 @@ const VideoPage = () => {
 
     const dispatch = useDispatch();
 
-    const {videos,status} = useSelector(state => state.postReducer);
+    const {videos, status} = useSelector(state => state.postReducer);
 
     useEffect(() => {
         dispatch(getAllPostVideos());
@@ -24,13 +24,19 @@ const VideoPage = () => {
                     ?
                     <Loading/>
                     :
-                videos.map(videoElem => (
-                    <div className={css.video_element} key={videoElem.id}>
-                        <Player>
-                            <source src={baseURL + '/' + videoElem.video}/>
-                        </Player>
-                    </div>
-                ))
+                    videos.length
+                        ?
+                        videos.map(videoElem => (
+                            <div className={css.video_element} key={videoElem.id}>
+                                <Player>
+                                    <source src={baseURL + '/' + videoElem.video}/>
+                                </Player>
+                            </div>
+                        ))
+                        :
+                        <div className={css.video_container_empty}>
+                            Videos empty
+                        </div>
             }
         </div>
     );

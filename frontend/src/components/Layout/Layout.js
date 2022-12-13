@@ -45,7 +45,7 @@ const Layout = () => {
                     user ?
                         <NavLink className={theme === true ? css.user_data_box_dark : css.user_data_box}
                                  to={'/registration'}>
-                            {user?.firstName[0].toUpperCase()}{user?.lastName[0].toUpperCase()}
+                            {user?.lastName[0].toUpperCase()}{user?.firstName[0].toUpperCase()}
                         </NavLink>
                         :
                         <NavLink className={theme === true ? css.user_data_box_dark : css.user_data_box}

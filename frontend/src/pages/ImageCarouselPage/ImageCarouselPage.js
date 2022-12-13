@@ -11,7 +11,7 @@ const ImageCarouselPage = () => {
         const slideInterval = useRef();
 
         const {posts: slides, serverErrors, status, itemCount} = useSelector(state => state.postReducer);
-    console.log(slides)
+
         const dispatch = useDispatch();
 
         const [currentSlide, setCurrentSlide] = useState(0);
@@ -23,7 +23,7 @@ const ImageCarouselPage = () => {
         }
         const next = () => {
             startSlideTimer();
-            const index = currentSlide < slides.length - 1  ? currentSlide + 1 : 0;
+            const index = currentSlide < slides.length - 1 ? currentSlide + 1 : 0;
             setCurrentSlide(index)
         }
 
@@ -59,23 +59,29 @@ const ImageCarouselPage = () => {
                         ?
                         <Loading/>
                         :
-                        <div className={css.carousel}>
-                            <div
-                                className={css.carousel_inner}
-                                style={{transform: `translateX(${-currentSlide * 100}%)`}}
-                            >
-                                {slides.map((slide, index) => (
-                                        <Image
-                                            key={index}
-                                            slide={slide}
-                                            stopSlide={stopSlideTimer}
-                                            startSlide={startSlideTimer}
-                                        />
-                                    )
-                                )}
+                        slides.length
+                            ?
+                            <div className={css.carousel}>
+                                <div
+                                    className={css.carousel_inner}
+                                    style={{transform: `translateX(${-currentSlide * 100}%)`}}
+                                >
+                                    {slides.map((slide, index) => (
+                                            <Image
+                                                key={index}
+                                                slide={slide}
+                                                stopSlide={stopSlideTimer}
+                                                startSlide={startSlideTimer}
+                                            />
+                                        )
+                                    )}
+                                </div>
+                                <CarouselControl next={next} prev={prev}/>
                             </div>
-                            <CarouselControl next={next} prev={prev}/>
-                        </div>
+                            :
+                            <div className={css.slides_container_empty}>
+                                Slides empty
+                            </div>
                 }
             </>
         );

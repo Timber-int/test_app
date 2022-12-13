@@ -28,7 +28,7 @@ const PostsPage = () => {
             perPage: searchData === '' ? 5 : 3,
             title: searchData
         }));
-    }, [page, perPage, searchData]);
+    }, [page, searchData]);
 
     useEffect(() => {
     }, [theme]);
@@ -56,6 +56,14 @@ const PostsPage = () => {
     const choosePage = (data) => {
         setSearchData('');
         dispatch(postActions.setPage({pageNumber: data.selected + 1}));
+    }
+
+    const getMorePosts = () => {
+        dispatch(getAllPosts({
+            page: searchData ? 1 : page,
+            perPage: perPage + 5,
+            title: searchData
+        }));
     }
 
     return (
@@ -130,7 +138,18 @@ const PostsPage = () => {
                                         </div>
                                     </div>
                                     {
+                                        perPage === 20
+                                            ?
+                                            <></>
+                                            :
+                                            <div className={css.get_more} onClick={() => getMorePosts()}>
+                                                Get more...
+                                            </div>
+                                    }
+                                    {
                                         itemCount <= 3
+                                        ||
+                                        perPage === 20
                                             ?
                                             <></>
                                             :

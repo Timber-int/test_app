@@ -6,8 +6,9 @@ export const getAllPosts = createAsyncThunk(
     'postSlice/getAllPosts',
     async ({page, perPage, title, viewsSort}, {dispatch, rejectWithValue}) => {
         try {
+            console.log(page, 'page', perPage, 'perPage', title, 'title', viewsSort, 'videoSort')
             const data = await postService.getAllPosts(page, perPage, title, viewsSort);
-
+            console.log(data)
             return {data};
         } catch (e) {
             return rejectWithValue(e.response.data.message);
@@ -159,7 +160,7 @@ const postSlice = createSlice({
         serverErrors: null,
         status: null,
         text: '',
-        theme: false,
+        theme: JSON.parse(localStorage.getItem(CONSTANTS.THEME)) || false,
     },
     reducers: {
         deleteSinglePostById: (state, action) => {
@@ -195,7 +196,7 @@ const postSlice = createSlice({
 
         setTheme: (state, action) => {
             state.theme = !state.theme;
-            // localStorage.setItem(CONSTANTS.THEME, JSON.stringify(state.theme));
+            localStorage.setItem(CONSTANTS.THEME, JSON.stringify(state.theme));
         },
 
         clearPostDataToUpdate: (state, action) => {

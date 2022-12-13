@@ -11,6 +11,7 @@
     white-space: nowrap;
     transition: ease 1s;
 }
+
 .server_error {
     margin-bottom: 20px;
     font-size: 32px;
@@ -18,4 +19,9 @@
     align-items: center;
     justify-content: center;
     color: #e53935;
+}
+
+.slides_container_empty {
+    font-size: 46px;
+    color: #f1f1f1;
 }
