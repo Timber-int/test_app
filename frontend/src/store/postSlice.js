@@ -161,6 +161,7 @@ const postSlice = createSlice({
         status: null,
         text: '',
         theme: JSON.parse(localStorage.getItem(CONSTANTS.THEME)) || false,
+        countPage: 5,
     },
     reducers: {
         deleteSinglePostById: (state, action) => {
@@ -205,6 +206,15 @@ const postSlice = createSlice({
 
         sortPostsByComments: (state, action) => {
             state.posts = state.posts.sort((a, b) => b.comments.length - a.comments.length);
+        },
+        setPageCountMore: (state, action) => {
+            state.countPage = state.countPage + 5;
+        },
+        setPageCountDefault: (state, action) => {
+            state.countPage = 5;
+        },
+        setPageDefault: (state, action) => {
+            state.page = 1;
         },
     },
     extraReducers: {
@@ -326,6 +336,10 @@ const {
     clearPostDataToUpdate,
     setTheme,
     deleteSingleVideoById,
+    setPageCountMore,
+    setPageCountDefault,
+    setPageDefault,
+
 } = postSlice.actions;
 
 export const postActions = {
@@ -338,6 +352,9 @@ export const postActions = {
     clearPostDataToUpdate,
     setTheme,
     deleteSingleVideoById,
+    setPageCountMore,
+    setPageCountDefault,
+    setPageDefault,
 };
 
 export default postReducer;

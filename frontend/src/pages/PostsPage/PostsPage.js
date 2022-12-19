@@ -20,22 +20,31 @@ const PostsPage = () => {
 
     const [searchData, setSearchData] = useState('');
 
-    const {posts, serverErrors, status, page, perPage, itemCount, theme} = useSelector(state => state.postReducer);
+    const {
+        posts,
+        serverErrors,
+        status,
+        page,
+        perPage,
+        itemCount,
+        theme,
+        countPage
+    } = useSelector(state => state.postReducer);
 
     useEffect(() => {
         dispatch(getAllPosts({
             page: searchData ? 1 : page,
-            perPage: searchData === '' ? 5 : 3,
+            perPage: searchData === '' ? countPage : 3,
             title: searchData
         }));
-    }, [page, searchData]);
+    }, [page, searchData, countPage]);
 
     useEffect(() => {
     }, [theme]);
 
     const sortByPopular = () => {
         setSearchData('');
-        dispatch(getAllPosts({page, perPage: searchData === '' ? 5 : 3, title: searchData, viewsSort: true}));
+        dispatch(getAllPosts({page, perPage: searchData === '' ? countPage : 3, title: searchData, viewsSort: true}));
     }
 
     const sortByComments = () => {
@@ -45,7 +54,8 @@ const PostsPage = () => {
 
     const lastPosts = () => {
         setSearchData('');
-        dispatch(getAllPosts({page, perPage: searchData === '' ? 5 : 3, title: searchData, viewsSort: false}));
+        dispatch(postActions.setPageCountDefault());
+        dispatch(getAllPosts({page, perPage: searchData === '' ? countPage : 3, title: searchData, viewsSort: false}));
     }
 
     const submit = (data) => {
@@ -59,12 +69,10 @@ const PostsPage = () => {
     }
 
     const getMorePosts = () => {
-        dispatch(getAllPosts({
-            page: searchData ? 1 : page,
-            perPage: perPage + 5,
-            title: searchData
-        }));
+        dispatch(postActions.setPageDefault());
+        dispatch(postActions.setPageCountMore());
     }
+
 
     return (
         <>
@@ -138,7 +146,7 @@ const PostsPage = () => {
                                         </div>
                                     </div>
                                     {
-                                        perPage === 20
+                                        perPage >= itemCount
                                             ?
                                             <></>
                                             :
@@ -149,7 +157,7 @@ const PostsPage = () => {
                                     {
                                         itemCount <= 3
                                         ||
-                                        perPage === 20
+                                        perPage >= itemCount
                                             ?
                                             <></>
                                             :
