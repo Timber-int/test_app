@@ -4,7 +4,7 @@
   "port": 3306,
   "username": "root",
   "password": "rootroot",
-  "database": "blogapp",
+  "database": "recipeapp",
   "synchronize": false,
   "logging": false,
   "entities": [

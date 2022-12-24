@@ -1,4 +1,4 @@
 export * from './authController';
-export * from './postController';
-export * from './commentController';
 export * from './userController';
+export * from './categoryController';
+export * from './dishController';

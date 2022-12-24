@@ -1,6 +1,9 @@
 export const MESSAGE = {
     WRONG_EMAIL_OR_PASSWORD: 'Wrong email or password',
     PHOTO_NOT_EXIST: 'Photo not exists',
+    CATEGORY_NOT_EXIST: 'Category not exists',
+    DISH_NOT_EXIST: 'Dish not exists',
+    CATEGORY_IS_EXIST: 'Category is exists',
     VIDEO_NOT_EXIST: 'Video not exists',
     TO_BIG_PHOTO_FILE: 'File is to big',
     TO_BIG_VIDEO_FILE: 'File is to big',

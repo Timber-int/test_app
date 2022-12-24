@@ -8,7 +8,7 @@ class FileService {
 
             const fileName = `${uuid.v4()}.${type}`;
 
-            if (type === 'jpg') {
+            if (type === 'jpg' || type === 'jpeg' || type === 'gif' || type === 'png' || type === 'webp' || type === 'avif') {
                 filePath = path.resolve(__dirname, '../', 'fileDirectory', 'photos', fileName);
             } else {
                 filePath = path.resolve(__dirname, '../', 'fileDirectory', 'videos', fileName);

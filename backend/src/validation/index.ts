@@ -1,3 +1,3 @@
 export * from './authValidation';
-export * from './postValidator';
-export * from './commentValidator';
+export * from './categoryValidator';
+export * from './dishValidator';

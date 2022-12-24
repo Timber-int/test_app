@@ -1,29 +1,27 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CreateTablePosts1668149840780 implements MigrationInterface {
+export class CreateTableDishes1671444858062 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-            CREATE TABLE IF NOT EXISTS Posts (
+            CREATE TABLE IF NOT EXISTS Dishes (
                 id INT PRIMARY KEY AUTO_INCREMENT,
-                title VARCHAR(255) NOT NULL UNIQUE,
-                text TEXT NOT NULL,
+                name VARCHAR(255) NOT NULL UNIQUE,
                 photo VARCHAR(255) NOT NULL,
-                userId INT NOT NULL,
-                views INT CHECK (views >= 0) DEFAULT(0) NOT NULL,
-                authorFirstName VARCHAR(255) NOT NULL,
-                authorLastName VARCHAR(255) NOT NULL,
+                recipe TEXT NOT NULL,
+                categoryId INT NOT NULL,
+                calories INT NOT NULL,
                 createdAt TIMESTAMP DEFAULT(UTC_TIMESTAMP()) NOT NULL,
                 deletedAt TIMESTAMP,
-                FOREIGN KEY (userId) REFERENCES Users (id)
+                FOREIGN KEY (categoryId) REFERENCES Categories (id)
                 ON DELETE CASCADE
                 ON UPDATE CASCADE
             )
-       `);
+        `);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-            DROP TABLE IF EXISTS Posts
+            DROP TABLE IF EXISTS Dishes
         `);
     }
 }

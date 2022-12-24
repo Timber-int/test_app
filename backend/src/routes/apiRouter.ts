@@ -2,16 +2,16 @@ import { Router } from 'express';
 
 import { STATUS } from '../errorCode';
 import { authRouter } from './authRouter';
-import { postRouter } from './postRouter';
-import { commentRouter } from './commentRouter';
 import { userRouter } from './userRouter';
+import { categoryRouter } from './categoryRouter';
+import { dishRouter } from './dishRouter';
 
 const router = Router();
 
-router.use('/posts', postRouter);
 router.use('/auth', authRouter);
-router.use('/comments', commentRouter);
+router.use('/dishes', dishRouter);
 router.use('/users', userRouter);
+router.use('/categories', categoryRouter);
 
 // @ts-ignore
 router.use('*', (err, req, res, next) => {
