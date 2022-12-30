@@ -27,7 +27,7 @@ const LoginPage = () => {
 
     const {status, serverErrors} = useSelector(state => state.authReducer);
 
-    const {theme} = useSelector(state => state.postReducer);
+    const {theme} = useSelector(state => state.categoryReducer);
 
     const submit = (data) => {
         dispatch(login({loginData: data}));
@@ -35,7 +35,7 @@ const LoginPage = () => {
         reset();
 
         if (status === CONSTANTS.RESOLVED) {
-            navigate('/userPosts');
+            navigate('/category');
         }
     }
 

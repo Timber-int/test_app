@@ -8,6 +8,7 @@ export interface IUser extends IDefaultValue {
     lastName: string,
     email: string,
     password: string;
+    role?: string;
 }
 
 @Entity('users', { database: CONSTANTS.DATA_BASE })
@@ -40,4 +41,12 @@ export class User extends DefaultValue implements IUser {
         nullable: false,
     })
         password: string;
+
+    @Column({
+        type: 'varchar',
+        width: 255,
+        nullable: false,
+        default: 'user',
+    })
+        role: string;
 }

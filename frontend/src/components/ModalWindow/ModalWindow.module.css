@@ -13,11 +13,10 @@
     padding: 25px;
     background-color: #ffffff;
     border-radius: 16px;
-    width: 60%;
+    width: 80%;
     height: 900px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     z-index: 1;
 }
 
@@ -43,10 +42,28 @@
     color: #141E30;
 }
 
-.post_text {
-    margin-top: 10px;
+.dish_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.dish_name {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 44px;
+    font-weight: bold;
+    color: #e53935;
+    letter-spacing: 0.475px;
+}
+
+.recipe {
+    width: 45%;
     color: #141E30;
-    height: 800px;
+    margin-top: 10px;
+    height: 700px;
     letter-spacing: 0.475px;
     font-size: 24px;
     overflow-wrap: break-word;
@@ -55,12 +72,43 @@
     display: flex;
 }
 
-.post_text::-webkit-scrollbar {
+.recipe_large {
+    width: 100%;
+    color: #141E30;
+    margin-top: 10px;
+    height: 700px;
+    letter-spacing: 0.475px;
+    font-size: 24px;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    overflow-y: auto;
+    display: flex;
+}
+
+
+.videos_container {
+    width: 45%;
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: hidden;
+    overflow-y: auto;
+    align-items: center;
+    height: 700px;
+}
+
+.video_box {
+    width: 80%;
+    height: 250px;
+    margin: 50px;
+}
+
+.recipe::-webkit-scrollbar, .recipe_large::-webkit-scrollbar {
     display: none;
 }
 
-.post_title {
-    font-size: 32px;
-    color: snow;
-    margin-top: 10px;
+.videos_container::-webkit-scrollbar {
+    display: none;
 }
+

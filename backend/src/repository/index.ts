@@ -6,3 +6,7 @@ export * from './categoryRepository/categoryRepositoryInterface';
 export * from './categoryRepository/categoryRepository';
 export * from './dishRepository/dishRepositoryInterface';
 export * from './dishRepository/dishRepository';
+export * from './dishVideoRepository/dishVideoRepository';
+export * from './dishVideoRepository/dishVideoRepositoryInterface';
+export * from './ingredientRepository/ingredientRepository';
+export * from './ingredientRepository/ingredientRepositoryInterface';

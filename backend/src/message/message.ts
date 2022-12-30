@@ -16,4 +16,6 @@ export const MESSAGE = {
     UNAUTHORIZED: 'unauthorized',
     TOKEN_NOT_VALID: 'token not valid',
     LOGOUT_USER: 'logout user',
+    USER_DOES_NOT_HAVE_ADMINISTRATOR_RIGHTS: 'User doesn\'t have administrator rights',
+    NOT_USER: 'User is not exist',
 };

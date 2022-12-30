@@ -6,14 +6,16 @@ import {BsFillMoonStarsFill} from 'react-icons/bs';
 import Switch from 'react-switch';
 
 import {CONSTANTS} from "../../constants";
-import {logout, postActions} from "../../store";
+import {dishesActions, logout} from "../../store";
 import css from './Layout.module.css'
+import {categoryActions, getAllCategory} from "../../store/categorySlice";
+import {baseURL} from "../../config";
 
 const Layout = () => {
 
     const {user, status} = useSelector(state => state.authReducer);
 
-    const {theme} = useSelector(state => state.postReducer);
+    const {category, theme} = useSelector(state => state.categoryReducer);
 
     const dispatch = useDispatch();
 
@@ -24,7 +26,13 @@ const Layout = () => {
             dispatch(logout());
         }
     }
+
+    const toggleTheme = () => {
+        dispatch(categoryActions.setTheme());
+    }
+
     useEffect(() => {
+        dispatch(getAllCategory());
         if (status === CONSTANTS.RESOLVED) {
             navigate('/registration');
         }
@@ -34,46 +42,50 @@ const Layout = () => {
 
     }, [theme]);
 
-    const toggleTheme = () => {
-        dispatch(postActions.setTheme());
+    const clear = () => {
+        dispatch(dishesActions.clearSearchData());
     }
 
     return (
         <div className={theme === true ? css.blog_container_dark : css.blog_container}>
             <div className={theme === true ? css.header_dark : css.header}>
-                {
-                    user ?
-                        <NavLink className={theme === true ? css.user_data_box_dark : css.user_data_box}
-                                 to={'/registration'}>
-                            {user?.lastName[0].toUpperCase()}{user?.firstName[0].toUpperCase()}
-                        </NavLink>
-                        :
-                        <NavLink className={theme === true ? css.user_data_box_dark : css.user_data_box}
-                                 to={'/registration'}>
+                <div className={css.user_box}>
+                    {
+                        user ?
+                            <NavLink className={theme === true ? css.user_data_box_dark : css.user_data_box}
+                                     to={'/registration'}>
+                                {user?.lastName[0].toUpperCase()}{user?.firstName[0].toUpperCase()}
+                            </NavLink>
+                            :
+                            <NavLink className={theme === true ? css.user_data_box_dark : css.user_data_box}
+                                     to={'/registration'}>
 
-                        </NavLink>
-                }
-                <div className={css.menu}>
-                    <NavLink to={'/posts'}>
-                        Main
-                    </NavLink>
-                    <NavLink to={'/userPosts'}>
-                        My post
-                    </NavLink>
-                    <NavLink to={'/createPost'}>
-                        Add post
+                            </NavLink>
+                    }
+                    <NavLink to={'/registration'}>
+                        <button className={theme === true ? css.enter_exit_button_dark : css.enter_exit_button}
+                                onClick={() => logoutUser()}>{localStorage.getItem(CONSTANTS.USER) ? 'Exit' : 'Enter'}
+                        </button>
                     </NavLink>
                 </div>
-                <div className={theme === true ? css.information_menu_dark : css.information_menu}>
-                    <div className={css.information_path}>
-                        <div className={css.text}>
-                            Information
-                        </div>
-                    </div>
-                    <div className={css.information_drop_down_menu}>
-                        <NavLink className={css.information_drop_down_path} to={'/carousel'}>Images</NavLink>
-                        <NavLink className={css.information_drop_down_path} to={'/video'}>Video</NavLink>
-                    </div>
+                <div className={css.menu}>
+                    {
+                        category.map(categoryElement => (
+                            <NavLink key={categoryElement.id}
+                                     to={'/category/' + categoryElement.id}
+                                     state={categoryElement}
+                                     className={css.single_category_element}
+                                     onClick={() => clear()}
+                            >
+                                <div>
+                                    <img className={css.category_image} src={baseURL + '/' + categoryElement.photo}
+                                         alt={categoryElement.name}
+                                    />
+                                </div>
+                                <div>{categoryElement.name}</div>
+                            </NavLink>
+                        ))
+                    }
                 </div>
                 <div>
                     <Switch
@@ -88,11 +100,6 @@ const Layout = () => {
                         height={32}
                     />
                 </div>
-                <NavLink to={'/registration'}>
-                    <button className={theme === true ? css.enter_exit_button_dark : css.enter_exit_button}
-                            onClick={() => logoutUser()}>{localStorage.getItem(CONSTANTS.USER) ? 'Exit' : 'Enter'}
-                    </button>
-                </NavLink>
             </div>
             <div className={css.outlet}>
                 <Outlet/>

@@ -1,8 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch,} from "react-redux";
 import {CarouselControl, Image, Loading} from "../../components";
-import {getAllPosts} from "../../store";
 import {CONSTANTS} from "../../constants";
 import css from './ImageCarouselPage.module.css';
 
@@ -10,7 +9,7 @@ const ImageCarouselPage = () => {
 
         const slideInterval = useRef();
 
-        const {posts: slides, serverErrors, status, itemCount} = useSelector(state => state.postReducer);
+        const slides = [];
 
         const dispatch = useDispatch();
 
@@ -40,49 +39,49 @@ const ImageCarouselPage = () => {
             }
         };
 
-        useEffect(() => {
-            startSlideTimer();
-
-            dispatch(getAllPosts({page: 1, perPage: itemCount, title: ''}));
-
-            return () => stopSlideTimer();
-        }, [itemCount]);
+        // useEffect(() => {
+        //     startSlideTimer();
+        //
+        //     dispatch(getAllPosts({page: 1, perPage: itemCount, title: ''}));
+        //
+        //     return () => stopSlideTimer();
+        // }, [itemCount]);
 
 
         return (
             <>
-                {
-                    serverErrors && <div className={css.server_error}>{serverErrors}</div>
-                }
-                {
-                    status === CONSTANTS.LOADING
-                        ?
-                        <Loading/>
-                        :
-                        slides.length
-                            ?
-                            <div className={css.carousel}>
-                                <div
-                                    className={css.carousel_inner}
-                                    style={{transform: `translateX(${-currentSlide * 100}%)`}}
-                                >
-                                    {slides.map((slide, index) => (
-                                            <Image
-                                                key={index}
-                                                slide={slide}
-                                                stopSlide={stopSlideTimer}
-                                                startSlide={startSlideTimer}
-                                            />
-                                        )
-                                    )}
-                                </div>
-                                <CarouselControl next={next} prev={prev}/>
-                            </div>
-                            :
-                            <div className={css.slides_container_empty}>
-                                Slides empty
-                            </div>
-                }
+                {/*{*/}
+                {/*    serverErrors && <div className={css.server_error}>{serverErrors}</div>*/}
+                {/*}*/}
+                {/*{*/}
+                {/*    status === CONSTANTS.LOADING*/}
+                {/*        ?*/}
+                {/*        <Loading/>*/}
+                {/*        :*/}
+                {/*        slides.length*/}
+                {/*            ?*/}
+                {/*            <div className={css.carousel}>*/}
+                {/*                <div*/}
+                {/*                    className={css.carousel_inner}*/}
+                {/*                    style={{transform: `translateX(${-currentSlide * 100}%)`}}*/}
+                {/*                >*/}
+                {/*                    {slides.map((slide, index) => (*/}
+                {/*                            <Image*/}
+                {/*                                key={index}*/}
+                {/*                                slide={slide}*/}
+                {/*                                stopSlide={stopSlideTimer}*/}
+                {/*                                startSlide={startSlideTimer}*/}
+                {/*                            />*/}
+                {/*                        )*/}
+                {/*                    )}*/}
+                {/*                </div>*/}
+                {/*                <CarouselControl next={next} prev={prev}/>*/}
+                {/*            </div>*/}
+                {/*            :*/}
+                {/*            <div className={css.slides_container_empty}>*/}
+                {/*                Slides empty*/}
+                {/*            </div>*/}
+                {/*}*/}
             </>
         );
     }

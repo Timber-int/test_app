@@ -14,6 +14,7 @@ router.post(
     },
     dataValidatorMiddleware.dataValidator,
     userMiddleware.checkIsUserExistsOnDB,
+    authMiddleware.checkIsUserAdministrator,
     authController.registration,
 );
 router.post('/login', (req: IRequestExtended, res: Response, next: NextFunction) => {

@@ -4,3 +4,4 @@ export * from './fileMiddleware';
 export * from './authMiddleware';
 export * from './categoryMiddleware';
 export * from './dishMiddleware';
+export * from './dishVideoMiddleware';

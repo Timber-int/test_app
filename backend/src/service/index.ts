@@ -5,3 +5,5 @@ export * from './passwordService';
 export * from './fileService';
 export * from './categoryService';
 export * from './dishService';
+export * from './dishVideoService';
+export * from './ingredientService';

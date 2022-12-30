@@ -1,9 +1,11 @@
 import {
-    Column, Entity, JoinColumn, ManyToOne,
+    Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany,
 } from 'typeorm';
 import { DefaultValue, IDefaultValue } from './defaultValue';
 import { CONSTANTS } from '../constants';
 import { Category } from './category';
+import { DishVideo } from './dishVideo';
+import { Ingredient } from './ingredient';
 
 export interface IDish extends IDefaultValue {
     id: number,
@@ -52,4 +54,11 @@ export class Dish extends DefaultValue implements IDish {
     @ManyToOne(() => Category, (category) => category.dishes)
     @JoinColumn({ name: 'categoryId' })
         category: Category;
+
+    @OneToMany(() => DishVideo, (dishVideo) => dishVideo.dish)
+        videos: DishVideo[];
+
+    @ManyToMany(() => Ingredient, (ingredient) => ingredient.dishes)
+    @JoinTable()
+        ingredients: Ingredient[];
 }

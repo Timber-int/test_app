@@ -13,6 +13,7 @@ class DishController {
             } = req.query;
 
             const { id } = req.params;
+            console.log(id);
 
             const dishes = await dishService.getAllDishes(Number(id), other, Number(perPage), Number(page));
 

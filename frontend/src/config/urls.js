@@ -5,10 +5,10 @@ export const urls = {
     registration: '/registration',
     login: '/login',
     logout: '/logout',
-    posts: '/posts',
+    categories: '/categories',
+    category: '/category',
     videos: '/videos',
-    download:'/download',
     users: '/users',
-    comments: '/comments',
+    dishes: '/dishes',
     refresh: '/refresh',
 };

@@ -18,9 +18,10 @@ class DishRepository extends Repository<Dish> implements IDishRepository {
         const [dishes, itemCount] = await getManager()
             .getRepository(Dish)
             .findAndCount({
-                where: [{ name: Like(`%${searchObject.name}%`) }, { categoryId }],
+                where: [{ name: Like(`%${searchObject.name}%`), categoryId }],
                 skip,
                 take: limit,
+                relations: ['videos'],
             });
 
         return {

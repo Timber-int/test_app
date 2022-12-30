@@ -1,6 +1,7 @@
 import { NextFunction, Response, Router } from 'express';
 import { dishController } from '../controller';
 import {
+    authMiddleware,
     categoryMiddleware, dataValidatorMiddleware, dishMiddleware, fileMiddleware,
 } from '../middleware';
 import { IRequestExtended } from '../interface';
@@ -16,6 +17,7 @@ router.post('/',
         next();
     },
     dataValidatorMiddleware.dataValidator,
+    authMiddleware.checkIsUserHasLawAdministrator,
     fileMiddleware.checkIsPhotoFileExist,
     dishMiddleware.checkIsDishNameUnique,
     dishMiddleware.checkIsDishHasCategory,
@@ -27,12 +29,13 @@ router.put('/:id',
         next();
     },
     dataValidatorMiddleware.dataValidator,
+    authMiddleware.checkIsUserHasLawAdministrator,
     fileMiddleware.checkIsPhotoToUpdateFileExist,
     dishMiddleware.checkIsDishNameUnique,
     dishMiddleware.checkIsDishExistsOnDB,
     dishMiddleware.checkIsDishHasCategory,
     dishController.updateDishById);
 
-router.delete('/:id', dishMiddleware.checkIsDishExistsOnDB, dishController.deleteDishById);
+router.delete('/:id', authMiddleware.checkIsUserHasLawAdministrator, dishMiddleware.checkIsDishExistsOnDB, dishController.deleteDishById);
 
 export const dishRouter = router;

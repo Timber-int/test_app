@@ -28,13 +28,13 @@ const RegistrationPage = () => {
 
     const {status, serverErrors} = useSelector(state => state.authReducer);
 
-    const {theme} = useSelector(state => state.postReducer);
+    const {theme} = useSelector(state => state.categoryReducer);
 
     const submit = (data) => {
         dispatch(registration({registrationData: data}));
 
         if (status === CONSTANTS.RESOLVED) {
-            navigate('/userPosts');
+            navigate('/category');
         }
 
         reset();
