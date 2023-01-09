@@ -6,9 +6,7 @@ export const getAllPosts = createAsyncThunk(
     'postSlice/getAllPosts',
     async ({page, perPage, title, viewsSort}, {dispatch, rejectWithValue}) => {
         try {
-            console.log(page, 'page', perPage, 'perPage', title, 'title', viewsSort, 'videoSort')
             const data = await postService.getAllPosts(page, perPage, title, viewsSort);
-            console.log(data)
             return {data};
         } catch (e) {
             return rejectWithValue(e.response.data.message);
@@ -100,7 +98,6 @@ export const createVideo = createAsyncThunk(
     'postSlice/createVideo',
     async ({video, postId, userId}, {dispatch, rejectWithValue}) => {
         try {
-
             let formData = new FormData();
 
             formData.append('video', video[0]);
@@ -111,7 +108,6 @@ export const createVideo = createAsyncThunk(
 
             return {data};
         } catch (e) {
-            console.log(e.response)
             return rejectWithValue(e.response.data.message);
         }
     }

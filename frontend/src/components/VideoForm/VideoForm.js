@@ -43,7 +43,7 @@ const VideoForm = ({post}) => {
                 />
                 <label className={css.file_label} htmlFor="uploadVideoBtn">
                     <FaFileUpload/>
-                    Upload video
+                    Choose video
                 </label>
             </div>
             <div className={css.form_submit_box}>

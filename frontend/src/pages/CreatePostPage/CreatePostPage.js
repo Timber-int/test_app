@@ -52,13 +52,13 @@ const CreatePostPage = () => {
                 }));
                 if (status === CONSTANTS.RESOLVED) {
                     reset();
-                    navigate('/userPosts');
+                    navigate('/posts');
                 }
             } else {
                 dispatch(createPost({postData: {...data, userId: user.id}}));
                 if (status === CONSTANTS.RESOLVED) {
                     reset();
-                    navigate('/userPosts');
+                    navigate('/posts');
                 }
             }
         }

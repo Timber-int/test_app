@@ -30,7 +30,7 @@ const UserPostsPage = () => {
                     :
                     <div className={css.posts_container}>
                         {
-                            posts.length ?
+                            posts.length && [...posts].filter(post => post.userId === user.id).length ?
                                 [...posts].filter(post => post.userId === user.id).map(post => (
                                     <Post
                                         key={post.id}

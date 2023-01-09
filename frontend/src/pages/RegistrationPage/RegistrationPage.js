@@ -30,17 +30,18 @@ const RegistrationPage = () => {
 
     const {theme} = useSelector(state => state.postReducer);
 
-    const submit = (data) => {
-        dispatch(registration({registrationData: data}));
+    const submit = async (data) => {
+        await dispatch(registration({registrationData: data}));
 
         if (status === CONSTANTS.RESOLVED) {
-            navigate('/userPosts');
+            await navigate('/userPosts');
         }
 
         reset();
     }
 
     useEffect(() => {
+
     }, [theme]);
 
     return (
@@ -90,7 +91,8 @@ const RegistrationPage = () => {
                         <div className={css.form_submit_box}>
                             <input className={theme === true ? css.confirm_input_dark : css.confirm_input} type="submit"
                                    value={'Confirm'}/>
-                            <NavLink className={theme === true ? css.nav_to_login_dark :css.nav_to_login} to={'/login'}>I already have account?</NavLink>
+                            <NavLink className={theme === true ? css.nav_to_login_dark : css.nav_to_login}
+                                     to={'/login'}>I already have account?</NavLink>
                         </div>
                     </form>
                 </>

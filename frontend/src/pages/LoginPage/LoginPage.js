@@ -29,19 +29,19 @@ const LoginPage = () => {
 
     const {theme} = useSelector(state => state.postReducer);
 
-    const submit = (data) => {
-        dispatch(login({loginData: data}));
+    const submit = async (data) => {
+        await dispatch(login({loginData: data}));
 
         reset();
 
         if (status === CONSTANTS.RESOLVED) {
-            navigate('/userPosts');
+            await navigate('/userPosts');
         }
     }
 
-
     useEffect(() => {
     }, [theme]);
+
 
     return (
         <div>
@@ -70,8 +70,10 @@ const LoginPage = () => {
                             />
                         </div>
                         <div className={css.form_submit_box}>
-                            <input className={theme === true ? css.confirm_input_dark : css.confirm_input} type="submit" value={'Confirm'}/>
-                            <NavLink className={theme === true ? css.nav_to_login_dark :css.nav_to_login} to={'/registration'}>I don't have account?</NavLink>
+                            <input className={theme === true ? css.confirm_input_dark : css.confirm_input} type="submit"
+                                   value={'Confirm'}/>
+                            <NavLink className={theme === true ? css.nav_to_login_dark : css.nav_to_login}
+                                     to={'/registration'}>I don't have account?</NavLink>
                         </div>
                     </form>
                 </>

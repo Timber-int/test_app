@@ -29,7 +29,7 @@ const VideoPage = () => {
                         videos.map(videoElem => (
                             <div className={css.video_element} key={videoElem.id}>
                                 <Player>
-                                    <source src={baseURL + '/' + videoElem.video}/>
+                                    <source src={baseURL + '/' + videoElem.video} />
                                 </Player>
                             </div>
                         ))
