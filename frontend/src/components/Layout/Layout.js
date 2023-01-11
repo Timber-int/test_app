@@ -12,18 +12,11 @@ const Layout = () => {
 
     const dispatch = useDispatch();
 
-    const navigate = useNavigate();
-
     const logoutUser = () => {
         if (user) {
             dispatch(logout());
         }
     }
-    useEffect(() => {
-        if (status === CONSTANTS.RESOLVED) {
-            navigate('/registration');
-        }
-    }, [user, status]);
 
     return (
         <div className={css.blog_container}>

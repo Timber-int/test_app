@@ -8,6 +8,7 @@ import {LoginPage, RegistrationPage} from "./pages";
 const App = () => {
 
     return (
+
         <Routes>
             <Route path={'/'} element={<Layout/>}>
                 <Route path={'registration'} element={<RegistrationPage/>}/>
