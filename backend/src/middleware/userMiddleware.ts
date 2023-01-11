@@ -4,13 +4,14 @@ import { userService } from '../service';
 import { ErrorHandler } from '../errorHandler';
 import { MESSAGE } from '../message';
 import { STATUS } from '../errorCode';
+import { IUser } from '../entity';
 
 class UserMiddleware {
-    public async checkIsUserExistsOnDB(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+    public async checkIsUserEmailUnique(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            const userWithEmail = await userService.getUserByEmail(req.body.email);
+            const userFromDB = await userService.getUserByEmail(req.body.email);
 
-            if (userWithEmail) {
+            if (userFromDB) {
                 next(new ErrorHandler(MESSAGE.WRONG_EMAIL_OR_PASSWORD, STATUS.CODE_404));
                 return;
             }
@@ -21,14 +22,16 @@ class UserMiddleware {
         }
     }
 
-    public async checkIsUserExistsByIdOnDB(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+    public async checkIsUserExistByEmail(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            const userFromDB = await userService.getUserById(Number(req.params.id));
+            const userFromDB = await userService.getUserByEmail(req.body.email);
 
             if (!userFromDB) {
-                next(new ErrorHandler(MESSAGE.USER_NOT_EXIST, STATUS.CODE_404));
+                next(new ErrorHandler(MESSAGE.WRONG_EMAIL_OR_PASSWORD, STATUS.CODE_404));
                 return;
             }
+
+            req.user = userFromDB;
 
             next();
         } catch (e) {
@@ -36,16 +39,18 @@ class UserMiddleware {
         }
     }
 
-    public async checkIsUserByEmailExist(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+    public async checkUserRole(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            const userWithEmail = await userService.getUserByEmail(req.body.email);
+            const { userRoles } = req;
 
-            if (!userWithEmail) {
-                next(new ErrorHandler(MESSAGE.WRONG_EMAIL_OR_PASSWORD, STATUS.CODE_404));
-                return;
+            const { role } = req.user as IUser;
+
+            if (role) {
+                if (!userRoles?.includes(role)) {
+                    next(new ErrorHandler(MESSAGE.UNAUTHORIZED, STATUS.CODE_401));
+                    return;
+                }
             }
-
-            req.user = userWithEmail;
 
             next();
         } catch (e) {

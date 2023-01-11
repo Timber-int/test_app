@@ -10,7 +10,7 @@ const RequireAuth = ({children}) => {
         user,
     } = useSelector(state => state['authReducer']);
 
-    if (!user && !localStorage.getItem(TokenType.ACCESS) && !localStorage.getItem(TokenType.REFRESH)) {
+    if (!user && !localStorage.getItem(TokenType.ACCESS_TOKEN) && !localStorage.getItem(TokenType.REFRESH_TOKEN)) {
         return <Navigate to={'/login'} state={location}/>;
     }
 

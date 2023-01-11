@@ -5,28 +5,18 @@ import { DefaultValue, IDefaultValue } from './defaultValue';
 import { CONSTANTS } from '../constants';
 import { User } from './user';
 
-export interface IToken extends IDefaultValue {
-    id: number;
-    accessToken: string;
-    refreshToken: string;
-    userId: number,
+export interface IActionToken extends IDefaultValue{
+    actionToken:string,
+    userId:number,
 }
-
-@Entity('tokens', { database: CONSTANTS.DATA_BASE })
-export class Token extends DefaultValue implements IToken {
+@Entity('actionToken', { database: CONSTANTS.DATA_BASE })
+export class ActionToken extends DefaultValue implements IActionToken {
     @Column({
         type: 'varchar',
         width: 255,
         nullable: false,
     })
-        accessToken: string;
-
-    @Column({
-        type: 'varchar',
-        width: 255,
-        nullable: false,
-    })
-        refreshToken: string;
+        actionToken: string;
 
     @Column({
         type: 'int',
@@ -38,3 +28,5 @@ export class Token extends DefaultValue implements IToken {
     @JoinColumn({ name: 'userId' })
         user: User;
 }
+
+export const actionToken = new ActionToken();

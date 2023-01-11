@@ -3,11 +3,16 @@ export interface ITokenPair {
     refreshToken: string;
 }
 
+export interface IActionTokenSingle {
+    actionToken: string,
+}
+
 export interface ITokenDataToSave {
     accessToken: string,
     refreshToken: string;
     userId: number;
 }
+
 export interface IActionTokenDataToSave {
     actionToken: string,
     userId: number;

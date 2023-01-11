@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {NavLink, useNavigate} from "react-router-dom";
+import React from 'react';
+import {NavLink} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {Loading} from "../../components";
@@ -11,8 +11,6 @@ import {CONSTANTS} from "../../constants";
 import css from './RegistrationPage.module.css';
 
 const RegistrationPage = () => {
-
-    const navigate = useNavigate();
 
     const {
         register,
@@ -30,11 +28,6 @@ const RegistrationPage = () => {
 
     const submit = (data) => {
         dispatch(registration({registrationData: data}));
-
-        if (status === CONSTANTS.RESOLVED) {
-            navigate('/userPosts');
-        }
-
         reset();
     }
 
@@ -43,12 +36,18 @@ const RegistrationPage = () => {
             {
                 serverErrors && <div className={css.server_error}>{serverErrors}</div>
             }
-            {status === CONSTANTS.LOADING ? <Loading/> :
-                <>
+            {status === CONSTANTS.LOADING
+                ?
+                <div className={css.loading_container}><Loading/></div>
+                :
+                <div className={css.container}>
+                    <div className={css.registration_container}>
                     <div className={css.registration_value_container}>Registration</div>
+                        <div className={css.registration_block}>
                     <form onSubmit={handleSubmit(submit)} className={css.registration_form}>
                         <div className={css.errors_span}>{errors.firstName &&
-                            <span>{errors.firstName.message}</span>}</div>
+                            <span>{errors.firstName.message}</span>}
+                        </div>
                         <div className={css.input_box}>
                             <div className={css.input_box_name}>Firstname:</div>
                             <input className={css.registration_input}
@@ -87,7 +86,9 @@ const RegistrationPage = () => {
                             <NavLink className={css.nav_to_login} to={'/login'}>I already have account?</NavLink>
                         </div>
                     </form>
-                </>
+                        </div>
+                    </div>
+                </div>
             }
         </div>
     );

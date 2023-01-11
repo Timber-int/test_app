@@ -2,13 +2,16 @@ import axios from "axios";
 import {baseURL, urls} from "../config";
 import {TokenType} from "../constants";
 import {authService} from "./authService";
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const axiosService = axios.create({
     baseURL,
 });
 
 axiosService.interceptors.request.use(config => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem(TokenType.ACCESS)} ${localStorage.getItem(TokenType.REFRESH)}`;
+    config.headers.Authorization = `Bearer ${cookies.get(TokenType.ACCESS_TOKEN)} ${cookies.get(TokenType.REFRESH_TOKEN)}`;
     return config;
 });
 
@@ -20,8 +23,8 @@ axiosService.interceptors.response.use(config => {
         originalRequest._isRetry = true;
         try {
             const response = await authService.refresh(baseURL + urls.auth + urls.refresh);
-            localStorage.setItem(TokenType.ACCESS, response.accessToken);
-            localStorage.setItem(TokenType.REFRESH, response.refreshToken);
+            cookies.set(TokenType.ACCESS_TOKEN, response.accessToken, [{httpOnly: true}]);
+            cookies.set(TokenType.REFRESH_TOKEN, response.refreshToken, [{httpOnly: true}]);
             return axiosService.request(originalRequest);
         } catch (e) {
             console.error('User is not authorization!!!');

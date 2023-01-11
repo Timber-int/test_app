@@ -1,13 +1,13 @@
 import { IUser } from '../entity';
 
 class PasswordService {
-    public async userNormalization(userToNormalize: any): Promise<IUser> {
+    public async userNormalization(user: any): Promise<IUser> {
         const fieldsToRemove = ['password'];
 
         fieldsToRemove.forEach((field: string) => {
-            delete userToNormalize[field];
+            delete user[field];
         });
-        return userToNormalize;
+        return user;
     }
 }
 

@@ -7,7 +7,7 @@ import { ITokenRepository } from './tokenRepositoryInterface';
 
 @EntityRepository(Token)
 class TokenRepository extends Repository<Token> implements ITokenRepository {
-    public async getTokenById(userId: number): Promise<Token | undefined> {
+    public async getTokenByUserId(userId: number): Promise<Token | undefined> {
         return getManager().getRepository(Token).findOne({ userId });
     }
 

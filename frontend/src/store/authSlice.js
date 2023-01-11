@@ -1,6 +1,9 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import Cookies from 'universal-cookie';
 import {authService} from "../services";
-import {CONSTANTS, TokenType} from "../constants";
+import {CONSTANTS, TokenType, UserRole} from "../constants";
+
+const cookies = new Cookies();
 
 export const registration = createAsyncThunk(
     'authSlice/registration',
@@ -53,21 +56,21 @@ export const login = createAsyncThunk(
 const authSlice = createSlice({
     name: 'authSlice',
     initialState: {
-        user: localStorage.getItem(CONSTANTS.USER) ? JSON.parse(localStorage.getItem(CONSTANTS.USER)) : null,
+        user: cookies.get(UserRole.USER) ? cookies.get(UserRole.USER) : null,
         serverErrors: null,
         status: null,
     },
     reducers: {
         userAuthorization: (state, action) => {
-            localStorage.setItem(TokenType.ACCESS, action.payload.data.accessToken);
-            localStorage.setItem(TokenType.REFRESH, action.payload.data.refreshToken);
-            localStorage.setItem(CONSTANTS.USER, JSON.stringify(action.payload.data.user));
+            cookies.set(TokenType.ACCESS_TOKEN, action.payload.data.accessToken, [{httpOnly: true}]);
+            cookies.set(TokenType.REFRESH_TOKEN, action.payload.data.refreshToken, [{httpOnly: true}]);
+            cookies.set(UserRole.USER, JSON.stringify(action.payload.data.user), [{httpOnly: true}]);
             state.user = action.payload.data.user;
         },
         userLogout: (state, action) => {
-            localStorage.removeItem(TokenType.ACCESS);
-            localStorage.removeItem(TokenType.REFRESH);
-            localStorage.removeItem(CONSTANTS.USER);
+            cookies.remove(TokenType.ACCESS_TOKEN);
+            cookies.remove(TokenType.REFRESH_TOKEN);
+            cookies.remove(UserRole.USER);
             state.user = null;
         },
     },

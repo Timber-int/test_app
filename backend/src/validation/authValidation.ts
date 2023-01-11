@@ -57,3 +57,23 @@ export const loginDataValidator = Joi.object({
             'string.pattern.base': 'Password not valid',
         }),
 });
+export const forgotPasswordDataValidator = Joi.object({
+    email: Joi.string()
+        .regex(CONSTANTS.EMAIL_REGEXP)
+        .required()
+        .trim()
+        .messages({
+            'string.pattern.base': 'Email not valid',
+        }),
+
+});
+export const forgotPasswordSetDataValidator = Joi.object({
+    password: Joi.string()
+        .regex(CONSTANTS.PASSWORD_REGEXP)
+        .required()
+        .trim()
+        .messages({
+            'string.pattern.base': 'Password not valid',
+        }),
+
+});

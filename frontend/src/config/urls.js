@@ -5,8 +5,6 @@ export const urls = {
     registration: '/registration',
     login: '/login',
     logout: '/logout',
-    posts: '/posts',
     users: '/users',
-    comments: '/comments',
     refresh: '/refresh',
 };

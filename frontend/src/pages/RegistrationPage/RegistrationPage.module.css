@@ -2,18 +2,44 @@
     display: block;
 }
 
+.container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.registration_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 .registration_value_container {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 32px;
-    color: snow;
+    font-size: 4vh;
+    color: #000;
     font-weight: bold;
 }
 
+.registration_block {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.registration_form {
+}
+
 .server_error {
-    margin-bottom: 20px;
-    font-size: 32px;
+    margin-bottom: 2vh;
+    font-size: 3vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,23 +47,22 @@
 }
 
 .input_box_name {
-    font-size: 32px;
-    color: snow;
+    font-size: 3vh;
+    color: #000;
 }
 
-
 .registration_input {
-    padding: 10px;
-    font-size: 24px;
-    border-radius: 10px;
-    max-width: 500px;
-    width: 500px;
+    padding: 1vh;
+    font-size: 2vh;
+    border-radius: 1vh;
+    max-width: 50vh;
+    width: 50vh;
 }
 
 .errors_span {
-    max-width: 500px;
-    margin: 5px;
-    font-size: 24px;
+    max-width: 50vh;
+    margin: 0.5vh;
+    font-size: 2vh;
     display: flex;
     align-items: center;
     color: #e53935;
@@ -47,30 +72,37 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 2vh;
 }
 
 .confirm_input {
-    font-size: 24px;
-    padding: 10px;
+    font-size: 2vh;
+    padding: 1vh;
     cursor: pointer;
-    border: 1px solid snow;
-    border-radius: 5px;
+    border: 0.1vh solid snow;
+    border-radius: 0.5vh;
     color: snow;
     background-color: #141E30;
 }
 
 .confirm_input:hover {
-    border: 1px solid snow;
+    border: 0.1vh solid snow;
     color: #141E30;
-    background-color: snow;
+    background-color: #f1f1f1;
 }
 
 .nav_to_login {
-    color: snow;
+    color: #000;
 }
-
 
 .nav_to_login:hover {
     color: #e53935;
+}
+
+.loading_container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

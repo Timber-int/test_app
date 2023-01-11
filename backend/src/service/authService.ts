@@ -1,5 +1,5 @@
-import { ITokenPair } from '../interface';
 import { IUser } from '../entity';
+import { ITokenPair } from '../interface';
 import { tokenService } from './tokenService';
 
 class AuthService {
@@ -8,16 +8,13 @@ class AuthService {
     }
 
     private async _getTokenPair(user: IUser): Promise<ITokenPair> {
-        const { id, email } = user;
+        const { email, id } = user as IUser;
 
-        const { accessToken, refreshToken } = await tokenService.generateTokenPair({ userEmail: email, userId: id });
+        const { accessToken, refreshToken } = await tokenService.generateTokenPair({ userId: id, userEmail: email });
 
         await tokenService.saveTokenToDB({ accessToken, refreshToken, userId: id });
 
-        return {
-            accessToken,
-            refreshToken,
-        };
+        return { accessToken, refreshToken };
     }
 }
 

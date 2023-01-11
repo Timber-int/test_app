@@ -13,6 +13,7 @@ class DataValidatorMiddleware {
                 next(new ErrorHandler(error.details[0].message));
                 return;
             }
+
             req.body = value;
 
             next();

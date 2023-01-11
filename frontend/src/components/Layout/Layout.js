@@ -30,44 +30,20 @@ const Layout = () => {
             <div className={css.header}>
                 {
                     user ?
-                        <NavLink className={css.user_data_box} to={'/registration'}>
+                        <NavLink className={css.user_data_box} to={'/login'}>
                             {user?.firstName[0].toUpperCase()}{user?.lastName[0].toUpperCase()}
                         </NavLink>
                         :
-                        <NavLink className={css.user_data_box} to={'/registration'}>
+                        <NavLink className={css.user_data_box} to={'/login'}>
 
                         </NavLink>
                 }
-                <div className={css.menu}>
-                    <NavLink to={'/posts'}>
-                        Main
-                    </NavLink>
-                    <NavLink to={'/userPosts'}>
-                        My post
-                    </NavLink>
-                    <NavLink to={'/createPost'}>
-                        Add post
-                    </NavLink>
-                </div>
-                <div className={css.information_menu}>
-                    <div className={css.information_path}>
-                        <div className={css.text}>
-                            Information
-                        </div>
-                    </div>
-                    <div className={css.information_drop_down_menu}>
-                        <NavLink className={css.information_drop_down_path} to={'/carousel'}>Images</NavLink>
-                        <NavLink className={css.information_drop_down_path} to={'/carousel'}>Story</NavLink>
-                    </div>
-                </div>
-                <NavLink to={'/registration'}>
-                    <button className={css.enter_exit_button}
-                            onClick={() => logoutUser()}>{localStorage.getItem(CONSTANTS.USER) ? 'Exit' : 'Enter'}
-                    </button>
-                </NavLink>
             </div>
             <div className={css.outlet}>
                 <Outlet/>
+            </div>
+            <div className={css.footer}>
+
             </div>
         </div>
     );
