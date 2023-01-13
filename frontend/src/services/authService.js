@@ -1,4 +1,4 @@
-import axiosService from "./axiosService";
+import {axiosService} from "./axiosService";
 import {baseURL, urls} from "../config";
 
 export const authService = {

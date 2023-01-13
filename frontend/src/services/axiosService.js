@@ -1,13 +1,19 @@
 import axios from "axios";
-import {baseURL, urls} from "../config";
-import {TokenType} from "../constants";
+import {baseMovieURL, baseURL, urls} from "../config";
+import {AUTHORIZATION, TokenType} from "../constants";
 import {authService} from "./authService";
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-const axiosService = axios.create({
+export const axiosService = axios.create({
     baseURL,
+});
+export const axiosMovieService = axios.create({
+    baseURL: baseMovieURL,
+    headers: {
+       Authorization: AUTHORIZATION
+    }
 });
 
 axiosService.interceptors.request.use(config => {
@@ -33,4 +39,3 @@ axiosService.interceptors.response.use(config => {
     }
 });
 
-export default axiosService;
