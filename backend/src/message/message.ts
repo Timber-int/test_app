@@ -10,5 +10,7 @@ export const MESSAGE = {
     CATEGORY_NOT_EXIST: 'Category is not exists',
     CATEGORY_EXIST: 'Category is already exists',
     GENDER_NOT_EXIST: 'Gender is not exists',
+    PRODUCT_NOT_EXIST: 'Product is not exists',
     GENDER_EXIST: 'Gender is already not exists',
+    PRODUCT_EXIST: 'Product is already not exists',
 };

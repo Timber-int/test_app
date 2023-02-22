@@ -8,6 +8,7 @@ export class CreateTableProducts1677053348979 implements MigrationInterface {
         title  VARCHAR(255) NOT NULL UNIQUE,
         photo VARCHAR(255) NOT NULL,
         price INT CHECK (price >= 0),
+        priceBeforeDiscount INT CHECK (priceBeforeDiscount >= 0) DEFAULT(0),
         count INT CHECK (count >= 0),
         hasDiscount BOOLEAN DEFAULT(false),
         discount INT CHECK (discount >= 0) DEFAULT(0),

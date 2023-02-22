@@ -5,3 +5,4 @@ export * from './passwordService';
 export * from './fileService';
 export * from './categoryService';
 export * from './genderService';
+export * from './productService';

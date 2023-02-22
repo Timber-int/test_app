@@ -1,9 +1,10 @@
 import {
-    Column, Entity, JoinColumn, ManyToOne,
+    Column, Entity, JoinColumn, ManyToOne, OneToMany,
 } from 'typeorm';
 import { DefaultValue, IDefaultValue } from './defaultValue';
 import { CONSTANTS } from '../constants';
 import { Gender } from './gender';
+import { Product } from './product';
 
 export interface ICategory extends IDefaultValue {
     id: number,
@@ -11,7 +12,7 @@ export interface ICategory extends IDefaultValue {
     photo: string,
     genderId:number,
     gender?:Gender,
-    // products?: Product[],
+    products?: Product[],
 }
 
 @Entity('categories', { database: CONSTANTS.DATA_BASE })
@@ -41,6 +42,6 @@ export class Category extends DefaultValue implements ICategory {
     @JoinColumn({ name: 'genderId' })
         gender: Gender;
 
-    // @OneToMany(() => Product, (Product) => Product.category)
-    // products: Product[];
+    @OneToMany(() => Product, (product: Product) => product.category)
+        products: Product[];
 }

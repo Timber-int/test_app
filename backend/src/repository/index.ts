@@ -8,3 +8,5 @@ export * from './categoryRepository/categoryRepositoryInterface';
 export * from './categoryRepository/categoryRepository';
 export * from './genderRepository/genderRepositoryInterface';
 export * from './genderRepository/genderRepository';
+export * from './productRepository/productRepository';
+export * from './productRepository/productRepositoryInterface';

@@ -1,5 +1,7 @@
 import { Request } from 'express';
-import { ICategory, IGender, IUser } from '../entity';
+import {
+    ICategory, IGender, IProduct, IUser,
+} from '../entity';
 
 export interface IRequestExtended extends Request {
     chosenValidationType?: any,
@@ -7,4 +9,5 @@ export interface IRequestExtended extends Request {
     user?: IUser,
     category?:ICategory,
     gender?:IGender,
+    product?:IProduct,
 }
