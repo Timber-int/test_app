@@ -31,3 +31,7 @@ export const TokenType = {
     REFRESH_TOKEN: 'REFRESH_TOKEN',
     ACTION_TOKEN: 'ACTION_TOKEN',
 };
+
+export const PhotoFormat = {
+    jpg: 'jpg',
+}

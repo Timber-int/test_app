@@ -4,3 +4,7 @@ export * from './actionTokenRepository/actionTokenRepositoryInterface';
 export * from './actionTokenRepository/actionTokenRepository';
 export * from './tokenRepository/tokenRepository';
 export * from './tokenRepository/tokenRepositoryInterface';
+export * from './categoryRepository/categoryRepositoryInterface';
+export * from './categoryRepository/categoryRepository';
+export * from './genderRepository/genderRepositoryInterface';
+export * from './genderRepository/genderRepository';

@@ -2,11 +2,15 @@ import { Router } from 'express';
 
 import { STATUS } from '../errorCode';
 import { authRouter } from './authRouter';
+import { categoryRouter } from './categoryRouter';
+import { genderRouter } from './genderRouter';
 // import { userRouter } from './userRouter';
 
 const router = Router();
 
 router.use('/auth', authRouter);
+router.use('/categories', categoryRouter);
+router.use('/genders', genderRouter);
 // router.use('/users', userRouter);
 
 // @ts-ignore

@@ -1,0 +1,46 @@
+import {
+    Column, Entity, JoinColumn, ManyToOne,
+} from 'typeorm';
+import { DefaultValue, IDefaultValue } from './defaultValue';
+import { CONSTANTS } from '../constants';
+import { Gender } from './gender';
+
+export interface ICategory extends IDefaultValue {
+    id: number,
+    title: string,
+    photo: string,
+    genderId:number,
+    gender?:Gender,
+    // products?: Product[],
+}
+
+@Entity('categories', { database: CONSTANTS.DATA_BASE })
+export class Category extends DefaultValue implements ICategory {
+    @Column({
+        type: 'varchar',
+        width: 255,
+        nullable: false,
+        unique: true,
+    })
+        title: string;
+
+    @Column({
+        type: 'varchar',
+        width: 255,
+        nullable: false,
+    })
+        photo: string;
+
+    @Column({
+        type: 'int',
+        nullable: false,
+    })
+        genderId: number;
+
+    @ManyToOne(() => Gender, (gender:Gender) => gender.category)
+    @JoinColumn({ name: 'genderId' })
+        gender: Gender;
+
+    // @OneToMany(() => Product, (Product) => Product.category)
+    // products: Product[];
+}
