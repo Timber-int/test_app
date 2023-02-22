@@ -10,3 +10,5 @@ export * from './genderRepository/genderRepositoryInterface';
 export * from './genderRepository/genderRepository';
 export * from './productRepository/productRepository';
 export * from './productRepository/productRepositoryInterface';
+export * from './productInformationRepository/productInformationRepository';
+export * from './productInformationRepository/productInformationRepositoryInterface';

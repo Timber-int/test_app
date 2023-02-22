@@ -5,3 +5,4 @@ export * from './actionToken';
 export * from './category';
 export * from './gender';
 export * from './product';
+export * from './productInformation';

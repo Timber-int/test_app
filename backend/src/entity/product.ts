@@ -1,9 +1,10 @@
 import {
-    Column, Entity, JoinColumn, ManyToOne,
+    Column, Entity, JoinColumn, ManyToOne, OneToOne,
 } from 'typeorm';
 import { DefaultValue, IDefaultValue } from './defaultValue';
 import { CONSTANTS } from '../constants';
 import { Category } from './category';
+import { ProductInformation } from './productInformation';
 
 export interface IProduct extends IDefaultValue {
     id: number,
@@ -16,6 +17,7 @@ export interface IProduct extends IDefaultValue {
     priceBeforeDiscount: number
     categoryId: number,
     category?: Category,
+    productInformation?:ProductInformation,
 }
 
 @Entity('products', { database: CONSTANTS.DATA_BASE })
@@ -77,4 +79,8 @@ export class Product extends DefaultValue implements IProduct {
     @ManyToOne(() => Category, (category: Category) => category.products)
     @JoinColumn({ name: 'categoryId' })
         category: Category;
+
+    @OneToOne(() => ProductInformation)
+    // @JoinColumn()
+        productInformation: ProductInformation;
 }

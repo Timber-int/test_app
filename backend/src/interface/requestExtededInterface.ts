@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import {
-    ICategory, IGender, IProduct, IUser,
+    ICategory, IGender, IProduct, IUser, ProductInformation,
 } from '../entity';
 
 export interface IRequestExtended extends Request {
@@ -10,4 +10,5 @@ export interface IRequestExtended extends Request {
     category?:ICategory,
     gender?:IGender,
     product?:IProduct,
+    productInformation?:ProductInformation,
 }

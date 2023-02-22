@@ -9,7 +9,6 @@ import { Product } from './product';
 export interface ICategory extends IDefaultValue {
     id: number,
     title: string,
-    photo: string,
     genderId:number,
     gender?:Gender,
     products?: Product[],
@@ -24,13 +23,6 @@ export class Category extends DefaultValue implements ICategory {
         unique: true,
     })
         title: string;
-
-    @Column({
-        type: 'varchar',
-        width: 255,
-        nullable: false,
-    })
-        photo: string;
 
     @Column({
         type: 'int',

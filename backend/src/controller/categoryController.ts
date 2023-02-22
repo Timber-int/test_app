@@ -1,11 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
-import { UploadedFile } from 'express-fileupload';
-import * as fs from 'fs';
-import path from 'path';
-import { categoryService, fileService } from '../service';
+import { NextFunction, Request, Response } from 'express';
+import { categoryService } from '../service';
 import { IRequestExtended } from '../interface';
 import { ICategory } from '../entity';
-import { PhotoFormat } from '../constants';
 
 class CategoryController {
     public async getAllCategories(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
@@ -32,14 +28,7 @@ class CategoryController {
 
     public async createCategory(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            const categoryPhoto = req.files?.photo as UploadedFile;
-
-            const categoryFilePath = await fileService.saveFile(categoryPhoto, PhotoFormat.jpg);
-
-            const category = await categoryService.createCategory({
-                ...req.body,
-                photo: categoryFilePath,
-            });
+            const category = await categoryService.createCategory(req.body);
 
             res.json({ data: category });
         } catch (e) {
@@ -49,25 +38,9 @@ class CategoryController {
 
     public async updateCategoryById(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            const { id, photo } = req.category as ICategory;
+            const { id } = req.category as ICategory;
 
-            const categoryPhoto = req.files?.photo as UploadedFile;
-
-            let categoryFilePath;
-
-            if (categoryPhoto) {
-                await fs.unlink(path.join(__dirname, '../', 'fileDirectory', 'photos', photo), ((err) => {
-                    if (err) {
-                        res.json({ msg: err?.message });
-                    }
-                }));
-                categoryFilePath = await fileService.saveFile(categoryPhoto, PhotoFormat.jpg);
-            }
-
-            await categoryService.updateCategoryById(id, categoryPhoto ? {
-                ...req.body,
-                photo: categoryFilePath,
-            } : { ...req.body });
+            await categoryService.updateCategoryById(id, req.body);
 
             const category = await categoryService.getCategoryById(id);
 
@@ -79,15 +52,9 @@ class CategoryController {
 
     public async deleteCategoryById(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            const { id, photo } = req.category as ICategory;
+            const { id } = req.category as ICategory;
 
             await categoryService.deleteCategoryById(Number(id));
-
-            await fs.unlink(path.join(__dirname, '../', 'fileDirectory', 'photos', photo), ((err) => {
-                if (err) {
-                    res.json({ msg: err?.message });
-                }
-            }));
 
             res.json({ data: req.category });
         } catch (e) {

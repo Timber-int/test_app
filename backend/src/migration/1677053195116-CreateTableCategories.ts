@@ -7,7 +7,6 @@ export class CreateTableCategories1677053195116 implements MigrationInterface {
         id INT PRIMARY KEY AUTO_INCREMENT,
         title VARCHAR(255) NOT NULL UNIQUE,
         genderId INT NOT NULL,
-        photo VARCHAR(255) NOT NULL,
         createdAt TIMESTAMP DEFAULT(UTC_TIMESTAMP()) NOT NULL,
         deletedAt TIMESTAMP,
         FOREIGN KEY (genderId) REFERENCES Genders (id)
