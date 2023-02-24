@@ -7,3 +7,5 @@ export * from './categoryService';
 export * from './genderService';
 export * from './productService';
 export * from './productInformationService';
+export * from './productSizeService';
+export * from './productPhotoService';

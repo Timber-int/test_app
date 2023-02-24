@@ -12,3 +12,7 @@ export * from './productRepository/productRepository';
 export * from './productRepository/productRepositoryInterface';
 export * from './productInformationRepository/productInformationRepository';
 export * from './productInformationRepository/productInformationRepositoryInterface';
+export * from './productSizeRepository/productSizeRepositoryInterface';
+export * from './productSizeRepository/productSizeRepository';
+export * from './productPhotoRepository/productPhotoRepositoryInterface';
+export * from './productPhotoRepository/productPhotoRepository';

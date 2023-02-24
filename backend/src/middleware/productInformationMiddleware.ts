@@ -15,6 +15,8 @@ class ProductInformationMiddleware {
                 return;
             }
 
+            req.product = productFromDB;
+
             next();
         } catch (e) {
             next(e);

@@ -2,7 +2,11 @@ import { NextFunction, Response, Router } from 'express';
 import { productController } from '../controller';
 import { dataValidatorMiddleware, fileMiddleware, productMiddleware } from '../middleware';
 import { IRequestExtended } from '../interface';
-import { createProductValidator, updateProductSetDiscountValidator, updateProductValidator } from '../validation';
+import {
+    createProductValidator,
+    updateProductSetDiscountValidator,
+    updateProductValidator,
+} from '../validation';
 
 const router = Router();
 

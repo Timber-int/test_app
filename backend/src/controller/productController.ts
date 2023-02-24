@@ -1,8 +1,13 @@
 import { NextFunction, Response } from 'express';
 import { UploadedFile } from 'express-fileupload';
+import * as fs from 'fs';
+import path from 'path';
 import { IRequestExtended } from '../interface';
 import { fileService, productService } from '../service';
 import { IProduct } from '../entity';
+import { STATUS } from '../errorCode';
+import { ErrorHandler } from '../errorHandler';
+import { MESSAGE } from '../message';
 
 class ProductController {
     public async getAllProducts(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
@@ -85,6 +90,11 @@ class ProductController {
     public async deleteProductById(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
             const product = req.product as IProduct;
+            await fs.unlink(path.join(__dirname, '../', 'fileDirectory', 'photos', product.photo), (err) => {
+                if (err) {
+                    next(new ErrorHandler(MESSAGE.PHOTO_NOT_EXIST, STATUS.CODE_404));
+                }
+            });
             await productService.deleteProductById(Number(req.params.id));
 
             res.json({ product });

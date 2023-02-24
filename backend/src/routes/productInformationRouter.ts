@@ -1,5 +1,5 @@
 import { NextFunction, Response, Router } from 'express';
-import { categoryController, productInformationController } from '../controller';
+import { productInformationController } from '../controller';
 import { IRequestExtended } from '../interface';
 import { dataValidatorMiddleware, productInformationMiddleware } from '../middleware';
 import { createProductInformationValidator, updateProductInformationValidator } from '../validation';
@@ -24,7 +24,7 @@ router.put('/:id',
     },
     dataValidatorMiddleware.dataValidator,
     productInformationMiddleware.checkIsProductInformationByIdExist,
-    categoryController.updateCategoryById,
+    productInformationController.updateProductInformationById,
 );
 
 router.delete('/:id',

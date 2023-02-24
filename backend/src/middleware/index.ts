@@ -6,3 +6,5 @@ export * from './categoryMiddleware';
 export * from './genderMiddleware';
 export * from './productMiddleware';
 export * from './productInformationMiddleware';
+export * from './productSizeMiddleware';
+export * from './productPhotoMiddleware';

@@ -6,3 +6,5 @@ export * from './category';
 export * from './gender';
 export * from './product';
 export * from './productInformation';
+export * from './productSize';
+export * from './productPhoto';

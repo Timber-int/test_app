@@ -1,10 +1,12 @@
 import {
-    Column, Entity, JoinColumn, ManyToOne, OneToOne,
+    Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne,
 } from 'typeorm';
 import { DefaultValue, IDefaultValue } from './defaultValue';
 import { CONSTANTS } from '../constants';
 import { Category } from './category';
 import { ProductInformation } from './productInformation';
+import { ProductSize } from './productSize';
+import { ProductPhoto } from './productPhoto';
 
 export interface IProduct extends IDefaultValue {
     id: number,
@@ -14,10 +16,13 @@ export interface IProduct extends IDefaultValue {
     count: number,
     hasDiscount: boolean,
     discount: number,
+    selected:boolean,
     priceBeforeDiscount: number
     categoryId: number,
     category?: Category,
     productInformation?:ProductInformation,
+    productSizes?:ProductSize[],
+    productPhotos?:ProductPhoto[],
 }
 
 @Entity('products', { database: CONSTANTS.DATA_BASE })
@@ -26,7 +31,6 @@ export class Product extends DefaultValue implements IProduct {
         type: 'varchar',
         width: 255,
         nullable: false,
-        unique: true,
     })
         title: string;
 
@@ -65,6 +69,13 @@ export class Product extends DefaultValue implements IProduct {
         hasDiscount: boolean;
 
     @Column({
+        type: 'boolean',
+        nullable: false,
+        default: false,
+    })
+        selected: boolean;
+
+    @Column({
         type: 'int',
         nullable: false,
     })
@@ -83,4 +94,10 @@ export class Product extends DefaultValue implements IProduct {
     @OneToOne(() => ProductInformation)
     // @JoinColumn()
         productInformation: ProductInformation;
+
+    @OneToMany(() => ProductSize, (productSize:ProductSize) => productSize.product)
+        productSizes: ProductSize[];
+
+    @OneToMany(() => ProductPhoto, (productPhoto:ProductPhoto) => productPhoto.product)
+        productPhotos: ProductPhoto[];
 }

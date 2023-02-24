@@ -10,6 +10,7 @@ import cors from 'cors';
 import { createConnection } from 'typeorm';
 import { config } from './config';
 import { apiRouter } from './routes';
+import { cronRunner } from './cron';
 
 const app = express();
 
@@ -23,7 +24,7 @@ app.use(fileUpload());
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'fileDirectory','photos')));
+app.use(express.static(path.join(__dirname, 'fileDirectory', 'photos')));
 app.use(express.static(path.join(__dirname, '../', 'public')));
 app.use(morgan('dev'));
 app.use(cors(corsOptions));
@@ -35,13 +36,13 @@ const { PORT } = config;
 
 app.use(apiRouter);
 
-
 app.listen(PORT, async () => {
     console.log(`Server has been started on ${PORT} port...`);
     try {
         const connection = await createConnection();
         if (connection) {
             console.log('Database connected...');
+            await cronRunner();
         }
     } catch (e) {
         if (e) {

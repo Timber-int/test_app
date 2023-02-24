@@ -6,6 +6,8 @@ import { categoryRouter } from './categoryRouter';
 import { genderRouter } from './genderRouter';
 import { productRouter } from './productRouter';
 import { productInformationRouter } from './productInformationRouter';
+import { productSizeRouter } from './productSizeRouter';
+import { productPhotoRouter } from './productPhotoRouter';
 // import { userRouter } from './userRouter';
 
 const router = Router();
@@ -15,6 +17,8 @@ router.use('/categories', categoryRouter);
 router.use('/genders', genderRouter);
 router.use('/products', productRouter);
 router.use('/productInformation', productInformationRouter);
+router.use('/productSizes', productSizeRouter);
+router.use('/productPhotos', productPhotoRouter);
 // router.use('/users', userRouter);
 
 // @ts-ignore
