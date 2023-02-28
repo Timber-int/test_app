@@ -45,6 +45,8 @@ export const createProductValidator = Joi.object({
         }),
     categoryId: Joi.number()
         .required(),
+    genderCategoryId: Joi.number()
+        .required(),
 });
 
 export const updateProductSetDiscountValidator = Joi.object({

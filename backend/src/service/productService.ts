@@ -5,11 +5,12 @@ import { IPaginationResponse } from '../interface';
 
 class ProductService {
     public async getAllProducts(
-        categoryId: number,
+        categoryId: number | null,
+        genderCategoryId: number,
         searchObject: Partial<IProduct>,
         limit: number,
         page: number): Promise<IPaginationResponse<IProduct>> {
-        return productRepository.getAllProducts(categoryId, searchObject, limit, page);
+        return productRepository.getAllProducts(categoryId, genderCategoryId, searchObject, limit, page);
     }
 
     public async getProductByTitle(title: string): Promise<Product | undefined> {

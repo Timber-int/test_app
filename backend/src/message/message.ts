@@ -8,6 +8,7 @@ export const MESSAGE = {
     TOKEN_NOT_VALID: 'token not valid',
     LOGOUT_USER: 'logout user',
     CATEGORY_NOT_EXIST: 'Category is not exists',
+    GENDER_CATEGORY_NOT_INCLUDE_CATEGORY: 'genderCategory is not includes category',
     PRODUCT_INFORMATION_NOT_EXIST: 'Product information is not exists',
     CATEGORY_EXIST: 'Category is already exists',
     GENDER_CATEGORY_EXIST: 'Gender category is already exists',

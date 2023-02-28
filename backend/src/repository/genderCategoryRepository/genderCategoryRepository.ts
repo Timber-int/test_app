@@ -21,7 +21,7 @@ class GenderCategoryRepository extends Repository<GenderCategory> implements IGe
     public async getGenderCategoryById(id: number): Promise<GenderCategory | undefined> {
         return getManager()
             .getRepository(GenderCategory)
-            .findOne({ id });
+            .findOne({ id }, { relations: ['category'] });
     }
 
     public async createGenderCategory(category: IGenderCategory): Promise<GenderCategory> {

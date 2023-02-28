@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
 import { IRequestExtended } from '../interface';
-import { genderService, genreCategoryService } from '../service';
+import { genderService, genderCategoryService } from '../service';
 import { ErrorHandler } from '../errorHandler';
 import { MESSAGE } from '../message';
 import { STATUS } from '../errorCode';
@@ -8,7 +8,7 @@ import { STATUS } from '../errorCode';
 class GenderCategoryMiddleware {
     public async checkIsGenderCategoryByTitleExist(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            const genderCategoryFromDB = await genreCategoryService.getGenderCategoryById(req.body.title);
+            const genderCategoryFromDB = await genderCategoryService.getGenderCategoryById(req.body.title);
 
             if (genderCategoryFromDB) {
                 next(new ErrorHandler(MESSAGE.GENDER_CATEGORY_EXIST, STATUS.CODE_404));
@@ -55,7 +55,7 @@ class GenderCategoryMiddleware {
         try {
             const { id } = req.params;
 
-            const genderCategoryFromDB = await genreCategoryService.getGenderCategoryById(Number(id));
+            const genderCategoryFromDB = await genderCategoryService.getGenderCategoryById(Number(id));
 
             if (!genderCategoryFromDB) {
                 next(new ErrorHandler(MESSAGE.GENDER_CATEGORY_EXIST, STATUS.CODE_404));

@@ -24,4 +24,4 @@ class GenderCategoryService {
     }
 }
 
-export const genreCategoryService = new GenderCategoryService();
+export const genderCategoryService = new GenderCategoryService();

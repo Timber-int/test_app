@@ -8,16 +8,32 @@ import { IProductRepository } from './productRepositoryInterface';
 @EntityRepository(Product)
 class ProductRepository extends Repository<Product> implements IProductRepository {
     public async getAllProducts(
-        categoryId: number,
+        categoryId: number | null,
+        genderCategoryId: number,
         searchObject: Partial<IProduct> = {},
         limit: number = 1,
         page: number = 1): Promise<IPaginationResponse<IProduct>> {
         const skip = limit * (page - 1);
+        if (categoryId) {
+            const [products, itemCount] = await getManager()
+                .getRepository(Product)
+                .findAndCount({
+                    where: [{ title: Like(`%${searchObject.title}%`), genderCategoryId, categoryId }],
+                    skip,
+                    take: limit,
+                });
 
+            return {
+                page,
+                perPage: limit,
+                itemCount,
+                data: products,
+            };
+        }
         const [products, itemCount] = await getManager()
             .getRepository(Product)
             .findAndCount({
-                where: [{ title: Like(`%${searchObject.title}%`), categoryId }],
+                where: [{ title: Like(`%${searchObject.title}%`), genderCategoryId }],
                 skip,
                 take: limit,
             });

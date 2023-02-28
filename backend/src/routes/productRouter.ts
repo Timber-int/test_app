@@ -10,21 +10,40 @@ import {
 
 const router = Router();
 
-router.get('/:id', productMiddleware.checkIsCategoryExist, productController.getAllProducts);
-router.post('/', (req: IRequestExtended, res: Response, next: NextFunction) => {
-    req.chosenValidationType = createProductValidator;
-    next();
-}, dataValidatorMiddleware.dataValidator, fileMiddleware.checkIsPhotoFileExist, productMiddleware.checkIsProductByTitleExist, productMiddleware.checkIsProductByCategoryExist, productController.createProduct,
+router.get('/genderCategory/:genderCategoryId/category/',
+    productMiddleware.checkIsGenderCategoryExist,
+    productMiddleware.checkIsCategoryExist,
+    productController.getAllProducts);
+router.post('/',
+    (req: IRequestExtended, res: Response, next: NextFunction) => {
+        req.chosenValidationType = createProductValidator;
+        next();
+    },
+    dataValidatorMiddleware.dataValidator,
+    fileMiddleware.checkIsPhotoFileExist,
+    productMiddleware.checkIsProductByTitleExist,
+    productMiddleware.checkIsProductByCategoryExist,
+    productMiddleware.checkIsProductByGenderCategoryExist,
+    productController.createProduct,
 );
-router.put('/:id', (req: IRequestExtended, res: Response, next: NextFunction) => {
-    req.chosenValidationType = updateProductValidator;
-    next();
-}, dataValidatorMiddleware.dataValidator, fileMiddleware.checkIsPhotoToUpdateFileExist, productMiddleware.checkIsProductByTitleExist, productController.updateProductById,
+router.put('/:id',
+    (req: IRequestExtended, res: Response, next: NextFunction) => {
+        req.chosenValidationType = updateProductValidator;
+        next();
+    },
+    dataValidatorMiddleware.dataValidator,
+    fileMiddleware.checkIsPhotoToUpdateFileExist,
+    productMiddleware.checkIsProductByTitleExist,
+    productController.updateProductById,
 );
-router.put('/setDiscount/:id', (req: IRequestExtended, res: Response, next: NextFunction) => {
-    req.chosenValidationType = updateProductSetDiscountValidator;
-    next();
-}, dataValidatorMiddleware.dataValidator, productMiddleware.checkIsProductByIdExist, productController.updateProductByIdSetDiscount,
+router.put('/setDiscount/:id',
+    (req: IRequestExtended, res: Response, next: NextFunction) => {
+        req.chosenValidationType = updateProductSetDiscountValidator;
+        next();
+    },
+    dataValidatorMiddleware.dataValidator,
+    productMiddleware.checkIsProductByIdExist,
+    productController.updateProductByIdSetDiscount,
 );
 router.delete('/:id', productMiddleware.checkIsProductByIdExist, productController.deleteProductById);
 

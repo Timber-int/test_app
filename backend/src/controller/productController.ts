@@ -13,16 +13,17 @@ class ProductController {
     public async getAllProducts(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
             const {
+                id,
                 page,
                 perPage,
                 ...other
             } = req.query;
 
             const {
-                id,
+                genderCategoryId,
             } = req.params;
 
-            const products = await productService.getAllProducts(Number(id), other, Number(perPage), Number(page));
+            const products = await productService.getAllProducts(Number(id), Number(genderCategoryId), other, Number(perPage), Number(page));
 
             res.json({ products });
         } catch (e) {
