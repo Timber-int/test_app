@@ -16,3 +16,5 @@ export * from './productSizeRepository/productSizeRepositoryInterface';
 export * from './productSizeRepository/productSizeRepository';
 export * from './productPhotoRepository/productPhotoRepositoryInterface';
 export * from './productPhotoRepository/productPhotoRepository';
+export * from './genderCategoryRepository/genderCategoryRepository';
+export * from './genderCategoryRepository/genderCategoryRepositoryInterface';

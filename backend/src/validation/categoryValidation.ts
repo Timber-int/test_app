@@ -9,7 +9,7 @@ export const createCategoryValidator = Joi.object({
             'string.empty': '"title" Can not be empty',
             'string.pattern.base': 'Enter only letter min 3 max 100',
         }),
-    genderId: Joi.number()
+    genderCategoryId: Joi.number()
         .required(),
 });
 

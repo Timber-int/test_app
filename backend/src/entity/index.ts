@@ -8,3 +8,4 @@ export * from './product';
 export * from './productInformation';
 export * from './productSize';
 export * from './productPhoto';
+export * from './genderCategory';

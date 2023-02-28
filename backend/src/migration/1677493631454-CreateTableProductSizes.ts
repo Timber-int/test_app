@@ -1,15 +1,15 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CreateTableCategories1677053195116 implements MigrationInterface {
+export class CreateTableProductSizes1677493631454 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-        CREATE TABLE IF NOT EXISTS Categories(
+        CREATE TABLE IF NOT EXISTS ProductSizes (
         id INT PRIMARY KEY AUTO_INCREMENT,
-        title VARCHAR(255) NOT NULL UNIQUE,
-        genderId INT NOT NULL,
+        productSize INT CHECK (productSize >= 0) NOT NULL,
+        productId INT NOT NULL,
         createdAt TIMESTAMP DEFAULT(UTC_TIMESTAMP()) NOT NULL,
         deletedAt TIMESTAMP,
-        FOREIGN KEY (genderId) REFERENCES Genders (id)
+        FOREIGN KEY (productId) REFERENCES Products (id)
            ON DELETE CASCADE
            ON UPDATE CASCADE
         )
@@ -18,7 +18,7 @@ export class CreateTableCategories1677053195116 implements MigrationInterface {
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-            DROP TABLE IF EXIST Categories
+            DROP TABLE IF EXIST ProductSizes
         `);
     }
 }

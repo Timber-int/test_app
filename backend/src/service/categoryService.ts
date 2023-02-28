@@ -3,8 +3,8 @@ import { ICategory } from '../entity';
 import { categoryRepository } from '../repository';
 
 class CategoryService {
-    public async getAllCategories(id:number): Promise<ICategory[]> {
-        return categoryRepository.getAllCategories(id);
+    public async getAllCategories(): Promise<ICategory[]> {
+        return categoryRepository.getAllCategories();
     }
 
     public async getCategoryByTitle(title: string): Promise<ICategory | undefined> {

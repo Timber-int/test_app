@@ -5,3 +5,4 @@ export * from './productValidator';
 export * from './categoryValidation';
 export * from './productSizeValidation';
 export * from './productPhotoValidation';
+export * from './genderCategoryValidation';

@@ -6,7 +6,9 @@ import { createCategoryValidator, updateCategoryValidator } from '../validation'
 
 const router = Router();
 
-router.get('/:id', categoryMiddleware.checkIsGenderExist, categoryController.getAllCategories);
+router.get('/',
+    // categoryMiddleware.checkIsGenderCategoryExist,
+    categoryController.getAllCategories);
 // router.get('/:id', categoryController.getCategoryById);
 router.post('/',
     (req: IRequestExtended, res: Response, next: NextFunction) => {
@@ -15,7 +17,7 @@ router.post('/',
     },
     dataValidatorMiddleware.dataValidator,
     categoryMiddleware.checkIsCategoryByTitleExist,
-    categoryMiddleware.checkIsCategoryByGenderExist,
+    categoryMiddleware.checkIsCategoryByGenderCategoryExist,
     categoryController.createCategory,
 );
 

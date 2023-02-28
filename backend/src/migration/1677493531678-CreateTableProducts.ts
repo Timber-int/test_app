@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CreateTableProducts1677053348979 implements MigrationInterface {
+export class CreateTableProducts1677493531678 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
         CREATE TABLE IF NOT EXISTS Products (

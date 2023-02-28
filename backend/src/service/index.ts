@@ -9,3 +9,4 @@ export * from './productService';
 export * from './productInformationService';
 export * from './productSizeService';
 export * from './productPhotoService';
+export * from './genderCategoryService';

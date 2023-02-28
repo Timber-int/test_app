@@ -3,14 +3,14 @@ import {
 } from 'typeorm';
 import { DefaultValue, IDefaultValue } from './defaultValue';
 import { CONSTANTS } from '../constants';
-import { Gender } from './gender';
 import { Product } from './product';
+import { GenderCategory } from './genderCategory';
 
 export interface ICategory extends IDefaultValue {
     id: number,
     title: string,
-    genderId:number,
-    gender?:Gender,
+    genderCategoryId:number,
+    genderCategory?:GenderCategory,
     products?: Product[],
 }
 
@@ -28,11 +28,11 @@ export class Category extends DefaultValue implements ICategory {
         type: 'int',
         nullable: false,
     })
-        genderId: number;
+        genderCategoryId: number;
 
-    @ManyToOne(() => Gender, (gender:Gender) => gender.category)
-    @JoinColumn({ name: 'genderId' })
-        gender: Gender;
+    @ManyToOne(() => GenderCategory, (genderCategory:GenderCategory) => genderCategory.category)
+    @JoinColumn({ name: 'genderCategoryId' })
+        genderCategory: GenderCategory;
 
     @OneToMany(() => Product, (product: Product) => product.category)
         products: Product[];

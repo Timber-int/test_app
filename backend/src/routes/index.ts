@@ -6,3 +6,4 @@ export * from './productRouter';
 export * from './productInformationRouter';
 export * from './productSizeRouter';
 export * from './productPhotoRouter';
+export * from './genderCategoryRouter';

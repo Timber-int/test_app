@@ -8,12 +8,14 @@ import { productRouter } from './productRouter';
 import { productInformationRouter } from './productInformationRouter';
 import { productSizeRouter } from './productSizeRouter';
 import { productPhotoRouter } from './productPhotoRouter';
+import { genderCategoryRouter } from './genderCategoryRouter';
 // import { userRouter } from './userRouter';
 
 const router = Router();
 
 router.use('/auth', authRouter);
 router.use('/categories', categoryRouter);
+router.use('/genderCategories', genderCategoryRouter);
 router.use('/genders', genderRouter);
 router.use('/products', productRouter);
 router.use('/productInformation', productInformationRouter);

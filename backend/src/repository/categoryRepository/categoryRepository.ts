@@ -6,10 +6,10 @@ import { ICategoryRepository } from './categoryRepositoryInterface';
 
 @EntityRepository(Category)
 class CategoryRepository extends Repository<Category> implements ICategoryRepository {
-    public async getAllCategories(id:number): Promise<Category[]> {
+    public async getAllCategories(): Promise<Category[]> {
         return getManager()
             .getRepository(Category)
-            .find({ where: { genderId: id } });
+            .find();
     }
 
     public async getCategoryByTitle(title: string): Promise<Category | undefined> {

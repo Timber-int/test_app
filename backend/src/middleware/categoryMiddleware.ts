@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
 import { IRequestExtended } from '../interface';
-import { categoryService, genderService } from '../service';
+import { categoryService, genreCategoryService } from '../service';
 import { ErrorHandler } from '../errorHandler';
 import { MESSAGE } from '../message';
 import { STATUS } from '../errorCode';
@@ -21,12 +21,12 @@ class CategoryMiddleware {
         }
     }
 
-    public async checkIsCategoryByGenderExist(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+    public async checkIsCategoryByGenderCategoryExist(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            const genderFromDB = await genderService.getGenderById(Number(req.body.genderId));
+            const genderCategoryFromDB = await genreCategoryService.getGenderCategoryById(Number(req.body.genderCategoryId));
 
-            if (!genderFromDB) {
-                next(new ErrorHandler(MESSAGE.GENDER_NOT_EXIST, STATUS.CODE_404));
+            if (!genderCategoryFromDB) {
+                next(new ErrorHandler(MESSAGE.GENDER_CATEGORY_NOT_EXIST, STATUS.CODE_404));
                 return;
             }
 
@@ -36,12 +36,12 @@ class CategoryMiddleware {
         }
     }
 
-    public async checkIsGenderExist(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+    public async checkIsGenderCategoryExist(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            const genderFromDB = await genderService.getGenderById(Number(req.params.id));
+            const genderCategoryFromDB = await genreCategoryService.getGenderCategoryById(Number(req.params.id));
 
-            if (!genderFromDB) {
-                next(new ErrorHandler(MESSAGE.GENDER_NOT_EXIST, STATUS.CODE_404));
+            if (!genderCategoryFromDB) {
+                next(new ErrorHandler(MESSAGE.GENDER_CATEGORY_NOT_EXIST, STATUS.CODE_404));
                 return;
             }
 

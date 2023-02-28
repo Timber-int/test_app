@@ -8,3 +8,4 @@ export * from './productMiddleware';
 export * from './productInformationMiddleware';
 export * from './productSizeMiddleware';
 export * from './productPhotoMiddleware';
+export * from './genderCategoryMiddleware';

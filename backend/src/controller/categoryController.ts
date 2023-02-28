@@ -6,7 +6,7 @@ import { ICategory } from '../entity';
 class CategoryController {
     public async getAllCategories(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            const categories = await categoryService.getAllCategories(Number(req.params.id));
+            const categories = await categoryService.getAllCategories();
 
             res.json({ data: categories });
         } catch (e) {

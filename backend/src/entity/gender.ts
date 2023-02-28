@@ -1,12 +1,12 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { DefaultValue, IDefaultValue } from './defaultValue';
 import { CONSTANTS } from '../constants';
-import { Category } from './category';
+import { GenderCategory } from './genderCategory';
 
 export interface IGender extends IDefaultValue {
     id: number,
     title: string,
-    category?:Category[]
+    genderCategory?:GenderCategory[]
 }
 
 @Entity('genders', { database: CONSTANTS.DATA_BASE })
@@ -19,6 +19,6 @@ export class Gender extends DefaultValue implements IGender {
     })
         title: string;
 
-    @OneToMany(() => Category, (category:Category) => category.gender)
-        category: Category[];
+    @OneToMany(() => GenderCategory, (genderCategory:GenderCategory) => genderCategory.gender)
+        genderCategory: GenderCategory[];
 }
