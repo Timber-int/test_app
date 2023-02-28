@@ -1,14 +1,21 @@
 import React, {useEffect} from 'react';
 import styled from "styled-components";
-import {NavLink, useLocation} from "react-router-dom";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../hooks";
-import {getAllCategory, getAllGenderCategory} from "../store/slices";
-import {IGenderCategoryResponse} from "../interfaces/genderCategoryInterface";
+import {categoryActions, getAllCategory, getAllGenderCategory} from "../store/slices";
+import {IGenderCategoryResponse} from "../interfaces";
 import {ICategoryResponse} from '../interfaces';
+
+interface IMoveToProductsData {
+    genderCategory: IGenderCategoryResponse,
+    category?: ICategoryResponse,
+}
 
 const GenderCategoryPage = () => {
 
     const {state: gender} = useLocation();
+
+    const navigate = useNavigate();
 
     const dispatch = useAppDispatch();
 
@@ -21,6 +28,14 @@ const GenderCategoryPage = () => {
         dispatch(getAllCategory());
     }, [gender.id]);
 
+    const moveToProducts = (id: number, data: IMoveToProductsData): void => {
+        dispatch(categoryActions.setChosenCategoryNull());
+        if (data.category) {
+            dispatch(categoryActions.setChosenCategory({category: data.category}));
+        }
+        navigate('/products/' + id, {state: data.genderCategory, replace: true});
+    }
+
     return (
         <Container>
             {
@@ -28,19 +43,26 @@ const GenderCategoryPage = () => {
                     (
                         <div key={genderCategory.id} className='gender_category_container'>
                             <div className='gender_category_box'>
-                                <NavLink
-                                    className='gender_category'
-                                    to={'/products/' + genderCategory.id}
-                                >
-                        <span className='title'>
+                                <div className='gender_category'>
+                        <span className='title'
+                              onClick={() => moveToProducts(genderCategory.id, {genderCategory})}>
                             {genderCategory.title}
                         </span>
-                                </NavLink>
+                                </div>
                             </div>
                             <div className='category_box'>
                                 {
                                     category.filter(category => category.genderCategoryId === genderCategory.id).map((category: ICategoryResponse) => (
-                                        <span className='title' key={category.id}>{category.title}</span>
+                                        <div
+                                            className='title'
+                                            key={category.id}
+                                            onClick={() => moveToProducts(genderCategory.id, {
+                                                genderCategory,
+                                                category
+                                            })}
+                                        >
+                                            {category.title}
+                                        </div>
                                     ))
                                 }
                             </div>
@@ -87,6 +109,7 @@ const Container = styled.div`
         width: 100%;
         margin: 1.5vh 0 0 0;
         text-transform: capitalize;
+        text-decoration: none;
         color: #857b7b;
         cursor: pointer;
       }

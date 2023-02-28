@@ -65,6 +65,8 @@ class ProductMiddleware {
                 return;
             }
 
+            req.genderCategory = genderCategoryFromDB;
+
             next();
         } catch (e) {
             next(e);
@@ -82,7 +84,6 @@ class ProductMiddleware {
                     next(new ErrorHandler(MESSAGE.GENDER_CATEGORY_NOT_INCLUDE_CATEGORY, STATUS.CODE_404));
                     return;
                 }
-                next();
 
                 const categoryFromDB = await categoryService.getCategoryById(Number(req.query.id));
 
@@ -92,6 +93,24 @@ class ProductMiddleware {
                 }
                 next();
             } else {
+                next();
+            }
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async checkIsProductCategoryByGenderCategoryExist(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            const genderCategoryFromDB = req.genderCategory as IGenderCategory;
+
+            if (genderCategoryFromDB.category) {
+                const isCategoryByGenderCategory = genderCategoryFromDB.category.find((category: ICategory) => category.id === Number(req.body.categoryId));
+
+                if (!isCategoryByGenderCategory) {
+                    next(new ErrorHandler(MESSAGE.GENDER_CATEGORY_NOT_INCLUDE_CATEGORY, STATUS.CODE_404));
+                    return;
+                }
                 next();
             }
         } catch (e) {

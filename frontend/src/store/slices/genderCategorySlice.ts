@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios, {AxiosError} from "axios";
 import {CONSTANTS} from "../../constants";
 import {genderCategoryService} from "../../service";
-import {IGenderCategoryResponse} from "../../interfaces/genderCategoryInterface";
+import {IGenderCategoryResponse} from "../../interfaces";
 
 export const getAllGenderCategory = createAsyncThunk(
     'categorySlice/getAllGenderCategory',

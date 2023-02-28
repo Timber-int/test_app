@@ -24,6 +24,7 @@ router.post('/',
     productMiddleware.checkIsProductByTitleExist,
     productMiddleware.checkIsProductByCategoryExist,
     productMiddleware.checkIsProductByGenderCategoryExist,
+    productMiddleware.checkIsProductCategoryByGenderCategoryExist,
     productController.createProduct,
 );
 router.put('/:id',
