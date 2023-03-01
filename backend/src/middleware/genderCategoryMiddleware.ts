@@ -30,6 +30,8 @@ class GenderCategoryMiddleware {
                 return;
             }
 
+            req.gender = genderFromDB;
+
             next();
         } catch (e) {
             next(e);
@@ -39,7 +41,7 @@ class GenderCategoryMiddleware {
     public async checkIsGenderExist(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
             const genderFromDB = await genderService.getGenderById(Number(req.params.id));
-            console.log(genderFromDB);
+
             if (!genderFromDB) {
                 next(new ErrorHandler(MESSAGE.GENDER_NOT_EXIST, STATUS.CODE_404));
                 return;

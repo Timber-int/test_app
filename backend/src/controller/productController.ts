@@ -13,17 +13,27 @@ class ProductController {
     public async getAllProducts(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
             const {
-                id,
+                categoryId,
                 page,
                 perPage,
+                genderCategoryId,
                 ...other
             } = req.query;
 
             const {
-                genderCategoryId,
+                genderId,
             } = req.params;
+            // console.log(req.query);
+            // console.log(req.params);
 
-            const products = await productService.getAllProducts(Number(id), Number(genderCategoryId), other, Number(perPage), Number(page));
+            const products = await productService.getAllProducts(
+                Number(genderId),
+                Number(categoryId),
+                Number(genderCategoryId),
+                other,
+                Number(perPage),
+                Number(page),
+            );
 
             res.json({ products });
         } catch (e) {
@@ -36,7 +46,7 @@ class ProductController {
             const productPhoto = req.files?.photo as UploadedFile;
 
             const productPhotoPath = await fileService.saveFile(productPhoto, 'jpg');
-
+            console.log(req.body);
             const product = await productService.createProduct({
                 ...req.body,
                 photo: productPhotoPath,

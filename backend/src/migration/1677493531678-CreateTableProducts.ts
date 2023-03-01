@@ -15,10 +15,12 @@ export class CreateTableProducts1677493531678 implements MigrationInterface {
         discount INT CHECK (discount >= 0) DEFAULT(0),
         categoryId INT NOT NULL,
         genderCategoryId INT NOT NULL,
+        genderId INT NOT NULL,
         createdAt TIMESTAMP DEFAULT(UTC_TIMESTAMP()) NOT NULL,
         deletedAt TIMESTAMP,
         FOREIGN KEY (categoryId) REFERENCES Categories (id),
-        FOREIGN KEY (genderCategoryId) REFERENCES GenderCategories (id)
+        FOREIGN KEY (genderCategoryId) REFERENCES GenderCategories (id),
+        FOREIGN KEY (genderId) REFERENCES Genders (id)
            ON DELETE CASCADE
            ON UPDATE CASCADE
         )

@@ -21,7 +21,7 @@ class GenderRepository extends Repository<Gender> implements IGenderRepository {
     public async getGenderById(id: number): Promise<Gender | undefined> {
         return getManager()
             .getRepository(Gender)
-            .findOne({ id });
+            .findOne({ id }, { relations: ['genderCategory'] });
     }
 
     public async createGender(gender: IGender): Promise<Gender> {

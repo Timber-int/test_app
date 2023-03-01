@@ -8,17 +8,21 @@ import { IProductRepository } from './productRepositoryInterface';
 @EntityRepository(Product)
 class ProductRepository extends Repository<Product> implements IProductRepository {
     public async getAllProducts(
+        genderId: number,
         categoryId: number | null,
-        genderCategoryId: number,
+        genderCategoryId: number | null,
         searchObject: Partial<IProduct> = {},
         limit: number = 1,
         page: number = 1): Promise<IPaginationResponse<IProduct>> {
         const skip = limit * (page - 1);
-        if (categoryId) {
+
+        if (!categoryId && !genderCategoryId) {
             const [products, itemCount] = await getManager()
                 .getRepository(Product)
                 .findAndCount({
-                    where: [{ title: Like(`%${searchObject.title}%`), genderCategoryId, categoryId }],
+                    where: [{
+                        title: Like(`%${searchObject.title}%`), genderId,
+                    }],
                     skip,
                     take: limit,
                 });
@@ -30,10 +34,30 @@ class ProductRepository extends Repository<Product> implements IProductRepositor
                 data: products,
             };
         }
+
+        if (categoryId) {
+            const [products, itemCount] = await getManager()
+                .getRepository(Product)
+                .findAndCount({
+                    where: [{
+                        title: Like(`%${searchObject.title}%`), genderCategoryId, categoryId, genderId,
+                    }],
+                    skip,
+                    take: limit,
+                });
+
+            return {
+                page,
+                perPage: limit,
+                itemCount,
+                data: products,
+            };
+        }
+
         const [products, itemCount] = await getManager()
             .getRepository(Product)
             .findAndCount({
-                where: [{ title: Like(`%${searchObject.title}%`), genderCategoryId }],
+                where: [{ title: Like(`%${searchObject.title}%`), genderCategoryId, genderId }],
                 skip,
                 take: limit,
             });

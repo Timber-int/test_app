@@ -1,6 +1,8 @@
 import { NextFunction, Response, Router } from 'express';
 import { productController } from '../controller';
-import { dataValidatorMiddleware, fileMiddleware, productMiddleware } from '../middleware';
+import {
+    dataValidatorMiddleware, fileMiddleware, genderCategoryMiddleware, productMiddleware,
+} from '../middleware';
 import { IRequestExtended } from '../interface';
 import {
     createProductValidator,
@@ -10,7 +12,8 @@ import {
 
 const router = Router();
 
-router.get('/genderCategory/:genderCategoryId/category/',
+router.get('/gender/:genderId',
+    productMiddleware.checkIsGenderExist,
     productMiddleware.checkIsGenderCategoryExist,
     productMiddleware.checkIsCategoryExist,
     productController.getAllProducts);
@@ -22,8 +25,10 @@ router.post('/',
     dataValidatorMiddleware.dataValidator,
     fileMiddleware.checkIsPhotoFileExist,
     productMiddleware.checkIsProductByTitleExist,
-    productMiddleware.checkIsProductByCategoryExist,
+    genderCategoryMiddleware.checkIsGenderCategoryByGenderExist,
     productMiddleware.checkIsProductByGenderCategoryExist,
+    productMiddleware.checkIsProductByCategoryExist,
+    productMiddleware.checkIsProductGenderCategoryByGenderExist,
     productMiddleware.checkIsProductCategoryByGenderCategoryExist,
     productController.createProduct,
 );

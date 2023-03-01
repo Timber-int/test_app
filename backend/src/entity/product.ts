@@ -8,6 +8,7 @@ import { ProductInformation } from './productInformation';
 import { ProductSize } from './productSize';
 import { ProductPhoto } from './productPhoto';
 import { GenderCategory } from './genderCategory';
+import { Gender } from './gender';
 
 export interface IProduct extends IDefaultValue {
     id: number,
@@ -21,6 +22,7 @@ export interface IProduct extends IDefaultValue {
     priceBeforeDiscount: number
     categoryId: number,
     genderCategoryId: number,
+    genderId:number,
     category?: Category,
     genderCategory?: GenderCategory,
     productInformation?:ProductInformation,
@@ -96,6 +98,12 @@ export class Product extends DefaultValue implements IProduct {
     })
         genderCategoryId: number;
 
+    @Column({
+        type: 'int',
+        nullable: false,
+    })
+        genderId: number;
+
     @ManyToOne(() => Category, (category: Category) => category.products)
     @JoinColumn({ name: 'categoryId' })
         category: Category;
@@ -103,6 +111,10 @@ export class Product extends DefaultValue implements IProduct {
     @ManyToOne(() => GenderCategory, (genderCategory: GenderCategory) => genderCategory.products)
     @JoinColumn({ name: 'genderCategoryId' })
         genderCategory: GenderCategory;
+
+    @ManyToOne(() => Gender, (gender: Gender) => gender.products)
+    @JoinColumn({ name: 'genderId' })
+        gender: Gender;
 
     @OneToOne(() => ProductInformation)
     // @JoinColumn()
