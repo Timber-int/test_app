@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import styled from "styled-components";
-import {NavLink, Outlet, useNavigate} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {categoryActions, genderCategoryActions, getAllGenders} from "../store/slices";
-import {IGenderResponse} from "../interfaces";
 import {IMoveToProductsData} from './GenderCategoryPage';
+import {productActions} from "../store/slices/productSlice";
 
 const MenuPage = () => {
 
@@ -19,12 +19,14 @@ const MenuPage = () => {
     }, []);
 
     const moveToGenderCategory = (data: IMoveToProductsData) => {
+        dispatch(productActions.setPage({pageNumber: 1}));
         dispatch(categoryActions.setChosenCategoryNull());
         dispatch(genderCategoryActions.setChosenGenderCategoryNull());
         navigate('/menu/category/' + data.gender.id, {state: data.gender, replace: true});
     }
 
     const moveToProducts = (data: IMoveToProductsData) => {
+        dispatch(productActions.setPage({pageNumber: 1}));
         dispatch(categoryActions.setChosenCategoryNull());
         dispatch(genderCategoryActions.setChosenGenderCategoryNull());
         navigate('/products/' + data.gender.id, {state: data, replace: true});

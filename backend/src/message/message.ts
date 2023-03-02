@@ -22,4 +22,5 @@ export const MESSAGE = {
     PRODUCT_PHOTOS_LIMIT: 'Product photo limits 5 photos',
     GENDER_EXIST: 'Gender is already not exists',
     PRODUCT_EXIST: 'Product is already not exists',
+    PRODUCT_PRICE_HAVE_DISCOUNT: 'Can not update, because product price have discount',
 };

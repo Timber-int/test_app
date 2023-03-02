@@ -40,6 +40,7 @@ router.put('/:id',
     dataValidatorMiddleware.dataValidator,
     fileMiddleware.checkIsPhotoToUpdateFileExist,
     productMiddleware.checkIsProductByTitleExist,
+    productMiddleware.checkIsProductHasDiscount,
     productController.updateProductById,
 );
 router.put('/setDiscount/:id',

@@ -1,23 +1,30 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IProductResponse} from "../../interfaces";
 import axios, {AxiosError} from "axios";
 import {productService} from "../../service";
 import {CONSTANTS} from "../../constants";
 
-interface IGetAllProductData {
+export interface IGetAllProductData {
     genderCategoryId?: number,
     categoryId?: number,
-    genderId:number,
-    page?: number,
-    perPage?: number,
-    title?: string,
+    genderId: number,
+    page: number,
+    perPage: number,
+    title: string,
 }
 
 export const getAllProducts = createAsyncThunk(
     'categorySlice/getAllProducts',
     async (payload: IGetAllProductData, {dispatch, rejectWithValue}) => {
         try {
-            const data = await productService.getAllProducts(payload.genderId, payload.genderCategoryId, payload.categoryId);
+            const data = await productService.getAllProducts({
+                genderId: payload.genderId,
+                genderCategoryId: payload.genderCategoryId,
+                categoryId: payload.categoryId,
+                page: payload.page,
+                perPage: payload.perPage,
+                title:payload.title,
+            });
             return {productResponse: data};
         } catch (e) {
             if (axios.isAxiosError(e)) {
@@ -41,14 +48,18 @@ const initialState: ProductInitialState = {
     status: null,
     serverErrors: null,
     page: 1,
-    perPage: 20,
+    perPage: 1,
     itemCount: 20,
 }
 
 export const productSlice = createSlice({
     name: 'productSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setPage: (state, action: PayloadAction<{ pageNumber: number }>) => {
+            state.page = action.payload.pageNumber;
+        },
+    },
     extraReducers: builder => {
         builder.addCase(getAllProducts.pending, (state, action) => {
                 state.status = CONSTANTS.LOADING;
@@ -75,6 +86,6 @@ export const productSlice = createSlice({
 });
 
 const productReducer = productSlice.reducer;
-const {} = productSlice.actions;
-export const productActions = {};
+const {setPage} = productSlice.actions;
+export const productActions = {setPage};
 export default productReducer;

@@ -1,10 +1,11 @@
 import {axiosService} from "./axiosService";
 import {IPaginationResponse, IProductResponse} from "../interfaces";
 import {baseURL, urls} from "../config";
+import {IGetAllProductData} from "../store/slices/productSlice";
 
 export const productService = {
     getAllProducts:
-        (genderId: number, genderCategoryId?: number, categoryId?: number, page: number = 1, perPage: number = 20, title: string = '') => axiosService.get<{ products: IPaginationResponse<IProductResponse> }>
+        (data:IGetAllProductData) => axiosService.get<{ products: IPaginationResponse<IProductResponse> }>
         (baseURL + urls.products + '/' +
-            `gender/${genderId}?genderCategoryId=${genderCategoryId ? genderCategoryId : ''}&categoryId=${categoryId ? categoryId : ''}&page=${page}&perPage=${perPage}&title=${title}`).then(value => value.data),
+            `gender/${data.genderId}?genderCategoryId=${data.genderCategoryId ? data.genderCategoryId : ''}&categoryId=${data.categoryId ? data.categoryId : ''}&page=${data.page}&perPage=${data.perPage}&title=${data.title}`).then(value => value.data),
 }

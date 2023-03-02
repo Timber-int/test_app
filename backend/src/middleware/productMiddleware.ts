@@ -24,6 +24,21 @@ class ProductMiddleware {
         }
     }
 
+    public async checkIsProductHasDiscount(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            const productFromDB = await productService.getProductById(Number(req.params.id));
+
+            if (productFromDB && productFromDB.hasDiscount && req.body.price) {
+                next(new ErrorHandler(MESSAGE.PRODUCT_PRICE_HAVE_DISCOUNT, STATUS.CODE_404));
+                return;
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    }
+
     public async checkIsGenderExist(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
             const genderFromDB = await genderService.getGenderById(Number(req.params.genderId));

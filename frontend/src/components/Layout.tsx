@@ -10,9 +10,9 @@ import {BsBucket} from 'react-icons/bs';
 const Layout = () => {
     return (
         <>
-            <InformationLines className='information_lines'>
-                <p className='information_text'>Скай тягло псяче</p>
-            </InformationLines>
+            {/*<InformationLines className='information_lines'>*/}
+            {/*    <p className='information_text'>Скай тягло псяче</p>*/}
+            {/*</InformationLines>*/}
             <Container>
                 <div className='header'>
                     <div className='menu'>
