@@ -2,13 +2,14 @@ import React, {useEffect} from 'react';
 import styled from "styled-components";
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../hooks";
-import {categoryActions, getAllCategory, getAllGenderCategory} from "../store/slices";
-import {IGenderCategoryResponse} from "../interfaces";
+import {categoryActions, genderCategoryActions, getAllCategory, getAllGenderCategory} from "../store/slices";
+import {IGenderCategoryResponse, IGenderResponse} from "../interfaces";
 import {ICategoryResponse} from '../interfaces';
 
-interface IMoveToProductsData {
-    genderCategory: IGenderCategoryResponse,
+export interface IMoveToProductsData {
+    genderCategory?: IGenderCategoryResponse,
     category?: ICategoryResponse,
+    gender:IGenderResponse,
 }
 
 const GenderCategoryPage = () => {
@@ -30,10 +31,15 @@ const GenderCategoryPage = () => {
 
     const moveToProducts = (id: number, data: IMoveToProductsData): void => {
         dispatch(categoryActions.setChosenCategoryNull());
+        dispatch(genderCategoryActions.setChosenGenderCategoryNull());
         if (data.category) {
             dispatch(categoryActions.setChosenCategory({category: data.category}));
         }
-        navigate('/products/' + id, {state: data.genderCategory, replace: true});
+        if (data.genderCategory){
+            dispatch(genderCategoryActions.setChosenGenderCategory({genderCategory: data.genderCategory}));
+        }
+
+        navigate('/products/' + gender.id, {state: data, replace: true});
     }
 
     return (
@@ -45,7 +51,7 @@ const GenderCategoryPage = () => {
                             <div className='gender_category_box'>
                                 <div className='gender_category'>
                         <span className='title'
-                              onClick={() => moveToProducts(genderCategory.id, {genderCategory})}>
+                              onClick={() => moveToProducts(genderCategory.id, {genderCategory,gender})}>
                             {genderCategory.title}
                         </span>
                                 </div>
@@ -58,7 +64,8 @@ const GenderCategoryPage = () => {
                                             key={category.id}
                                             onClick={() => moveToProducts(genderCategory.id, {
                                                 genderCategory,
-                                                category
+                                                category,
+                                                gender
                                             })}
                                         >
                                             {category.title}

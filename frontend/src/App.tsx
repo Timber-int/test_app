@@ -9,7 +9,6 @@ import {
     ProductsByGenderCategoryPage,
     RegistrationPage
 } from "./pages";
-import Cookies from 'universal-cookie';
 
 const App = () => {
     return (

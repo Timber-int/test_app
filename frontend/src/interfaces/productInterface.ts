@@ -11,6 +11,7 @@ export interface IProduct {
     selected:boolean,
     priceBeforeDiscount: number
     categoryId: number,
+    genderId:number,
     genderCategoryId: number,
     category?: ICategoryResponse,
     genderCategory?: IGenderCategoryResponse,

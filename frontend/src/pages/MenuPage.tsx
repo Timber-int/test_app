@@ -1,10 +1,14 @@
 import React, {useEffect} from 'react';
 import styled from "styled-components";
-import {NavLink, Outlet} from "react-router-dom";
+import {NavLink, Outlet, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../hooks";
-import {getAllGenders} from "../store/slices";
+import {categoryActions, genderCategoryActions, getAllGenders} from "../store/slices";
+import {IGenderResponse} from "../interfaces";
+import {IMoveToProductsData} from './GenderCategoryPage';
 
 const MenuPage = () => {
+
+    const navigate = useNavigate();
 
     const {genders, serverErrors, status} = useAppSelector(state => state.genderReducer);
 
@@ -14,20 +18,32 @@ const MenuPage = () => {
         dispatch(getAllGenders());
     }, []);
 
+    const moveToGenderCategory = (data: IMoveToProductsData) => {
+        dispatch(categoryActions.setChosenCategoryNull());
+        dispatch(genderCategoryActions.setChosenGenderCategoryNull());
+        navigate('/menu/category/' + data.gender.id, {state: data.gender, replace: true});
+    }
+
+    const moveToProducts = (data: IMoveToProductsData) => {
+        dispatch(categoryActions.setChosenCategoryNull());
+        dispatch(genderCategoryActions.setChosenGenderCategoryNull());
+        navigate('/products/' + data.gender.id, {state: data, replace: true});
+    }
+
     return (
         <Container>
             <div className='menu'>
                 <div className='genders_menu'>
                     {
                         genders.map(gender => (
-                            <NavLink
+                            <div
                                 className='gender'
                                 key={gender.id}
-                                to={'/menu/category/' + gender.id}
-                                state={gender}
+                                onClick={() => moveToProducts({gender})}
+                                onMouseEnter={() => moveToGenderCategory({gender})}
                             >
                                 {gender.title}
-                            </NavLink>
+                            </div>
                         ))
                     }
                 </div>
@@ -50,18 +66,22 @@ const Container = styled.div`
 
     .genders_menu {
       width: 100%;
-
-      & a[class='gender active'] {
-        text-decoration: underline;
-      }
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
 
       .gender {
         text-decoration: none;
         text-transform: capitalize;
         color: #000000;
+        cursor: pointer;
 
         &:nth-child(2) {
           margin: 0 2vw 0 2vw;
+        }
+
+        &:hover {
+          text-decoration: underline;
         }
       }
 

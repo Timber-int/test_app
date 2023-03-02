@@ -5,8 +5,9 @@ import {productService} from "../../service";
 import {CONSTANTS} from "../../constants";
 
 interface IGetAllProductData {
-    genderCategoryId: number,
+    genderCategoryId?: number,
     categoryId?: number,
+    genderId:number,
     page?: number,
     perPage?: number,
     title?: string,
@@ -16,7 +17,7 @@ export const getAllProducts = createAsyncThunk(
     'categorySlice/getAllProducts',
     async (payload: IGetAllProductData, {dispatch, rejectWithValue}) => {
         try {
-            const data = await productService.getAllProducts(payload.genderCategoryId, payload.categoryId);
+            const data = await productService.getAllProducts(payload.genderId, payload.genderCategoryId, payload.categoryId);
             return {productResponse: data};
         } catch (e) {
             if (axios.isAxiosError(e)) {

@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios, {AxiosError} from "axios";
 import {CONSTANTS} from "../../constants";
 import {genderCategoryService} from "../../service";
@@ -23,18 +23,31 @@ type GenderCategoryInitialState = {
     genderCategory: IGenderCategoryResponse[],
     status: null | string,
     serverErrors: null | AxiosError | string,
+    genderCategoryId: number | null,
+    chosenGenderCategory: IGenderCategoryResponse | null,
 }
 
 const initialState: GenderCategoryInitialState = {
     genderCategory: [],
     status: null,
     serverErrors: null,
+    genderCategoryId: null,
+    chosenGenderCategory: null,
 }
 
 export const genderCategorySlice = createSlice({
     name: 'genderCategorySlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setChosenGenderCategory: (state, action: PayloadAction<{ genderCategory: IGenderCategoryResponse }>) => {
+            state.chosenGenderCategory = action.payload.genderCategory;
+            state.genderCategoryId = action.payload.genderCategory.id
+        },
+        setChosenGenderCategoryNull: (state, action: PayloadAction<void>) => {
+            state.chosenGenderCategory = null;
+            state.genderCategoryId = null;
+        }
+    },
     extraReducers: builder => {
         builder.addCase(getAllGenderCategory.pending, (state, action) => {
                 state.status = CONSTANTS.LOADING;
@@ -58,6 +71,6 @@ export const genderCategorySlice = createSlice({
 });
 
 const genderCategoryReducer = genderCategorySlice.reducer;
-const {} = genderCategorySlice.actions;
-export const genderCategoryActions = {};
+const {setChosenGenderCategory,setChosenGenderCategoryNull} = genderCategorySlice.actions;
+export const genderCategoryActions = {setChosenGenderCategory,setChosenGenderCategoryNull};
 export default genderCategoryReducer;

@@ -8,7 +8,7 @@ interface IProductProps {
     title: string
 }
 
-const Products = ({products, title}: IProductProps) => {
+const Products = ({products,title}: IProductProps) => {
     return (
         <Container>
             <div className='category_title_container'>
