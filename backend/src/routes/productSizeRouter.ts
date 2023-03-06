@@ -6,11 +6,18 @@ import { createProductSizeValidator } from '../validation';
 
 const router = Router();
 
-router.get('/:id', productInformationMiddleware.checkIsProductExist, productSizeController.getAllProductSizes);
-router.post('/', (req: IRequestExtended, res: Response, next: NextFunction) => {
-    req.chosenValidationType = createProductSizeValidator;
-    next();
-}, dataValidatorMiddleware.dataValidator, productInformationMiddleware.checkIsProductInformationByProductExist, productSizeMiddleware.checkIsProductSizeLimit, productSizeController.createProductSize);
+router.get('/', productSizeController.getAllProductSizes);
+router.post('/',
+    (req: IRequestExtended, res: Response, next: NextFunction) => {
+        req.chosenValidationType = createProductSizeValidator;
+        next();
+    },
+    dataValidatorMiddleware.dataValidator,
+    productInformationMiddleware.checkIsProductInformationByProductExist,
+    productSizeMiddleware.checkIsProductSizeLimit,
+    productSizeMiddleware.checkIsProductSizesByProductIdAndSize,
+    productSizeController.createProductSize,
+);
 router.delete('/:id', productSizeMiddleware.checkIsProductSizeByIdExist, productSizeController.deleteProductSizeById);
 
 export const productSizeRouter = router;

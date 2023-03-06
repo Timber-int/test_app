@@ -8,10 +8,10 @@ export interface IProduct {
     count: number,
     hasDiscount: boolean,
     discount: number,
-    selected:boolean,
+    selected: boolean,
     priceBeforeDiscount: number
     categoryId: number,
-    genderId:number,
+    genderId: number,
     genderCategoryId: number,
     category?: ICategoryResponse,
     genderCategory?: IGenderCategoryResponse,
@@ -22,4 +22,8 @@ export interface IProduct {
 
 export interface IProductResponse extends IProduct {
     id: number
+}
+
+export interface ISelectedProduct extends IProductResponse {
+    userId: number
 }

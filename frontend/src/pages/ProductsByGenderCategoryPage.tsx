@@ -34,7 +34,7 @@ const ProductsByGenderCategoryPage = () => {
         genderCategoryId,
     } = useAppSelector(state => state.genderCategoryReducer);
 
-    const {products, page, perPage, itemCount} = useAppSelector(state => state.productReducer);
+    const {products, page, perPage, itemCount, searchData} = useAppSelector(state => state.productReducer);
 
     useEffect(() => {
         dispatch(getAllCategory());
@@ -49,7 +49,7 @@ const ProductsByGenderCategoryPage = () => {
                 categoryId,
                 page,
                 perPage,
-                title: ''
+                title: searchData,
             }));
         }
         if (chosenGenderCategory) {
@@ -58,13 +58,13 @@ const ProductsByGenderCategoryPage = () => {
                 genderCategoryId: genderCategory.id,
                 page,
                 perPage,
-                title: ''
+                title: searchData,
             }));
 
         } else {
-            dispatch(getAllProducts({genderId: gender.id, page, perPage, title: ''}));
+            dispatch(getAllProducts({genderId: gender.id, page, perPage, title: searchData}));
         }
-    }, [gender, genderCategoryId, categoryId, page]);
+    }, [gender, genderCategoryId, categoryId, page, searchData]);
 
     const setChosenGenderCategory = (genderCategory: IGenderCategoryResponse): void => {
         console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
@@ -136,12 +136,21 @@ const ProductsByGenderCategoryPage = () => {
                         </div>
                 }
             </div>
-            <div className='products_container'>
-                <Products products={products} title={setTitle(gender, chosenCategory, chosenGenderCategory)}/>
-                <div className='pagination_container'>
-                    <Pagination page={page} perPage={perPage} itemCount={itemCount}/>
-                </div>
-            </div>
+            {
+                products.length
+                    ?
+                    <div className='products_content_container'>
+                        <div className='products_container'>
+                            <Products products={products} title={setTitle(gender, chosenCategory, chosenGenderCategory)}/>
+                        </div>
+                        <div className='pagination_container'>
+                            <Pagination page={page} perPage={perPage} itemCount={itemCount}/>
+                        </div>
+                    </div>
+                    :
+                    <div className='products_content_container_empty'>Products for
+                        this {setTitle(gender, chosenCategory, chosenGenderCategory)} category empty!!!</div>
+            }
         </Container>
     );
 };
@@ -155,7 +164,6 @@ const Container = styled.div`
     width: 25%;
 
     .menu_container {
-
       .back_to_menu_box {
         width: 100%;
 
@@ -181,7 +189,6 @@ const Container = styled.div`
       }
 
       .category_title_box {
-
         .category_title {
           text-transform: capitalize;
           text-decoration: none;
@@ -200,11 +207,9 @@ const Container = styled.div`
           margin-left: 2vh;
         }
       }
-
     }
 
     .gender_category_menu {
-
       .back_to_menu_box {
         width: 100%;
 
@@ -245,22 +250,36 @@ const Container = styled.div`
               text-transform: capitalize;
             }
           }
-
         }
       }
     }
-
-
   }
 
-  .products_container {
+  .products_content_container {
     width: 75%;
     display: flex;
     flex-wrap: wrap;
 
+    .products_container {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
     .pagination_container {
       width: 100%;
     }
+  }
+
+  .products_content_container_empty {
+    width: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 80vh;
+    min-height: 80vh;
+    max-height: 80vh;
+    justify-content: center;
+    align-items: center;
   }
 `;
 

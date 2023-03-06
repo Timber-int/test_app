@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import Logo from '../assets/logo.4094b43fa7 (1).svg';
 import {NavLink, Outlet} from 'react-router-dom';
@@ -6,8 +6,26 @@ import {BiSearch} from 'react-icons/bi';
 import {RiAccountCircleLine} from 'react-icons/ri';
 import {AiOutlineHeart} from 'react-icons/ai';
 import {BsBucket} from 'react-icons/bs';
+import {RxCross2} from 'react-icons/rx';
+import {SearchInput} from "./SearchInput";
+import {useAppDispatch, useAppSelector} from "../hooks";
+import {productActions} from "../store/slices/productSlice";
 
 const Layout = () => {
+
+    const [visibleSearchBox, setVisibleSearchBox] = useState<boolean>(false);
+
+    const {user} = useAppSelector(state => state.authReducer);
+
+    const dispatch = useAppDispatch();
+
+    const checkSearchData = () => {
+        setVisibleSearchBox(prevState => !prevState);
+        if (visibleSearchBox) {
+            dispatch(productActions.setSearchDataEmpty());
+        }
+    }
+
     return (
         <>
             {/*<InformationLines className='information_lines'>*/}
@@ -16,24 +34,45 @@ const Layout = () => {
             <Container>
                 <div className='header'>
                     <div className='menu'>
-                        <div className='block_first'>
-                            <NavLink to={'/menu'}>
-                                X
-                            </NavLink>
-                        </div>
-                        <div className='block_second'>
-                            <img className='logo' src={Logo} alt="logo"/>
-                        </div>
+                        {
+                            visibleSearchBox
+                                ?
+                                <div className='search_container'>
+                                    <SearchInput/>
+                                </div>
+                                :
+                                <>
+                                    <div className='block_first'>
+                                        <NavLink to={'/menu'}>
+                                            X
+                                        </NavLink>
+                                    </div>
+                                    <div className='block_second'>
+                                        <img className='logo' src={Logo} alt="logo"/>
+                                    </div>
+                                </>
+                        }
                         <div className='block_third'>
-                            <NavLink to={'/'}>
-                                <span><BiSearch/></span>
-                                <span>Search</span>
-                            </NavLink>
+                            <div onClick={() => checkSearchData()}>
+                                {
+                                    visibleSearchBox
+                                        ?
+                                        <>
+                                            <span><RxCross2/></span>
+                                            <span>Close</span>
+                                        </>
+                                        :
+                                        <>
+                                            <span><BiSearch/></span>
+                                            <span>Search</span>
+                                        </>
+                                }
+                            </div>
                             <NavLink to={'/auth'}>
                                 <span><RiAccountCircleLine/></span>
                                 <span>Account</span>
                             </NavLink>
-                            <NavLink to={'/'}>
+                            <NavLink to={user ? '/selectedProducts' : '/auth'}>
                                 <span><AiOutlineHeart/></span>
                                 <span>Selected</span>
                             </NavLink>
@@ -44,6 +83,7 @@ const Layout = () => {
                         </div>
                     </div>
                 </div>
+                <div className={visibleSearchBox ? 'line_separate_active' : 'line_separate'}></div>
                 <div className='content'>
                     <Outlet/>
                 </div>
@@ -82,6 +122,17 @@ const InformationLines = styled.div`
 const Container = styled.div`
   padding: 0 10vh 0 10vh;
 
+  .line_separate {
+    width: 100%;
+    height: 0.1vh;
+  }
+
+  .line_separate_active {
+    width: 100%;
+    height: 0.1vh;
+    background-color: #000000;
+  }
+
   .header {
     width: 100%;
     display: flex;
@@ -91,6 +142,12 @@ const Container = styled.div`
       height: 10vh;
       width: 100%;
       display: flex;
+
+      .search_container {
+        width: 75%;
+        display: flex;
+        align-items: center;
+      }
 
       .block_first {
         width: 25%;
@@ -116,13 +173,14 @@ const Container = styled.div`
         flex-wrap: wrap;
         align-items: center;
 
-        & > a {
+        & > a, & > div {
           width: 25%;
           display: flex;
           justify-content: flex-end;
           flex-wrap: wrap;
           text-decoration: none;
           color: #000000;
+          cursor: pointer;
 
           & > span {
             width: 100%;
@@ -132,7 +190,7 @@ const Container = styled.div`
 
         }
 
-        & > a:hover {
+        & > a:hover, & > div:hover {
           width: 25%;
           display: flex;
           justify-content: flex-end;

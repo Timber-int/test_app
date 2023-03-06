@@ -8,7 +8,7 @@ interface IProductProps {
     title: string
 }
 
-const Products = ({products,title}: IProductProps) => {
+const Products = ({products, title}: IProductProps) => {
     return (
         <Container>
             <div className='category_title_container'>
@@ -19,7 +19,8 @@ const Products = ({products,title}: IProductProps) => {
             </div>
             <div className='products_container'>
                 {
-                    products.map(product => <Product key={product.id} product={product}/>)
+                    products.map(product => <div className='product_box' key={product.id}><Product product={product}/>
+                    </div>)
                 }
             </div>
         </Container>
@@ -29,16 +30,18 @@ const Products = ({products,title}: IProductProps) => {
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  
-  .category_title_container{
+  width: 100%;
+
+  .category_title_container {
     width: 100%;
-    
-    .title{
+
+    .title {
       color: #000000;
       text-transform: capitalize;
     }
   }
-  .sorting_container{
+
+  .sorting_container {
     width: 100%;
   }
 
@@ -47,6 +50,15 @@ const Container = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+
+    .product_box {
+      width: 32%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 0.5vh;
+      position: relative;
+    }
   }
 `;
 

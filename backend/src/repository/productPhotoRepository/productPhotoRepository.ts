@@ -6,10 +6,16 @@ import { IProductPhotoRepository } from './productPhotoRepositoryInterface';
 
 @EntityRepository(ProductPhoto)
 class ProductPhotoRepository extends Repository<ProductPhoto> implements IProductPhotoRepository {
-    public async getAllProductPhotos(productId:number): Promise<ProductPhoto[]> {
+    public async getAllProductPhotos(): Promise<ProductPhoto[]> {
         return getManager()
             .getRepository(ProductPhoto)
-            .find({ where: { productId } });
+            .find();
+    }
+
+    public async getAllProductPhotosByProductId(id: number): Promise<ProductPhoto[]> {
+        return getManager()
+            .getRepository(ProductPhoto)
+            .find({ where: { productId: id } });
     }
 
     public async getProductPhotoById(id: number): Promise<ProductPhoto | undefined> {

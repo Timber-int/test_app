@@ -6,7 +6,7 @@ import { IProductSize } from '../entity';
 class ProductSizeController {
     public async getAllProductSizes(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            const productSizes = await productSizeService.getAllProductSizes(Number(req.params.id));
+            const productSizes = await productSizeService.getAllProductSizes();
 
             res.json({ data: productSizes });
         } catch (e) {

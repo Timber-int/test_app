@@ -5,8 +5,6 @@ import {
     authService, passwordService, tokenService, userService,
 } from '../service';
 import { IUser } from '../entity';
-import { emailService } from '../service/emailService';
-import { EmailActionEnum } from '../emailInformation';
 
 class AuthController {
     public async registration(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
@@ -65,7 +63,7 @@ class AuthController {
                 httpOnly: true,
             });
 
-            await emailService.sendMail(email, EmailActionEnum.LOGIN, {});
+            // await emailService.sendMail(email, EmailActionEnum.LOGIN, {});
 
             res.json({
                 accessToken,

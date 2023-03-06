@@ -5,6 +5,8 @@ import genderReducer from "./slices/genderSlice";
 import genderCategoryReducer from "./slices/genderCategorySlice";
 import productReducer from "./slices/productSlice";
 import authReducer from "./slices/authSlice";
+import productSizeReducer from "./slices/productSizeSlice";
+import productPhotoReducer from "./slices/productPhotoSlice";
 
 const rootReducer = combineReducers({
     genderReducer,
@@ -12,6 +14,8 @@ const rootReducer = combineReducers({
     genderCategoryReducer,
     productReducer,
     authReducer,
+    productSizeReducer,
+    productPhotoReducer
 });
 
 export const setupStore = () => configureStore({

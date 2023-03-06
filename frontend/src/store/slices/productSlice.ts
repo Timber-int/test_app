@@ -1,8 +1,11 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IProductResponse} from "../../interfaces";
+import {IProductResponse, ISelectedProduct} from "../../interfaces";
 import axios, {AxiosError} from "axios";
 import {productService} from "../../service";
 import {CONSTANTS} from "../../constants";
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 export interface IGetAllProductData {
     genderCategoryId?: number,
@@ -23,7 +26,7 @@ export const getAllProducts = createAsyncThunk(
                 categoryId: payload.categoryId,
                 page: payload.page,
                 perPage: payload.perPage,
-                title:payload.title,
+                title: payload.title,
             });
             return {productResponse: data};
         } catch (e) {
@@ -41,6 +44,9 @@ type ProductInitialState = {
     page: number,
     perPage: number,
     itemCount: number,
+    searchData: string,
+    selectedProducts: ISelectedProduct[]
+
 }
 
 const initialState: ProductInitialState = {
@@ -48,8 +54,12 @@ const initialState: ProductInitialState = {
     status: null,
     serverErrors: null,
     page: 1,
-    perPage: 1,
+    perPage: 20,
     itemCount: 20,
+    searchData: '',
+    selectedProducts: cookies.get(CONSTANTS.SELECTED_PRODUCTS_KEY) as ISelectedProduct[]
+        ? cookies.get(CONSTANTS.SELECTED_PRODUCTS_KEY)
+        : [],
 }
 
 export const productSlice = createSlice({
@@ -59,6 +69,33 @@ export const productSlice = createSlice({
         setPage: (state, action: PayloadAction<{ pageNumber: number }>) => {
             state.page = action.payload.pageNumber;
         },
+        setSearchData: (state, action: PayloadAction<{ searchData: string }>) => {
+            state.searchData = action.payload.searchData;
+        },
+        setSearchDataEmpty: (state, action: PayloadAction<void>) => {
+            state.searchData = '';
+        },
+        setProductDataToSelected: (state, action: PayloadAction<{ product: IProductResponse, userId: number }>) => {
+
+            const selectedProduct = state.selectedProducts.find(selectedProduct => selectedProduct.id === action.payload.product.id);
+
+            if (selectedProduct) {
+                state.selectedProducts = state.selectedProducts.filter(product => product.id !== selectedProduct.id);
+
+                cookies.set(CONSTANTS.SELECTED_PRODUCTS_KEY, JSON.stringify([...state.selectedProducts]));
+                return;
+            }
+
+            cookies.set(CONSTANTS.SELECTED_PRODUCTS_KEY, JSON.stringify([...state.selectedProducts, {
+                ...action.payload.product,
+                userId: action.payload.userId
+            }]));
+
+            state.selectedProducts = [...state.selectedProducts, {
+                ...action.payload.product,
+                userId: action.payload.userId,
+            }];
+        }
     },
     extraReducers: builder => {
         builder.addCase(getAllProducts.pending, (state, action) => {
@@ -86,6 +123,6 @@ export const productSlice = createSlice({
 });
 
 const productReducer = productSlice.reducer;
-const {setPage} = productSlice.actions;
-export const productActions = {setPage};
+const {setPage, setSearchData, setSearchDataEmpty, setProductDataToSelected} = productSlice.actions;
+export const productActions = {setPage, setSearchData, setSearchDataEmpty, setProductDataToSelected};
 export default productReducer;

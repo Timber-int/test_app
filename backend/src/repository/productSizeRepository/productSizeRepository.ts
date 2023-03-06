@@ -6,10 +6,22 @@ import { IProductSizeRepository } from './productSizeRepositoryInterface';
 
 @EntityRepository(ProductSize)
 class ProductSizeRepository extends Repository<ProductSize> implements IProductSizeRepository {
-    public async getAllProductSizes(productId:number): Promise<ProductSize[]> {
+    public async getAllProductSizes(): Promise<ProductSize[]> {
+        return getManager()
+            .getRepository(ProductSize)
+            .find();
+    }
+
+    public async getAllProductSizesByProductId(productId:number): Promise<ProductSize[]> {
         return getManager()
             .getRepository(ProductSize)
             .find({ where: { productId } });
+    }
+
+    public async getAllProductSizesByProductIdAndSize(productId:number, productSize:number): Promise<ProductSize|undefined> {
+        return getManager()
+            .getRepository(ProductSize)
+            .findOne({ where: { productId, productSize } });
     }
 
     public async getProductSizeById(id: number): Promise<ProductSize | undefined> {

@@ -30,10 +30,27 @@ class ProductSizeMiddleware {
         try {
             const { id } = req.product as IProduct;
 
-            const productSizesFromDB = await productSizeService.getAllProductSizes(Number(id));
+            const productSizesFromDB = await productSizeService.getAllProductSizesByProductId(Number(id));
 
-            if (productSizesFromDB.length > 5) {
+            if (productSizesFromDB.length > 10) {
                 next(new ErrorHandler(MESSAGE.PRODUCT_SIZE_LIMIT, STATUS.CODE_404));
+                return;
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async checkIsProductSizesByProductIdAndSize(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            const { id } = req.product as IProduct;
+
+            const productSizesFromDB = await productSizeService.getAllProductSizesByProductIdAndSize(Number(id), Number(req.body.productSize));
+
+            if (productSizesFromDB) {
+                next(new ErrorHandler(MESSAGE.PRODUCT_SIZE_EXIST, STATUS.CODE_404));
                 return;
             }
 

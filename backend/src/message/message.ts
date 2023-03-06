@@ -17,6 +17,7 @@ export const MESSAGE = {
     GENDER_CATEGORY_NOT_EXIST: 'Gender category is not exists',
     PRODUCT_NOT_EXIST: 'Product is not exists',
     PRODUCT_SIZE_NOT_EXIST: 'Product size is not exists',
+    PRODUCT_SIZE_EXIST: 'Product size is already exists',
     PRODUCT_PHOTO_NOT_EXIST: 'Product photo is not exists',
     PRODUCT_SIZE_LIMIT: 'Product size limits 5 sizes',
     PRODUCT_PHOTOS_LIMIT: 'Product photo limits 5 photos',

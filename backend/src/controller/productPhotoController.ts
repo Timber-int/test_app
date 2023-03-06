@@ -12,7 +12,7 @@ import { STATUS } from '../errorCode';
 class ProductPhotoController {
     public async getAllProductPhotos(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            const productPhotos = await productPhotoService.getAllProductPhotos(Number(req.params.id));
+            const productPhotos = await productPhotoService.getAllProductPhotos();
 
             res.json({ data: productPhotos });
         } catch (e) {

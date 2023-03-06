@@ -3,8 +3,12 @@ import { IProductPhoto, ProductPhoto } from '../entity';
 import { productPhotoRepository } from '../repository';
 
 class ProductPhotoService {
-    public async getAllProductPhotos(productId:number): Promise<ProductPhoto[]> {
-        return productPhotoRepository.getAllProductPhotos(productId);
+    public async getAllProductPhotos(): Promise<ProductPhoto[]> {
+        return productPhotoRepository.getAllProductPhotos();
+    }
+
+    public async getAllProductPhotosByProductId(productId:number): Promise<ProductPhoto[]> {
+        return productPhotoRepository.getAllProductPhotosByProductId(productId);
     }
 
     public async getProductPhotoById(id: number): Promise<ProductPhoto | undefined> {

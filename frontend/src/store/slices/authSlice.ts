@@ -47,7 +47,6 @@ export const login = createAsyncThunk(
     'authSlice/login',
     async (loginData: ILogin, {dispatch, rejectWithValue}) => {
         try {
-
             const data = await authService.login(loginData);
 
             dispatch(authActions.userAuthorization({data}));
