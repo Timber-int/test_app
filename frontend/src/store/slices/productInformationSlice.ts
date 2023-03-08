@@ -44,7 +44,6 @@ export const productInformationSlice = createSlice({
         builder.addCase(getProductInformationByProductId.fulfilled, (state, action) => {
                 state.status = CONSTANTS.RESOLVED;
                 // @ts-ignore
-                console.log(action.payload.productInformation.data)
                 if (action.payload && action.payload.productInformation.data !== null) {
                     state.productInformation = action.payload.productInformation.data;
                 }

@@ -220,6 +220,7 @@ const Container = styled.div`
         .first_content {
           margin-top: 2vh;
           width: 90%;
+          height: 65vh;
           display: flex;
           justify-content: center;
           border-radius: 1.5vh;

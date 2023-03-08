@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IProductResponse, IProductSizeResponse, ISelectedProduct} from "../../interfaces";
+import {IProductBucket, IProductResponse, IProductSizeResponse, ISelectedProduct} from "../../interfaces";
 import axios, {AxiosError} from "axios";
 import {productService} from "../../service";
 import {CONSTANTS} from "../../constants";
@@ -48,6 +48,8 @@ type ProductInitialState = {
     showModalWindow: boolean,
     selectedProducts: ISelectedProduct[],
     chosenProductSize: IProductSizeResponse | null,
+    reviewedProducts: IProductResponse[],
+    productsBucket: IProductBucket[],
 
 }
 
@@ -61,9 +63,13 @@ const initialState: ProductInitialState = {
     searchData: '',
     chosenProductSize: null,
     showModalWindow: false,
+    reviewedProducts: cookies.get(CONSTANTS.REVIEWED_PRODUCTS_KEY) as IProductResponse[]
+        ? cookies.get(CONSTANTS.REVIEWED_PRODUCTS_KEY)
+        : [],
     selectedProducts: cookies.get(CONSTANTS.SELECTED_PRODUCTS_KEY) as ISelectedProduct[]
         ? cookies.get(CONSTANTS.SELECTED_PRODUCTS_KEY)
         : [],
+    productsBucket: []
 }
 
 export const productSlice = createSlice({
@@ -75,6 +81,9 @@ export const productSlice = createSlice({
         },
         setChosenProductSize: (state, action: PayloadAction<{ chosenProductSize: IProductSizeResponse }>) => {
             state.chosenProductSize = action.payload.chosenProductSize;
+        },
+        setChosenProductSizeNull: (state, action: PayloadAction<void>) => {
+            state.chosenProductSize = null;
         },
         setPage: (state, action: PayloadAction<{ pageNumber: number }>) => {
             state.page = action.payload.pageNumber;
@@ -105,6 +114,55 @@ export const productSlice = createSlice({
                 ...action.payload.product,
                 userId: action.payload.userId,
             }];
+        },
+
+        setReviewedProducts: (state, action: PayloadAction<{ reviewedProduct: IProductResponse }>) => {
+
+            const reviewedProductExist = state.reviewedProducts.find(reviewedProduct => reviewedProduct.id === action.payload.reviewedProduct.id);
+
+            if (!reviewedProductExist) {
+                cookies.set(CONSTANTS.REVIEWED_PRODUCTS_KEY, JSON.stringify([...state.reviewedProducts, {
+                    ...action.payload.reviewedProduct,
+                }]));
+
+                state.reviewedProducts = [...state.reviewedProducts, {
+                    ...action.payload.reviewedProduct,
+                }];
+            }
+        },
+
+        setProductToBucket: (state, action: PayloadAction<{ product: IProductBucket }>) => {
+
+            const productExist = state.productsBucket.find(productElement =>
+                productElement.id === action.payload.product.id
+                &&
+                productElement.size === action.payload.product.size
+            );
+            // Доробити
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // if (productExist){
+            //     state.productsBucket = state.productsBucket.map(productElement=>{...productElement,})
+            // }
+
+            state.productsBucket.push(action.payload.product);
+
         }
     },
     extraReducers: builder => {
@@ -139,7 +197,9 @@ const {
     setSearchDataEmpty,
     setProductDataToSelected,
     setShowModalWindow,
-    setChosenProductSize
+    setChosenProductSize,
+    setReviewedProducts,
+    setChosenProductSizeNull,
 } = productSlice.actions;
 export const productActions = {
     setPage,
@@ -147,6 +207,8 @@ export const productActions = {
     setSearchDataEmpty,
     setProductDataToSelected,
     setShowModalWindow,
-    setChosenProductSize
+    setChosenProductSize,
+    setReviewedProducts,
+    setChosenProductSizeNull,
 };
 export default productReducer;

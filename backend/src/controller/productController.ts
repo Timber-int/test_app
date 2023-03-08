@@ -23,8 +23,6 @@ class ProductController {
             const {
                 genderId,
             } = req.params;
-            // console.log(req.query);
-            // console.log(req.params);
 
             const products = await productService.getAllProducts(
                 Number(genderId),

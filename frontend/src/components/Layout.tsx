@@ -127,6 +127,8 @@ const InformationLines = styled.div`
 `;
 const Container = styled.div`
   padding: 0 10vh 0 10vh;
+  display: flex;
+  flex-wrap: wrap;
 
   .line_separate {
     width: 100%;
@@ -210,11 +212,15 @@ const Container = styled.div`
 
   .content {
     width: 100%;
-    height: 60vh;
+    height: auto;
+    min-height: 90vh;
   }
 
   .footer {
+    margin-top: 5vh;
     width: 100%;
+    height: 50vh;
+    background-color: #000000;
   }
 `
 

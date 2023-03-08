@@ -7,15 +7,20 @@ import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
 import {baseURL} from "../config";
 import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
-import {IProductResponse} from "../interfaces";
+import {IProductResponse, IProductSizeResponse} from "../interfaces";
 import {productActions} from "../store/slices/productSlice";
-import {checkSelectedProductStyle} from './Product';
+import {checkSelectedProductStyle, Product} from './Product';
 import {FaPencilRuler} from 'react-icons/fa';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+interface IProductBucketData {
+    product: IProductResponse,
+    size: IProductSizeResponse | null,
+}
 
 const ProductDetails = () => {
 
@@ -31,7 +36,7 @@ const ProductDetails = () => {
 
     const {productInformation} = useAppSelector(state => state.productInformationReducer);
 
-    const {selectedProducts, chosenProductSize} = useAppSelector(state => state.productReducer);
+    const {selectedProducts, chosenProductSize, reviewedProducts} = useAppSelector(state => state.productReducer);
 
     const {productPhotos} = useAppSelector(state => state.productPhotoReducer);
 
@@ -51,7 +56,15 @@ const ProductDetails = () => {
         dispatch(getAllProductSizes());
         dispatch(getAllProductPhotos());
         dispatch(getProductInformationByProductId(product.id));
+        dispatch(productActions.setReviewedProducts({reviewedProduct: product}));
+        dispatch(productActions.setChosenProductSizeNull());
     }, [product.id]);
+
+    const setProductToBucket = (data: IProductBucketData): void => {
+        if (data.size) {
+            console.log(data)
+        }
+    }
 
     return (
         <Container>
@@ -117,9 +130,13 @@ const ProductDetails = () => {
                             <div className='product_price_container'>{product.price}</div>
                     }
                 </div>
-                <div className={chosenProductSize ? 'add_to_basket_button' : 'add_to_basket_button_disabled'}>
+                <button
+                    className={chosenProductSize ? 'add_to_basket_button' : 'add_to_basket_button_disabled'}
+                    disabled={!chosenProductSize}
+                    onClick={() => setProductToBucket({product, size: chosenProductSize})}
+                >
                     Add to basket
-                </div>
+                </button>
                 <div className='accordion_container'>
                     {
                         productInformation
@@ -284,6 +301,26 @@ const ProductDetails = () => {
                     </Accordion>
                 </div>
             </div>
+            {
+                reviewedProducts.length
+                    ?
+                    <div className='reviewed_products_container'>
+                        <div className='viewed_title_container'>You have viewed</div>
+                        <div className='reviewed_products'>
+                            {
+                                reviewedProducts.map(reviewedProduct => {
+                                    return (
+                                        <div key={reviewedProduct.id} className='product_box'>
+                                            <Product product={reviewedProduct}/>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                    :
+                    <></>
+            }
         </Container>
     );
 };
@@ -291,11 +328,41 @@ const ProductDetails = () => {
 const Container = styled.div`
   width: 100%;
   display: flex;
-  //flex-wrap: wrap;
+  flex-wrap: wrap;
   justify-content: space-between;
+
+  .reviewed_products_container {
+    width: 100%;
+    margin-top: 5vh;
+    display: flex;
+    flex-wrap: wrap;
+
+    .viewed_title_container {
+      width: 100%;
+      font-size: 3vh;
+      font-weight: bold;
+    }
+
+    .reviewed_products {
+      width: 100%;
+      margin-top: 1vh;
+      display: flex;
+      flex-wrap: wrap;
+
+      .product_box {
+        width: 24.4%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0.5vh;
+        position: relative;
+      }
+    }
+  }
 
   .photos_container {
     width: 50%;
+
   }
 
   .image-gallery-icon {
@@ -412,6 +479,7 @@ const Container = styled.div`
 
       .product_price_container {
         width: 100%;
+        margin-top: 3vh;
         font-size: 3vh;
       }
     }
@@ -446,6 +514,7 @@ const Container = styled.div`
       font-weight: bold;
       font-size: 3vh;
       color: #FFF;
+
     }
 
     .accordion_container {

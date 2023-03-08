@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Routes} from "react-router-dom";
-import {Layout, ProductDetails, SelectedProducts} from "./components";
+import {Layout, MainCarousel, ProductDetails, SelectedProducts} from "./components";
 import {RequireAuth} from './components/hoc/RequireAuth';
 import {
     AuthPage,
@@ -15,6 +15,7 @@ const App = () => {
     return (
         <Routes>
             <Route path={'/'} element={<Layout/>}>
+                <Route index element={<MainCarousel/>}/>
                 <Route path={'/menu'} element={<MenuPage/>}>
                     <Route path={'/menu/category/:id'} element={<GenderCategoryPage/>}/>
                 </Route>
