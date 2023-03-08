@@ -7,6 +7,7 @@ import productReducer from "./slices/productSlice";
 import authReducer from "./slices/authSlice";
 import productSizeReducer from "./slices/productSizeSlice";
 import productPhotoReducer from "./slices/productPhotoSlice";
+import productInformationReducer from "./slices/productInformationSlice";
 
 const rootReducer = combineReducers({
     genderReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
     productReducer,
     authReducer,
     productSizeReducer,
-    productPhotoReducer
+    productPhotoReducer,
+    productInformationReducer
 });
 
 export const setupStore = () => configureStore({

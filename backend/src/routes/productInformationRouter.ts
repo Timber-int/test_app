@@ -14,6 +14,7 @@ router.post('/',
     },
     dataValidatorMiddleware.dataValidator,
     productInformationMiddleware.checkIsProductInformationByProductExist,
+    productInformationMiddleware.checkIsProductInformationByProductIdExist,
     productInformationController.createProductInformation,
 );
 

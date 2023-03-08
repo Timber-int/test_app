@@ -23,6 +23,21 @@ class ProductInformationMiddleware {
         }
     }
 
+    public async checkIsProductInformationByProductIdExist(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
+        try {
+            const productInformationFromDB = await productInformationService.getProductInformationByProductId(Number(req.body.productId));
+
+            if (productInformationFromDB) {
+                next(new ErrorHandler(MESSAGE.PRODUCT_INFORMATION_EXIST, STATUS.CODE_404));
+                return;
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    }
+
     public async checkIsProductExist(req: IRequestExtended, res: Response, next: NextFunction): Promise<void | Error> {
         try {
             const productFromDB = await productService.getProductById(Number(req.params.id));

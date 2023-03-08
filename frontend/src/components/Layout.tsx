@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import Logo from '../assets/logo.4094b43fa7 (1).svg';
 import {NavLink, Outlet} from 'react-router-dom';
@@ -10,12 +10,15 @@ import {RxCross2} from 'react-icons/rx';
 import {SearchInput} from "./SearchInput";
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {productActions} from "../store/slices/productSlice";
+import {ModalWindow} from "./ModalWindow";
 
 const Layout = () => {
 
     const [visibleSearchBox, setVisibleSearchBox] = useState<boolean>(false);
 
     const {user} = useAppSelector(state => state.authReducer);
+
+    const {showModalWindow} = useAppSelector(state => state.productReducer);
 
     const dispatch = useAppDispatch();
 
@@ -25,6 +28,8 @@ const Layout = () => {
             dispatch(productActions.setSearchDataEmpty());
         }
     }
+    useEffect(() => {
+    }, [showModalWindow]);
 
     return (
         <>
@@ -32,6 +37,7 @@ const Layout = () => {
             {/*    <p className='information_text'>Скай тягло псяче</p>*/}
             {/*</InformationLines>*/}
             <Container>
+                {showModalWindow ? <ModalWindow/> : <></>}
                 <div className='header'>
                     <div className='menu'>
                         {

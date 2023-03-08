@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IProductResponse, ISelectedProduct} from "../../interfaces";
+import {IProductResponse, IProductSizeResponse, ISelectedProduct} from "../../interfaces";
 import axios, {AxiosError} from "axios";
 import {productService} from "../../service";
 import {CONSTANTS} from "../../constants";
@@ -45,7 +45,9 @@ type ProductInitialState = {
     perPage: number,
     itemCount: number,
     searchData: string,
-    selectedProducts: ISelectedProduct[]
+    showModalWindow: boolean,
+    selectedProducts: ISelectedProduct[],
+    chosenProductSize: IProductSizeResponse | null,
 
 }
 
@@ -57,6 +59,8 @@ const initialState: ProductInitialState = {
     perPage: 20,
     itemCount: 20,
     searchData: '',
+    chosenProductSize: null,
+    showModalWindow: false,
     selectedProducts: cookies.get(CONSTANTS.SELECTED_PRODUCTS_KEY) as ISelectedProduct[]
         ? cookies.get(CONSTANTS.SELECTED_PRODUCTS_KEY)
         : [],
@@ -66,6 +70,12 @@ export const productSlice = createSlice({
     name: 'productSlice',
     initialState,
     reducers: {
+        setShowModalWindow: (state, action: PayloadAction<void>) => {
+            state.showModalWindow = !state.showModalWindow;
+        },
+        setChosenProductSize: (state, action: PayloadAction<{ chosenProductSize: IProductSizeResponse }>) => {
+            state.chosenProductSize = action.payload.chosenProductSize;
+        },
         setPage: (state, action: PayloadAction<{ pageNumber: number }>) => {
             state.page = action.payload.pageNumber;
         },
@@ -123,6 +133,20 @@ export const productSlice = createSlice({
 });
 
 const productReducer = productSlice.reducer;
-const {setPage, setSearchData, setSearchDataEmpty, setProductDataToSelected} = productSlice.actions;
-export const productActions = {setPage, setSearchData, setSearchDataEmpty, setProductDataToSelected};
+const {
+    setPage,
+    setSearchData,
+    setSearchDataEmpty,
+    setProductDataToSelected,
+    setShowModalWindow,
+    setChosenProductSize
+} = productSlice.actions;
+export const productActions = {
+    setPage,
+    setSearchData,
+    setSearchDataEmpty,
+    setProductDataToSelected,
+    setShowModalWindow,
+    setChosenProductSize
+};
 export default productReducer;

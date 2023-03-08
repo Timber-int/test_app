@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {baseURL} from '../config';
 import {IProductResponse, ISelectedProduct} from "../interfaces";
 import {useAppDispatch, useAppSelector} from "../hooks";
-import {getAllProductPhotos, getAllProductSizes} from "../store/slices";
+import {getAllProductPhotos, getAllProductSizes, getProductInformationByProductId} from "../store/slices";
 import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
 import {useNavigate} from "react-router-dom";
 import Cookies from 'universal-cookie';
@@ -13,7 +13,7 @@ import {Carousel} from 'react-responsive-carousel';
 
 const cookies = new Cookies();
 
-const checkSelectedProductStyle = (selectedProducts: ISelectedProduct[], productId: number): boolean => {
+export const checkSelectedProductStyle = (selectedProducts: ISelectedProduct[], productId: number): boolean => {
     const selectedProduct = selectedProducts.find(selectedProduct => selectedProduct.id === productId);
     return !!selectedProduct;
 }
@@ -43,17 +43,19 @@ const Product = ({product}: IProductProps) => {
 
     const {productSizes} = useAppSelector(state => state.productSizeReducer);
 
+    const {productPhotos} = useAppSelector(state => state.productPhotoReducer);
+
+    const {selectedProducts} = useAppSelector(state => state.productReducer);
+
     const {user} = useAppSelector(state => state.authReducer);
 
     useEffect(() => {
         dispatch(getAllProductSizes());
         dispatch(getAllProductPhotos());
     }, []);
-    const {productPhotos} = useAppSelector(state => state.productPhotoReducer);
 
-    const {selectedProducts} = useAppSelector(state => state.productReducer);
-
-    const setProductDataToSelected = useCallback((product: IProductResponse) => {
+    const setProductDataToSelected = useCallback((e: React.FormEvent<EventTarget>, product: IProductResponse) => {
+        e.preventDefault();
         if (!user) {
             navigate('/auth', {replace: true});
             return;
@@ -64,16 +66,21 @@ const Product = ({product}: IProductProps) => {
         }
     }, [product, user]);
 
+    const moveToProductDetails = (id: number): void => {
+        navigate('/productDetails/' + id, {state: product});
+        return
+    }
     return (
         <Container>
-            {/*<div className='photo_container'><img className='photo' src={baseURL + '/' + photo} alt={title}/></div>*/}
-            <Carousel showThumbs={false} showIndicators={false} showStatus={false} >
+            <Carousel showThumbs={false} showIndicators={false} showStatus={false}>
                 {
-                    productPhotos.filter(productPhoto => productPhoto.productId === id)
+                    productPhotos
+                        .filter(productPhoto => productPhoto.productId === id)
                         .map(productPhoto => (
-                            <div className='photo_container'>
-                                <img className='photo' src={baseURL + '/' + productPhoto.photo}/>
-                                {/*<p className="legend">Legend 1</p>*/}
+                            <div className='photo_container' key={productPhoto.id}
+                                 onClick={() => moveToProductDetails(id)}
+                            >
+                                <img className='photo' src={baseURL + '/' + productPhoto.photo} alt={title}/>
                             </div>
 
                         ))
@@ -113,7 +120,7 @@ const Product = ({product}: IProductProps) => {
                     </div>
                 </div>
             </div>
-            <div className='selected_block' onClick={() => setProductDataToSelected(product)}>
+            <div className='selected_block' onClick={(e) => setProductDataToSelected(e, product)}>
                 {
                     checkSelectedProductStyle(selectedProducts, id)
                         ?

@@ -5,6 +5,8 @@ export const CONSTANTS = {
     LOADING: 'Loading',
     RESOLVED: 'Resolved',
     REJECTED: 'Rejected',
+    SIZE:'size',
+    MEASURE: 'measure',
 
     SELECTED_PRODUCTS_KEY: 'Products selected',
 

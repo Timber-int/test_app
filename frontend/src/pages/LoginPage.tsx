@@ -120,7 +120,7 @@ const Container = styled.div`
         height: 7.5vh;
         padding: 1.5vh;
         background-color: #000000;
-        color: white;
+        color: #FFF;
         justify-content: center;
         align-items: center;
         font-size: 2.5vh;

@@ -5,6 +5,7 @@ export const urls = {
     genders: '/genders',
     genderCategories: '/genderCategories',
     categories: '/categories',
+    productInformation: '/productInformation',
     products: '/products',
     registration: '/registration',
     login: '/login',

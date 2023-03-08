@@ -11,6 +11,10 @@ class ProductInformationService {
         return productInformationRepository.getProductInformationById(id);
     }
 
+    public async getProductInformationByProductId(productId: number): Promise<ProductInformation | undefined> {
+        return productInformationRepository.getProductInformationByProductId(productId);
+    }
+
     public async createProductInformation(productInformation: IProductInformation): Promise<ProductInformation> {
         return productInformationRepository.createProductInformation(productInformation);
     }

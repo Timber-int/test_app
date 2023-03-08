@@ -19,8 +19,12 @@ const Products = ({products, title}: IProductProps) => {
             </div>
             <div className='products_container'>
                 {
-                    products.map(product => <div className='product_box' key={product.id}><Product product={product}/>
-                    </div>)
+                    products.map(product => (
+                            <div className='product_box' key={product.id}>
+                                <Product product={product}/>
+                            </div>
+                        )
+                    )
                 }
             </div>
         </Container>

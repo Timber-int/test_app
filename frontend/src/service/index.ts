@@ -5,3 +5,4 @@ export * from './genderCategoryServcie';
 export * from './productService';
 export * from './productSizeService';
 export * from './productPhotoService';
+export * from './productInformationService';

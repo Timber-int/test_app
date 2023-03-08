@@ -32,7 +32,7 @@ class ProductPhotoMiddleware {
 
             const productPhotosFromDB = await productPhotoService.getAllProductPhotosByProductId(Number(id));
 
-            if (productPhotosFromDB.length > 4) {
+            if (productPhotosFromDB.length > 9) {
                 next(new ErrorHandler(MESSAGE.PRODUCT_PHOTOS_LIMIT, STATUS.CODE_404));
                 return;
             }

@@ -6,3 +6,4 @@ export * from './genderCategoryInterface';
 export * from './authInterface';
 export * from './productSizeInterface'
 export * from './productPhotoInterface';
+export * from './productInformationInterface';

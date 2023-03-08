@@ -11,6 +11,7 @@ export const MESSAGE = {
     GENDER_CATEGORY_NOT_INCLUDE_CATEGORY: 'gender category is not includes category',
     GENDER_NOT_INCLUDE_GENDER_CATEGORY: 'gender is not includes genderCategory',
     PRODUCT_INFORMATION_NOT_EXIST: 'Product information is not exists',
+    PRODUCT_INFORMATION_EXIST: 'Product information is already exists',
     CATEGORY_EXIST: 'Category is already exists',
     GENDER_CATEGORY_EXIST: 'Gender category is already exists',
     GENDER_NOT_EXIST: 'Gender is not exists',
