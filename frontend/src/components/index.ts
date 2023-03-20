@@ -7,3 +7,4 @@ export * from './SelectedProducts';
 export * from './ProductDetails';
 export * from './ModalWindow';
 export * from './MainCarousel';
+export * from './BucketModalWindow';

@@ -17,10 +17,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-interface IProductBucketData {
-    product: IProductResponse,
-    size: IProductSizeResponse | null,
-}
 
 const ProductDetails = () => {
 
@@ -36,7 +32,12 @@ const ProductDetails = () => {
 
     const {productInformation} = useAppSelector(state => state.productInformationReducer);
 
-    const {selectedProducts, chosenProductSize, reviewedProducts} = useAppSelector(state => state.productReducer);
+    const {
+        selectedProducts,
+        chosenProductSize,
+        reviewedProducts,
+        productsBucket,
+    } = useAppSelector(state => state.productReducer);
 
     const {productPhotos} = useAppSelector(state => state.productPhotoReducer);
 
@@ -60,9 +61,10 @@ const ProductDetails = () => {
         dispatch(productActions.setChosenProductSizeNull());
     }, [product.id]);
 
-    const setProductToBucket = (data: IProductBucketData): void => {
-        if (data.size) {
-            console.log(data)
+    const setProductToBucket = (data: IProductResponse, size: number | undefined): void => {
+        if (size) {
+            dispatch(productActions.setProductToBucket({product: {...data, size}}));
+            dispatch(productActions.setShowBucketModalWindow());
         }
     }
 
@@ -133,7 +135,7 @@ const ProductDetails = () => {
                 <button
                     className={chosenProductSize ? 'add_to_basket_button' : 'add_to_basket_button_disabled'}
                     disabled={!chosenProductSize}
-                    onClick={() => setProductToBucket({product, size: chosenProductSize})}
+                    onClick={() => setProductToBucket(product, chosenProductSize?.productSize)}
                 >
                     Add to basket
                 </button>
@@ -281,12 +283,14 @@ const ProductDetails = () => {
                         <AccordionDetails className={'block'}>
                             <Typography className={'content_text'}>
                                 <div>
-                                    <span>New goods are subject</span> to return at the Nova Poshta branch during the
+                                    <span>New goods are subject</span> to return at the Nova Poshta branch during
+                                    the
                                     inspection or <span>after 14 days from the moment of purchase, provided there are no signs
                                     of wear.</span>
                                 </div>
                                 <div>
-                                    Socks, tights, gloves, shoe care products in aerosol packaging are non-exchangeable
+                                    Socks, tights, gloves, shoe care products in aerosol packaging are
+                                    non-exchangeable
                                     and non-returnable products.
                                 </div>
 

@@ -1,5 +1,11 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IProductBucket, IProductResponse, IProductSizeResponse, ISelectedProduct} from "../../interfaces";
+import {
+    IProductBucketData,
+    IProductBucketResponse,
+    IProductResponse,
+    IProductSizeResponse,
+    ISelectedProduct
+} from "../../interfaces";
 import axios, {AxiosError} from "axios";
 import {productService} from "../../service";
 import {CONSTANTS} from "../../constants";
@@ -46,10 +52,11 @@ type ProductInitialState = {
     itemCount: number,
     searchData: string,
     showModalWindow: boolean,
+    showBucketModalWindow: boolean,
     selectedProducts: ISelectedProduct[],
     chosenProductSize: IProductSizeResponse | null,
     reviewedProducts: IProductResponse[],
-    productsBucket: IProductBucket[],
+    productsBucket: IProductBucketResponse[],
 
 }
 
@@ -63,13 +70,16 @@ const initialState: ProductInitialState = {
     searchData: '',
     chosenProductSize: null,
     showModalWindow: false,
+    showBucketModalWindow: false,
     reviewedProducts: cookies.get(CONSTANTS.REVIEWED_PRODUCTS_KEY) as IProductResponse[]
         ? cookies.get(CONSTANTS.REVIEWED_PRODUCTS_KEY)
         : [],
     selectedProducts: cookies.get(CONSTANTS.SELECTED_PRODUCTS_KEY) as ISelectedProduct[]
         ? cookies.get(CONSTANTS.SELECTED_PRODUCTS_KEY)
         : [],
-    productsBucket: []
+    productsBucket: cookies.get(CONSTANTS.BUCKET_PRODUCTS_KEY) as IProductBucketResponse[]
+        ? cookies.get(CONSTANTS.BUCKET_PRODUCTS_KEY)
+        : []
 }
 
 export const productSlice = createSlice({
@@ -78,6 +88,9 @@ export const productSlice = createSlice({
     reducers: {
         setShowModalWindow: (state, action: PayloadAction<void>) => {
             state.showModalWindow = !state.showModalWindow;
+        },
+        setShowBucketModalWindow: (state, action: PayloadAction<void>) => {
+            state.showBucketModalWindow = !state.showBucketModalWindow;
         },
         setChosenProductSize: (state, action: PayloadAction<{ chosenProductSize: IProductSizeResponse }>) => {
             state.chosenProductSize = action.payload.chosenProductSize;
@@ -131,39 +144,59 @@ export const productSlice = createSlice({
             }
         },
 
-        setProductToBucket: (state, action: PayloadAction<{ product: IProductBucket }>) => {
-
+        setProductToBucket: (state, action: PayloadAction<{ product: IProductBucketData }>) => {
             const productExist = state.productsBucket.find(productElement =>
                 productElement.id === action.payload.product.id
                 &&
                 productElement.size === action.payload.product.size
             );
-            // Доробити
 
+            if (productExist) {
+                state.productsBucket = state.productsBucket.map(productElement =>
+                    productElement.id === productExist.id
+                    &&
+                    productElement.size === productExist.size
+                        ?
+                        {
+                            ...productElement,
+                            count: productElement.count + 1,
+                            price: productElement.price + action.payload.product.price,
+                        }
+                        :
+                        productElement
+                )
+                cookies.set(CONSTANTS.BUCKET_PRODUCTS_KEY, JSON.stringify(state.productsBucket));
+                return;
+            }
 
+            state.productsBucket.push({...action.payload.product, count: 1, createdAtId: new Date().getTime()});
+            cookies.set(CONSTANTS.BUCKET_PRODUCTS_KEY, JSON.stringify(state.productsBucket));
+        },
+        clearProductsBucket: (state, action: PayloadAction<void>) => {
+            state.productsBucket = [];
+            cookies.remove(CONSTANTS.BUCKET_PRODUCTS_KEY);
+        },
+        plusProductProductsBucket: (state, action: PayloadAction<{ product: IProductBucketResponse }>) => {
+            state.productsBucket = state.productsBucket.map(element => element.createdAtId === action.payload.product.createdAtId ? {
+                ...element,
+                count: element.count + 1,
+                price: element.price + action.payload.product.price / action.payload.product.count
+            } : element)
+        },
 
+        minusProductProductsBucket: (state, action: PayloadAction<{ product: IProductBucketResponse }>) => {
+            if (action.payload.product.count === 1) return;
+            state.productsBucket = state.productsBucket.map(element => element.createdAtId === action.payload.product.createdAtId ? {
+                ...element,
+                count: element.count - 1,
+                price: element.price - action.payload.product.price / action.payload.product.count
+            } : element)
+        },
+        deleteProductFromProductBucket: (state, action: PayloadAction<{ createdAtId: number }>) => {
+            state.productsBucket = state.productsBucket.filter(element => element.createdAtId !== action.payload.createdAtId);
+            cookies.set(CONSTANTS.BUCKET_PRODUCTS_KEY, JSON.stringify(state.productsBucket));
+        },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            // if (productExist){
-            //     state.productsBucket = state.productsBucket.map(productElement=>{...productElement,})
-            // }
-
-            state.productsBucket.push(action.payload.product);
-
-        }
     },
     extraReducers: builder => {
         builder.addCase(getAllProducts.pending, (state, action) => {
@@ -200,6 +233,12 @@ const {
     setChosenProductSize,
     setReviewedProducts,
     setChosenProductSizeNull,
+    setProductToBucket,
+    clearProductsBucket,
+    setShowBucketModalWindow,
+    deleteProductFromProductBucket,
+    plusProductProductsBucket,
+    minusProductProductsBucket,
 } = productSlice.actions;
 export const productActions = {
     setPage,
@@ -210,5 +249,11 @@ export const productActions = {
     setChosenProductSize,
     setReviewedProducts,
     setChosenProductSizeNull,
+    setProductToBucket,
+    clearProductsBucket,
+    setShowBucketModalWindow,
+    deleteProductFromProductBucket,
+    plusProductProductsBucket,
+    minusProductProductsBucket,
 };
 export default productReducer;

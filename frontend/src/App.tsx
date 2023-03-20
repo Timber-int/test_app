@@ -3,12 +3,12 @@ import {Route, Routes} from "react-router-dom";
 import {Layout, MainCarousel, ProductDetails, SelectedProducts} from "./components";
 import {RequireAuth} from './components/hoc/RequireAuth';
 import {
-    AuthPage,
+    AuthPage, ForgotPasswordPage,
     GenderCategoryPage,
     LoginPage,
-    MenuPage,
+    MenuPage, OrderPage,
     ProductsByGenderCategoryPage,
-    RegistrationPage
+    RegistrationPage, SetNewPasswordPage
 } from "./pages";
 
 const App = () => {
@@ -24,8 +24,13 @@ const App = () => {
                 <Route path={'/selectedProducts'} element={<RequireAuth><SelectedProducts/></RequireAuth>}/>
                 <Route path={'/auth'} element={<AuthPage/>}>
                     <Route path={'/auth/registration'} element={<RegistrationPage/>}/>
+                    <Route path={'/auth/forgotPassword'} element={<ForgotPasswordPage/>}/>
+                    <Route path={'/auth/forgotPasswordSet'} element={<SetNewPasswordPage/>}/>
                     <Route path={'/auth'} element={<LoginPage/>}/>
                 </Route>
+            </Route>
+            <Route path={'/orderPage'} element={<OrderPage/>}>
+
             </Route>
         </Routes>
     );

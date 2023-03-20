@@ -11,6 +11,7 @@ import {SearchInput} from "./SearchInput";
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {productActions} from "../store/slices/productSlice";
 import {ModalWindow} from "./ModalWindow";
+import {BucketModalWindow} from "./BucketModalWindow";
 
 const Layout = () => {
 
@@ -18,7 +19,7 @@ const Layout = () => {
 
     const {user} = useAppSelector(state => state.authReducer);
 
-    const {showModalWindow} = useAppSelector(state => state.productReducer);
+    const {showModalWindow,showBucketModalWindow} = useAppSelector(state => state.productReducer);
 
     const dispatch = useAppDispatch();
 
@@ -38,6 +39,7 @@ const Layout = () => {
             {/*</InformationLines>*/}
             <Container>
                 {showModalWindow ? <ModalWindow/> : <></>}
+                {showBucketModalWindow ? <BucketModalWindow/> : <></>}
                 <div className='header'>
                     <div className='menu'>
                         {
@@ -82,7 +84,7 @@ const Layout = () => {
                                 <span><AiOutlineHeart/></span>
                                 <span>Selected</span>
                             </NavLink>
-                            <NavLink to={'/'}>
+                            <NavLink to={'/orderPage'}>
                                 <span><BsBucket/></span>
                                 <span>Bucket</span>
                             </NavLink>

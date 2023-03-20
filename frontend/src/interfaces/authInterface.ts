@@ -1,5 +1,5 @@
 export interface IUser {
-    id?:number,
+    id?: number,
     firstName: string,
     lastName: string,
     email: string,
@@ -14,6 +14,19 @@ export interface IRegistration {
     password: string,
 }
 
+export interface IForgotPassword {
+    email: string,
+}
+
+export interface IForgotPasswordFormSet {
+    password: string,
+    confirmPassword: string,
+}
+
+export interface IForgotPasswordSet {
+    password: string,
+}
+
 export interface ILogin {
     email: string,
     password: string,
@@ -24,6 +37,15 @@ export interface ITokenPair {
     refreshToken: string;
 }
 
-export interface IUserResponse extends ITokenPair{
-    user:IUser
+export interface IUserResponse extends ITokenPair {
+    user: IUser
 }
+
+export interface IActionTokenSingle {
+    actionToken: string,
+}
+
+export interface IUserResponseWithActionToken extends IActionTokenSingle {
+    user: IUser
+}
+

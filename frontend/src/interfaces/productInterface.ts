@@ -28,7 +28,12 @@ export interface ISelectedProduct extends IProductResponse {
     userId: number
 }
 
-export interface IProductBucket extends IProductResponse {
+export interface IProductBucketData extends IProductResponse {
     size: number,
-    count:number,
+}
+
+export interface IProductBucketResponse extends IProductResponse {
+    size: number,
+    count: number,
+    createdAtId: number,
 }

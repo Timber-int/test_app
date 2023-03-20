@@ -1,7 +1,14 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios, {AxiosError} from "axios";
 import {CONSTANTS, TokenType, UserRole} from "../../constants";
-import {ILogin, IRegistration, IUser, IUserResponse} from "../../interfaces";
+import {
+    IForgotPassword, IForgotPasswordSet,
+    ILogin,
+    IRegistration,
+    IUser,
+    IUserResponse,
+    IUserResponseWithActionToken
+} from "../../interfaces";
 import {authService} from "../../service/authService";
 import Cookies from 'universal-cookie';
 
@@ -15,6 +22,42 @@ export const registration = createAsyncThunk(
             const data = await authService.registration(registrationData);
 
             dispatch(authActions.userAuthorization({data}));
+
+            return {data};
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                return rejectWithValue(e.message);
+            }
+        }
+    }
+);
+
+export const forgotPassword = createAsyncThunk(
+    'authSlice/forgotPassword',
+    async (forgotPasswordData: IForgotPassword, {dispatch, rejectWithValue}) => {
+        try {
+
+            const data = await authService.forgotPassword(forgotPasswordData);
+
+            dispatch(authActions.setActionToken({data}));
+
+            return {data};
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                return rejectWithValue(e.message);
+            }
+        }
+    }
+);
+
+export const forgotPasswordSet = createAsyncThunk(
+    'authSlice/forgotPasswordSet',
+    async (forgotPasswordSetData: IForgotPasswordSet, {dispatch, rejectWithValue}) => {
+        try {
+
+            const data = await authService.forgotPasswordSet(forgotPasswordSetData);
+
+            dispatch(authActions.deleteActionToken());
 
             return {data};
         } catch (e) {
@@ -82,6 +125,13 @@ export const authSlice = createSlice({
             cookies.set(UserRole.USER, JSON.stringify(action.payload.data.user));
             state.user = action.payload.data.user as IUser;
         },
+        setActionToken: (state, action: PayloadAction<{ data: IUserResponseWithActionToken }>) => {
+            cookies.set(TokenType.ACTION_TOKEN, action.payload.data.actionToken);
+            state.user = action.payload.data.user as IUser;
+        },
+        deleteActionToken: (state, action: PayloadAction<void>) => {
+            cookies.remove(TokenType.ACTION_TOKEN);
+        },
         userLogout: (state, action: PayloadAction<void>) => {
             cookies.remove(TokenType.ACCESS_TOKEN);
             cookies.remove(TokenType.REFRESH_TOKEN);
@@ -139,6 +189,6 @@ export const authSlice = createSlice({
 });
 
 const authReducer = authSlice.reducer;
-const {userAuthorization, userLogout} = authSlice.actions;
-export const authActions = {userAuthorization, userLogout};
+const {userAuthorization, userLogout, setActionToken, deleteActionToken} = authSlice.actions;
+export const authActions = {userAuthorization, userLogout, setActionToken, deleteActionToken};
 export default authReducer;

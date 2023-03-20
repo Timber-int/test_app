@@ -4,3 +4,6 @@ export * from './ProductsByGenderCategoryPage';
 export * from './RegistrationPage';
 export * from './AuthPage';
 export * from './LoginPage';
+export * from './OrderPage';
+export * from './ForgotPasswordPage';
+export * from './SetNewPasswordPage';

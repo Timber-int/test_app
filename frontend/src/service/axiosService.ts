@@ -11,7 +11,7 @@ export const axiosService = axios.create({
 
 axiosService.interceptors.request.use(config => {
     // @ts-ignore
-    config.headers.Authorization = `Bearer ${cookies.get(TokenType.ACCESS_TOKEN)} ${cookies.get(TokenType.REFRESH_TOKEN)}`;
+    config.headers.Authorization = `Bearer ${cookies.get(TokenType.ACCESS_TOKEN)} ${cookies.get(TokenType.REFRESH_TOKEN)} ${cookies.get(TokenType.ACTION_TOKEN)}`;
     return config;
 });
 

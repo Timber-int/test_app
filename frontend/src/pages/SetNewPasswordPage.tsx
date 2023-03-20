@@ -2,16 +2,16 @@ import React from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import styled from "styled-components";
 import {joiResolver} from "@hookform/resolvers/joi";
-import {registrationDataValidator} from "../validation";
+import {forgotPasswordSetDataValidator} from "../validation";
 import {NavLink, useNavigate} from 'react-router-dom';
-import {IRegistration} from '../interfaces';
-import {registration} from "../store/slices";
+import {IForgotPasswordFormSet} from '../interfaces';
 import {useAppDispatch} from "../hooks";
 import {GiMoneyStack} from "react-icons/gi";
 import {BsBoxSeam} from "react-icons/bs";
 import {HiOutlineCreditCard} from "react-icons/hi";
+import {forgotPassword, forgotPasswordSet} from '../store/slices';
 
-const RegistrationPage = () => {
+const SetNewPasswordPage = () => {
 
     const navigate = useNavigate();
 
@@ -22,70 +22,22 @@ const RegistrationPage = () => {
         handleSubmit,
         reset,
         formState: {errors},
-    } = useForm<IRegistration>({
-        resolver: joiResolver(registrationDataValidator),
+    } = useForm<IForgotPasswordFormSet>({
+        resolver: joiResolver(forgotPasswordSetDataValidator),
         mode: 'onTouched',
     });
 
-    const submit: SubmitHandler<IRegistration> = async (data: IRegistration) => {
-        await dispatch(registration(data));
-        await navigate('/orderPage', {replace: true});
+    const submit: SubmitHandler<IForgotPasswordFormSet> = async (data: IForgotPasswordFormSet) => {
+        await dispatch(forgotPasswordSet({password: data.password}));
+        await navigate('/auth', {replace: true});
         reset();
     }
 
     return (
         <Container>
             <div className='first_block'>
-                <div className='registration'>Registration</div>
+                <div className='registration'>Forgot password email confirm</div>
                 <form onSubmit={handleSubmit(submit)} className='form_container'>
-                    <div className='input_box'>
-                        <div className='errors_container'>
-                            {errors.firstName
-                                &&
-                                <span>
-                            {errors.firstName.message}
-                        </span>
-                            }
-                        </div>
-                        <input className='form_input'
-                               type="text" {...register('firstName')}
-                               required
-                               placeholder={'FirstName'}
-                        />
-                    </div>
-
-                    <div className='input_box'>
-                        <div className='errors_container'>
-                            {errors.lastName
-                                &&
-                                <span>
-                            {errors.lastName.message}
-                        </span>
-                            }
-                        </div>
-                        <input className='form_input'
-                               type="text" {...register('lastName')}
-                               required
-                               placeholder={'LastName'}
-                        />
-                    </div>
-
-                    <div className='input_box'>
-                        <div className='errors_container'>
-                            {errors.email
-                                &&
-                                <span>
-                            {errors.email.message}
-                        </span>
-                            }
-                        </div>
-                        <input className='form_input'
-                               type="text" {...register('email')}
-                               required
-                               placeholder={'Email'}
-                        />
-                    </div>
-
                     <div className='input_box'>
                         <div className='errors_container'>
                             {errors.password
@@ -101,12 +53,27 @@ const RegistrationPage = () => {
                                placeholder={'Password'}
                         />
                     </div>
+                    <div className='input_box'>
+                        <div className='errors_container'>
+                            {errors.confirmPassword
+                                &&
+                                <span>
+                            {errors.confirmPassword.message}
+                        </span>
+                            }
+                        </div>
+                        <input className='form_input'
+                               type="text" {...register('confirmPassword')}
+                               required
+                               placeholder={'Confirm password'}
+                        />
+                    </div>
                     <div className='account_question'>
                         <NavLink to={'/auth'}>I already have a account</NavLink>
                     </div>
 
                     <div className='submit_container'>
-                        <input className='submit_input' type="submit" value={'Registration'}/>
+                        <input className='submit_input' type="submit" value={'Confirm'}/>
                     </div>
                 </form>
             </div>
@@ -261,4 +228,4 @@ const Container = styled.div`
   }
 `;
 
-export {RegistrationPage};
+export {SetNewPasswordPage};

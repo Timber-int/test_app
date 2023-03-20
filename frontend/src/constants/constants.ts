@@ -9,6 +9,7 @@ export const CONSTANTS = {
     MEASURE: 'measure',
 
     SELECTED_PRODUCTS_KEY: 'Products selected',
+    BUCKET_PRODUCTS_KEY: 'Products bucket',
     REVIEWED_PRODUCTS_KEY:'Reviewed products',
 
     PASSWORD_REGEXP: new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,128})'),
